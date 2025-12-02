@@ -10,8 +10,8 @@
     <meta name="apple-mobile-web-app-title" content="2025北海道">
     <meta name="theme-color" content="#F2F0E9">
 
-    <!-- APP ICON -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNGMkYwRTkiLz48dGV4dCB4PSI1MCUiIHk9IjU1JSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IiYjMzlOb3RvIFNlcmlmIFRDJyMsIHNlcmlmIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1zaXplPSIyODAiIGZpbGw9IiMxQTFBMUEiPuWMlzwvdGV4dD48dGV4dCB4PSI1MCUiIHk9Ijg1JSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXdlaWdodD0ibm9ybWFsIiBmb250LXNpemU9IjUwIiBmaWxsPSIjOEM3MDUxIiBsZXR0ZXItc3BhY2luZz0iMTAiPjIwMjU8L3RleHQ+PC9zdmc+">
+    <!-- APP ICON (New Design) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzFBMUExQSIvPgogIDxwYXRoIGQ9Ik0yNTYgMTIwIEw0MzAgNDAwIEg4MiBaIiBmaWxsPSJub25lIiBzdHJva2U9IiNGMkYwRTkiIHN0cm9rZS13aWR0aD0iMTIiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNMjU2IDE0MCBMMzUwIDQwMCBNMTYyIDQwMCBMMjU2IDE0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjJGMEU5IiBzdHJva2Utd2lkdGg9IjQiIG9wYWNpdHk9IjAuMiIvPgogIDxjaXJjbGUgY3g9IjI1NiIgY3k9IjIzMCIgcj0iMzUiIGZpbGw9IiM4QzcwNTEiLz4KICA8dGV4dCB4PSIyNTYiIHk9IjQ2MCIgZm9udC1mYW1pbHk9IidDb3Jtb3JhbnQgR2FyYW1vbmQnLCBzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtc2l6ZT0iNDIiIGZpbGw9IiM4QzcwNTEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSI4Ij5IT0tLQUlETzwvdGV4dD4KPC9zdmc+">
     
     <title>2025北海道</title>
     
@@ -82,6 +82,20 @@
             border-bottom: 1px solid #1A1A1A;
         }
 
+        /* Special input styling for Wallet Input */
+        .wallet-input {
+            border-bottom: 1px solid #E5E2D9;
+            padding: 8px 0;
+            font-size: 1.1rem;
+        }
+        .wallet-input::placeholder {
+            color: #D1CDC4;
+            font-family: 'Noto Serif TC', serif;
+        }
+        .wallet-input:focus {
+            border-bottom: 1px solid #8C7051;
+        }
+
         .fade-in { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
@@ -107,6 +121,33 @@
             font-family: 'Cormorant Garamond', serif;
             font-weight: 600;
         }
+
+        /* Reserved Event Styling */
+        .event-reserved {
+            background: rgba(140, 112, 81, 0.05); /* Bronze tint */
+            border-left: 4px solid #8C7051;
+            padding-left: 12px;
+            padding-right: 12px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        /* Modal Animations */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes popOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.95); }
+        }
+        
+        .animate-pop-in { animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-pop-out { animation: popOut 0.2s ease-in forwards; }
+
+        #modal.hidden { display: none; }
+        #modal:not(.hidden) { display: flex; }
 
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
@@ -172,162 +213,65 @@
         </div>
     </nav>
 
-    <!-- Modal -->
-    <div id="modal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center pointer-events-none">
-        <div class="absolute inset-0 bg-ink/20 backdrop-blur-sm transition-opacity" onclick="closeModal()" style="pointer-events: auto;"></div>
-        <div class="bg-[#F9F8F6] w-full max-w-sm rounded-t-3xl sm:rounded-2xl shadow-2xl p-8 relative animate-[fadeInUp_0.3s_ease-out] pointer-events-auto max-h-[90vh] overflow-y-auto">
-            <div class="w-12 h-1 bg-stone-300 rounded-full mx-auto mb-6"></div>
+    <!-- Modal Structure (Fixed) -->
+    <div id="modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-pointer" onclick="closeModal()"></div>
+        
+        <!-- Modal Container -->
+        <div id="modal-container" class="bg-[#F9F8F6] w-11/12 max-w-sm rounded-2xl shadow-2xl p-6 relative pointer-events-auto max-h-[90vh] overflow-y-auto z-10 opacity-0 transform scale-95">
             <div id="modal-content"></div>
         </div>
     </div>
 
     <!-- Logic -->
     <script>
+        // --- DATA ---
         const FLIGHT_DATA = [
-            {
-                type: 'Departure',
-                code: 'CI130',
-                date: '12/24',
-                fromCode: 'TPE', fromCity: 'Taipei', timeDep: '08:35',
-                toCode: 'CTS', toCity: 'Sapporo', timeArr: '13:10',
-                duration: '3h 35m'
-            },
-            {
-                type: 'Return',
-                code: 'CI131',
-                date: '12/29',
-                fromCode: 'CTS', fromCity: 'Sapporo', timeDep: '15:00',
-                toCode: 'TPE', toCity: 'Taipei', timeArr: '18:XX',
-                duration: '4h 10m'
-            }
+            { type: 'Departure', code: 'CI130', date: '12/24', fromCode: 'TPE', fromCity: 'Taipei', timeDep: '08:35', toCode: 'CTS', toCity: 'Sapporo', timeArr: '13:10', duration: '3h 35m' },
+            { type: 'Return', code: 'CI131', date: '12/29', fromCode: 'CTS', fromCity: 'Sapporo', timeDep: '15:00', toCode: 'TPE', toCity: 'Taipei', timeArr: '18:XX', duration: '4h 10m' }
         ];
 
         const DEFAULT_ITINERARY = [
-            {
-                day: 1, date: "12/24", title: "洞爺湖", subtitle: "Lake Toya", location: "TPE -> CTS",
-                events: [
-                    { id: 1, time: "05:00", title: "家中集合", desc: "接駁車出發", type: "transport", transportType: 'charter', transportRoute: "家裡 -> 桃園機場", important: true, bookingStatus: 'fixed' },
-                    { id: 2, time: "05:35", title: "抵達桃園機場", desc: "T1 / 辦理登機", type: "transport", transportType: 'walk', bookingStatus: 'fixed' },
-                    { id: 3, time: "08:35", title: "起飛 CI130", desc: "Flight: 3h 35m", type: "flight", bookingStatus: 'fixed' },
-                    { id: 4, time: "13:10", title: "抵達新千歲", desc: "入境、領行李", type: "flight", bookingStatus: 'fixed' },
-                    { id: 5, time: "14:30", title: "包車前往洞爺", desc: "車程約 2 小時", type: "transport", transportType: 'charter', transportRoute: "新千歲機場 -> 洞爺乃之風", important: true, bookingStatus: 'fixed' },
-                    { id: 6, time: "17:00", title: "洞爺乃之風", desc: "Check-in / 湖景", type: "hotel", bookingStatus: 'fixed' },
-                    { id: 7, time: "18:30", title: "自助晚餐", desc: "飯店餐廳", type: "food", bookingStatus: 'flexible', openingHours: "17:30 - 21:00" }
-                ]
-            },
-            {
-                day: 2, date: "12/25", title: "札幌、狸小路", subtitle: "Sapporo City", location: "Toya -> Sapporo",
-                events: [
-                    { id: 10, time: "10:00", title: "飯店接駁車", desc: "往札幌北口 (重要)", type: "transport", transportType: 'public', transportRoute: "洞爺乃之風 -> 札幌北口", important: true, bookingStatus: 'fixed' },
-                    { id: 11, time: "12:30", title: "Vessel Hotel", desc: "寄放行李 / Check-in", type: "hotel", bookingStatus: 'fixed' },
-                    { id: 12, time: "13:30", title: "湯咖哩", desc: "Suage+ 或 Garage", type: "food", bookingStatus: 'flexible', openingHours: "11:30 - 21:30" },
-                    { id: 13, time: "15:00", title: "狸小路", desc: "散策 / 藥妝採買", type: "sight", bookingStatus: 'flexible', openingHours: "10:00 - 22:00" },
-                    { id: 14, time: "18:00", title: "炭火兜 羊肉", desc: "成吉思汗烤肉 (已預約)", type: "food", important: true, bookingStatus: 'fixed', openingHours: "17:00 - 23:00" }
-                ]
-            },
-            {
-                day: 3, date: "12/26", title: "旭川、四季彩之丘、精靈露臺", subtitle: "Asahikawa & Furano", location: "Asahikawa / Biei",
-                events: [
-                    { id: 20, time: "08:00", title: "包車出發", desc: "飯店門口", type: "transport", transportType: 'charter', transportRoute: "札幌飯店 -> 旭山動物園", important: true, bookingStatus: 'fixed' },
-                    { id: 21, time: "10:30", title: "旭山動物園", desc: "企鵝散步 (11:00)", type: "sight", bookingStatus: 'flexible', openingHours: "10:30 - 15:30" },
-                    { id: 22, time: "13:15", title: "四季彩之丘", desc: "雪上活動", type: "sight", bookingStatus: 'flexible', openingHours: "09:00 - 16:30" },
-                    { id: 23, time: "15:00", title: "森林精靈露臺", desc: "富良野", type: "sight", bookingStatus: 'flexible', openingHours: "12:00 - 20:45" },
-                    { id: 24, time: "19:00", title: "返回札幌", desc: "市區晚餐", type: "transport", transportType: 'charter', transportRoute: "富良野 -> 札幌市區", bookingStatus: 'fixed' }
-                ]
-            },
-            {
-                day: 4, date: "12/27", title: "小樽", subtitle: "Otaru Canal", location: "Sapporo -> Otaru",
-                events: [
-                    { id: 30, time: "09:30", title: "JR 札幌站", desc: "快速 Airport", type: "transport", transportType: 'public', transportRoute: "札幌站 -> 小樽站", bookingStatus: 'flexible' },
-                    { id: 31, time: "10:30", title: "三角市場", desc: "海鮮丼早午餐", type: "food", bookingStatus: 'flexible', openingHours: "07:00 - 16:00" },
-                    { id: 32, time: "12:00", title: "小樽運河", desc: "散步、拍照", type: "sight", bookingStatus: 'flexible' },
-                    { id: 33, time: "13:30", title: "堺町通", desc: "甜點巡禮", type: "sight", bookingStatus: 'flexible', openingHours: "09:00 - 18:00" },
-                    { id: 34, time: "16:30", title: "運河點燈", desc: "藍色時刻", type: "sight", bookingStatus: 'flexible' },
-                    { id: 35, time: "18:00", title: "晚餐", desc: "壽司通 / 炸雞", type: "food", bookingStatus: 'flexible' }
-                ]
-            },
-            {
-                day: 5, date: "12/28", title: "札幌", subtitle: "Sapporo Free Day", location: "Sapporo",
-                events: [
-                    { id: 40, time: "10:00", title: "二條市場", desc: "海鮮", type: "food", bookingStatus: 'flexible', openingHours: "07:00 - 17:00" },
-                    { id: 41, time: "13:00", title: "北海道神宮", desc: "參拜", type: "sight", bookingStatus: 'flexible', openingHours: "07:00 - 16:00" },
-                    { id: 42, time: "15:00", title: "大通公園", desc: "市集 / 電視塔", type: "sight", bookingStatus: 'flexible' },
-                    { id: 43, time: "19:00", title: "居酒屋", desc: "最後晚餐", type: "food", bookingStatus: 'flexible' }
-                ]
-            },
-            {
-                day: 6, date: "12/29", title: "新千歲機場", subtitle: "New Chitose Airport", location: "Sapporo -> TPE",
-                events: [
-                    { id: 50, time: "09:00", title: "Check-out", desc: "前往機場", type: "hotel", bookingStatus: 'fixed' },
-                    { id: 51, time: "11:00", title: "新千歲機場", desc: "國內線伴手禮", type: "sight", bookingStatus: 'flexible' },
-                    { id: 52, time: "13:30", title: "報到", desc: "CI131", type: "flight", bookingStatus: 'fixed' },
-                    { id: 53, time: "15:00", title: "起飛", desc: "再見北海道", type: "flight", bookingStatus: 'fixed' }
-                ]
-            }
+            { day: 1, date: "12/24", title: "洞爺湖", subtitle: "Lake Toya", location: "TPE -> CTS", events: [ { id: 1, time: "05:00", title: "家中集合", desc: "接駁車出發", type: "transport", transportType: 'charter', transportRoute: "家裡 -> 桃園機場", important: true, bookingStatus: 'fixed', showMap: false }, { id: 2, time: "05:35", title: "抵達桃園機場", desc: "T1 / 辦理登機", type: "transport", transportType: 'walk', bookingStatus: 'fixed', showMap: true }, { id: 3, time: "08:35", title: "起飛 CI130", desc: "Flight: 3h 35m", type: "flight", bookingStatus: 'fixed', showMap: false }, { id: 4, time: "13:10", title: "抵達新千歲", desc: "入境、領行李", type: "flight", bookingStatus: 'fixed', showMap: true }, { id: 5, time: "14:30", title: "包車前往洞爺", desc: "車程約 2 小時", type: "transport", transportType: 'charter', transportRoute: "新千歲機場 -> 洞爺乃之風", important: true, bookingStatus: 'fixed', showMap: false }, { id: 6, time: "17:00", title: "洞爺乃之風", desc: "Check-in / 湖景", type: "hotel", bookingStatus: 'fixed', showMap: true }, { id: 7, time: "18:30", title: "自助晚餐", desc: "飯店餐廳", type: "food", bookingStatus: 'flexible', openingHours: "17:30 - 21:00", showMap: false } ] },
+            { day: 2, date: "12/25", title: "札幌、狸小路", subtitle: "Sapporo City", location: "Toya -> Sapporo", events: [ { id: 10, time: "10:00", title: "飯店接駁車", desc: "往札幌北口 (重要)", type: "transport", transportType: 'public', transportRoute: "洞爺乃之風 -> 札幌北口", important: true, bookingStatus: 'fixed', showMap: false }, { id: 11, time: "12:30", title: "Vessel Hotel", desc: "寄放行李 / Check-in", type: "hotel", bookingStatus: 'fixed', showMap: true }, { id: 12, time: "13:30", title: "湯咖哩", desc: "Suage+ 或 Garage", type: "food", bookingStatus: 'flexible', openingHours: "11:30 - 21:30", showMap: true }, { id: 13, time: "15:00", title: "狸小路", desc: "散策 / 藥妝採買", type: "sight", bookingStatus: 'flexible', openingHours: "10:00 - 22:00", showMap: true }, { id: 14, time: "18:00", title: "炭火兜 羊肉", desc: "成吉思汗烤肉 (已預約)", type: "food", important: true, bookingStatus: 'fixed', openingHours: "17:00 - 23:00", showMap: true } ] },
+            { day: 3, date: "12/26", title: "旭川、四季彩之丘、精靈露臺", subtitle: "Asahikawa & Furano", location: "Asahikawa / Biei", events: [ { id: 20, time: "08:00", title: "包車出發", desc: "飯店門口", type: "transport", transportType: 'charter', transportRoute: "札幌飯店 -> 旭山動物園", important: true, bookingStatus: 'fixed', showMap: false }, { id: 21, time: "10:30", title: "旭山動物園", desc: "企鵝散步 (11:00)", type: "sight", bookingStatus: 'flexible', openingHours: "10:30 - 15:30", showMap: true }, { id: 22, time: "13:15", title: "四季彩之丘", desc: "雪上活動", type: "sight", bookingStatus: 'flexible', openingHours: "09:00 - 16:30", showMap: true }, { id: 23, time: "15:00", title: "森林精靈露臺", desc: "富良野", type: "sight", bookingStatus: 'flexible', openingHours: "12:00 - 20:45", showMap: true }, { id: 24, time: "19:00", title: "返回札幌", desc: "市區晚餐", type: "transport", transportType: 'charter', transportRoute: "富良野 -> 札幌市區", bookingStatus: 'fixed', showMap: false } ] },
+            { day: 4, date: "12/27", title: "小樽", subtitle: "Otaru Canal", location: "Sapporo -> Otaru", events: [ { id: 30, time: "09:30", title: "JR 札幌站", desc: "快速 Airport", type: "transport", transportType: 'public', transportRoute: "札幌站 -> 小樽站", bookingStatus: 'flexible', showMap: false }, { id: 31, time: "10:30", title: "三角市場", desc: "海鮮丼早午餐", type: "food", bookingStatus: 'flexible', openingHours: "07:00 - 16:00", showMap: true }, { id: 32, time: "12:00", title: "小樽運河", desc: "散步、拍照", type: "sight", bookingStatus: 'flexible', showMap: true }, { id: 33, time: "13:30", title: "堺町通", desc: "甜點巡禮", type: "sight", bookingStatus: 'flexible', openingHours: "09:00 - 18:00", showMap: true }, { id: 34, time: "16:30", title: "運河點燈", desc: "藍色時刻", type: "sight", bookingStatus: 'flexible', showMap: true }, { id: 35, time: "18:00", title: "晚餐", desc: "壽司通 / 炸雞", type: "food", bookingStatus: 'flexible', showMap: true } ] },
+            { day: 5, date: "12/28", title: "札幌", subtitle: "Sapporo Free Day", location: "Sapporo", events: [ { id: 40, time: "10:00", title: "二條市場", desc: "海鮮", type: "food", bookingStatus: 'flexible', openingHours: "07:00 - 17:00", showMap: true }, { id: 41, time: "13:00", title: "北海道神宮", desc: "參拜", type: "sight", bookingStatus: 'flexible', openingHours: "07:00 - 16:00", showMap: true }, { id: 42, time: "15:00", title: "大通公園", desc: "市集 / 電視塔", type: "sight", bookingStatus: 'flexible', showMap: true }, { id: 43, time: "19:00", title: "居酒屋", desc: "最後晚餐", type: "food", bookingStatus: 'flexible', showMap: true } ] },
+            { day: 6, date: "12/29", title: "新千歲機場", subtitle: "New Chitose Airport", location: "Sapporo -> TPE", events: [ { id: 50, time: "09:00", title: "Check-out", desc: "前往機場", type: "hotel", bookingStatus: 'fixed', showMap: false }, { id: 51, time: "11:00", title: "新千歲機場", desc: "國內線伴手禮", type: "sight", bookingStatus: 'flexible', showMap: true }, { id: 52, time: "13:30", title: "報到", desc: "CI131", type: "flight", bookingStatus: 'fixed', showMap: false }, { id: 53, time: "15:00", title: "起飛", desc: "再見北海道", type: "flight", bookingStatus: 'fixed', showMap: false } ] }
         ];
 
         const DEFAULT_CHECKLIST = [
-            { text: "護照（有效期限6個月以上）", done: false },
-            { text: "身分證影本（放行李與雲端各一）", done: false },
-            { text: "機票／電子登機證", done: false },
-            { text: "飯店預約資訊", done: false },
-            { text: "旅責險／旅平險保單（紙本或截圖）", done: false },
-            { text: "旅遊保險紙本或截圖", done: false },
-            { text: "日幣現金", done: false },
-            { text: "信用卡（Visa / JCB 都常用）", done: false },
-            { text: "西瓜卡 Suica / Kitaca（交通）", done: false },
-            { text: "行動電源（日本要求容量標示）", done: false },
-            { text: "充電線（Type-C / Lightning / Watch）", done: false },
-            { text: "iPhone / Apple Watch 充電器", done: false },
-            { text: "相機 / 記憶卡", done: false },
-            { text: "耳機", done: false },
-            { text: "口罩", done: false },
-            { text: "濕紙巾／酒精", done: false },
-            { text: "小藥包（腸胃、退燒、過敏、止咳、OK繃）", done: false },
-            { text: "Lucas 的個人用品（抗敏藥膏、退燒貼等）", done: false },
-            { text: "發熱衣（貼身）2–3件", done: false },
-            { text: "羊毛針織或保暖中層 1–2件", done: false },
-            { text: "羽絨外套", done: false },
-            { text: "保暖褲／刷毛褲", done: false },
-            { text: "厚襪／羊毛襪 3–5雙", done: false },
-            { text: "帽子", done: false },
-            { text: "圍巾", done: false },
-            { text: "手套", done: false },
-            { text: "防滑雪靴", done: false },
-            { text: "洗面乳", done: false },
-            { text: "乳液（極潤）", done: false },
-            { text: "護唇膏", done: false },
-            { text: "防曬乳（雪地防曬）", done: false },
-            { text: "卸妝用品", done: false },
-            { text: "牙膏牙刷", done: false },
-            { text: "髮油或整髮用品", done: false },
-            { text: "保養品：乳霜＞化妝水", done: false },
-            { text: "折疊雨傘", done: false },
-            { text: "小玩具", done: false },
-            { text: "折凳", done: false },
-            { text: "夾鏈袋（收小物、濕衣服）", done: false },
+            { text: "護照（有效期限6個月以上）", done: false }, { text: "身分證影本", done: false }, { text: "機票／電子登機證", done: false }, { text: "飯店預約資訊", done: false }, { text: "旅責險／旅平險保單", done: false }, { text: "日幣現金", done: false }, { text: "信用卡（Visa / JCB）", done: false }, { text: "西瓜卡 Suica / Kitaca", done: false }, { text: "行動電源", done: false }, { text: "充電線", done: false }, { text: "iPhone / Apple Watch 充電器", done: false }, { text: "相機 / 記憶卡", done: false }, { text: "耳機", done: false }, { text: "口罩", done: false }, { text: "濕紙巾／酒精", done: false }, { text: "小藥包", done: false }, { text: "Lucas 的個人用品", done: false }, { text: "發熱衣 2–3件", done: false }, { text: "羊毛針織或保暖中層", done: false }, { text: "羽絨外套", done: false }, { text: "保暖褲／刷毛褲", done: false }, { text: "厚襪／羊毛襪 3–5雙", done: false }, { text: "帽子", done: false }, { text: "圍巾", done: false }, { text: "手套", done: false }, { text: "防滑雪靴", done: false }, { text: "洗面乳", done: false }, { text: "乳液（極潤）", done: false }, { text: "護唇膏", done: false }, { text: "防曬乳", done: false }, { text: "卸妝用品", done: false }, { text: "牙膏牙刷", done: false }, { text: "髮油或整髮用品", done: false }, { text: "保養品", done: false }, { text: "折疊雨傘", done: false }, { text: "小玩具", done: false }, { text: "折凳", done: false }, { text: "夾鏈袋", done: false }
         ];
 
         // State
         let itinerary = JSON.parse(localStorage.getItem('itinerary_v4')) || DEFAULT_ITINERARY;
+        // Migration check for old data structure
+        itinerary.forEach(day => {
+            day.events.forEach(event => {
+                if(event.showMap === undefined) event.showMap = false;
+            });
+        });
+
         let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
-        // Force ensure checklist is an array
         let checklist = [];
         try {
             const savedChecklist = JSON.parse(localStorage.getItem('checklist_v6'));
-            if (Array.isArray(savedChecklist)) {
-                checklist = savedChecklist;
-            } else {
-                checklist = DEFAULT_CHECKLIST;
-            }
-        } catch (e) {
-            checklist = DEFAULT_CHECKLIST;
-        }
+            checklist = Array.isArray(savedChecklist) ? savedChecklist : DEFAULT_CHECKLIST;
+        } catch (e) { checklist = DEFAULT_CHECKLIST; }
 
         let memos = localStorage.getItem('memos') || "";
-        let exchangeRate = parseFloat(localStorage.getItem('exchangeRate')) || 0.22;
-        let documents = JSON.parse(localStorage.getItem('documents')) || [];
-        let initialBudget = parseFloat(localStorage.getItem('initialBudget')) || 0;
+        let exchangeRate = parseFloat(localStorage.getItem('exchangeRate')) || 0.215;
+        let documents = JSON.parse(localStorage.getItem('documents')) || [
+            {id: 1, title: 'Flight E-Ticket', type: 'flight', bookingId: 'REF-88293', date: '2025/12/24'},
+            {id: 2, title: 'Toya Nonokaze Resort', type: 'hotel', bookingId: 'AGODA-112', date: '2025/12/24'},
+            {id: 3, title: 'Travel Insurance', type: 'file', bookingId: 'INS-999', date: 'Valid'},
+        ];
+        
+        let initialBudget = parseFloat(localStorage.getItem('initialBudget')) || 100000;
+        let currentWalletFilter = 'all'; 
+        let currentPaymentMethod = 'cash'; 
         let currentDayIndex = 0;
 
         function saveAll() {
@@ -341,8 +285,32 @@
         }
 
         const appContent = document.getElementById('app-content');
-        const modal = document.getElementById('modal');
-        const modalContent = document.getElementById('modal-content');
+        
+        // --- MODAL SYSTEM ---
+        function showModal(contentHTML) {
+            const modal = document.getElementById('modal');
+            const container = document.getElementById('modal-container');
+            const content = document.getElementById('modal-content');
+            
+            content.innerHTML = contentHTML;
+            modal.classList.remove('hidden');
+            
+            // Reset animation
+            container.classList.remove('animate-pop-out');
+            container.classList.add('animate-pop-in');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            const container = document.getElementById('modal-container');
+            
+            container.classList.remove('animate-pop-in');
+            container.classList.add('animate-pop-out');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
 
         function setActiveTab(tabName) {
             document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -352,58 +320,25 @@
             window.scrollTo(0,0);
         }
 
-        // --- RENDER: PLAN ---
+        // --- RENDER FUNCTIONS ---
+
         function renderPlan() {
             setActiveTab('plan');
             let html = `<div class="fade-in pb-10 flex flex-col h-full">`;
             
-            // Collapsible Flights Section
+            // Flights Details
             html += `
                 <div class="mb-4">
                     <details class="group bg-white rounded-xl shadow-gallery overflow-hidden border border-stone-100">
                         <summary class="flex justify-between items-center p-4 cursor-pointer bg-paper hover:bg-stone-50 transition-colors">
                             <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-bronze/10 text-bronze flex items-center justify-center">
-                                    <i class="fa-solid fa-plane"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-serif font-bold text-ink leading-none">Flight Info</h3>
-                                    <div class="text-[10px] text-subtle mt-1 uppercase tracking-widest">CI130 / CI131</div>
-                                </div>
+                                <div class="w-8 h-8 rounded-full bg-bronze/10 text-bronze flex items-center justify-center"><i class="fa-solid fa-plane"></i></div>
+                                <div><h3 class="font-serif font-bold text-ink leading-none">Flight Info</h3><div class="text-[10px] text-subtle mt-1 uppercase tracking-widest">CI130 / CI131</div></div>
                             </div>
                             <span class="text-stone-400 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
                         </summary>
-                        
                         <div class="p-5 border-t border-stone-100 bg-white">
-                            ${FLIGHT_DATA.map(f => `
-                                <div class="mb-6 last:mb-0 relative">
-                                    <div class="flex justify-between items-end mb-2">
-                                        <div class="text-xs font-bold text-bronze uppercase tracking-widest border border-bronze/30 px-2 py-0.5 rounded">${f.type}</div>
-                                        <div class="text-sm font-mono text-stone-400">${f.date}</div>
-                                    </div>
-                                    <div class="flex justify-between items-center font-serif text-ink mb-1">
-                                        <div class="text-center">
-                                            <div class="text-2xl font-bold leading-none">${f.fromCode}</div>
-                                            <div class="text-[10px] text-subtle mt-1">${f.timeDep}</div>
-                                        </div>
-                                        <div class="flex-1 px-4 text-center">
-                                            <div class="border-t border-dashed border-stone-300 relative top-1.5"></div>
-                                            <i class="fa-solid fa-plane text-stone-300 text-xs relative bg-white px-1"></i>
-                                            <div class="text-[9px] text-stone-400 mt-1">${f.duration}</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-2xl font-bold leading-none">${f.toCode}</div>
-                                            <div class="text-[10px] text-subtle mt-1">${f.timeArr}</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-between items-center mt-2">
-                                        <div class="text-sm font-bold text-ink">${f.code}</div>
-                                        <a href="https://www.china-airlines.com/tw/zh/fly/flight-status/index" target="_blank" class="text-[10px] bg-stone-100 hover:bg-stone-200 text-stone-600 px-2 py-1 rounded transition-colors">
-                                            <i class="fa-solid fa-magnifying-glass mr-1"></i>Check Live Status
-                                        </a>
-                                    </div>
-                                </div>
-                            `).join('<div class="h-px bg-stone-100 my-4 w-full"></div>')}
+                            ${FLIGHT_DATA.map(f => `<div class="mb-6 last:mb-0 relative"><div class="flex justify-between items-end mb-2"><div class="text-xs font-bold text-bronze uppercase tracking-widest border border-bronze/30 px-2 py-0.5 rounded">${f.type}</div><div class="text-sm font-mono text-stone-400">${f.date}</div></div><div class="flex justify-between items-center font-serif text-ink mb-1"><div class="text-center"><div class="text-2xl font-bold leading-none">${f.fromCode}</div><div class="text-[10px] text-subtle mt-1">${f.timeDep}</div></div><div class="flex-1 px-4 text-center"><div class="border-t border-dashed border-stone-300 relative top-1.5"></div><i class="fa-solid fa-plane text-stone-300 text-xs relative bg-white px-1"></i><div class="text-[9px] text-stone-400 mt-1">${f.duration}</div></div><div class="text-center"><div class="text-2xl font-bold leading-none">${f.toCode}</div><div class="text-[10px] text-subtle mt-1">${f.timeArr}</div></div></div></div>`).join('<div class="h-px bg-stone-100 my-4 w-full"></div>')}
                         </div>
                     </details>
                 </div>
@@ -421,859 +356,582 @@
                     </div>
                     <div class="overflow-x-auto hide-scrollbar whitespace-nowrap px-2 pb-2">
                         <div class="flex gap-3 justify-between sm:justify-start">
-                            ${itinerary.map((day, idx) => `
-                                <button onclick="switchDay(${idx})" class="transition-all duration-300 flex flex-col items-center min-w-[50px] p-2 rounded-lg ${idx === currentDayIndex ? 'bg-white shadow-sm scale-105 border border-stone-100' : 'opacity-60 scale-95 hover:bg-white/50'}">
-                                    <span class="font-display text-2xl ${idx === currentDayIndex ? 'text-accent' : 'text-stone-400'} italic leading-none">0${day.day}</span>
-                                    <span class="text-[9px] font-bold uppercase tracking-widest ${idx === currentDayIndex ? 'text-ink' : 'text-stone-400'} mt-1">${day.date}</span>
-                                </button>
-                            `).join('')}
+                            ${itinerary.map((day, idx) => `<button onclick="switchDay(${idx})" class="transition-all duration-300 flex flex-col items-center min-w-[50px] p-2 rounded-lg ${idx === currentDayIndex ? 'bg-white shadow-sm scale-105 border border-stone-100' : 'opacity-60 scale-95 hover:bg-white/50'}"><span class="font-display text-2xl ${idx === currentDayIndex ? 'text-accent' : 'text-stone-400'} italic leading-none">0${day.day}</span><span class="text-[9px] font-bold uppercase tracking-widest ${idx === currentDayIndex ? 'text-ink' : 'text-stone-400'} mt-1">${day.date}</span></button>`).join('')}
                         </div>
                     </div>
                 </div>
             `;
 
-            // Single Day Content
+            // Day Content
             const day = itinerary[currentDayIndex];
             html += `
                 <div class="flex-1 px-1 animate-[fadeIn_0.4s_ease-out]">
-                    <!-- Day Title Header -->
-                    <div class="mb-6 flex justify-between items-end group/header cursor-pointer" onclick="editDay(${currentDayIndex})">
+                    <div class="mb-6 flex justify-between items-end group/header cursor-pointer" onclick="editDayTitle(${currentDayIndex})">
                         <div>
                             <h2 class="font-serif text-3xl font-bold text-ink leading-none mb-1">${day.title}</h2>
                             <div class="text-xs tracking-[0.2em] uppercase text-bronze font-bold">${day.subtitle || 'Journey'}</div>
                         </div>
-                        <span class="text-stone-300 text-sm opacity-0 group-hover/header:opacity-100 transition-opacity mb-1"><i class="fa-solid fa-pen"></i></span>
                     </div>
                     
-                    <!-- Events List -->
                     <div class="space-y-6 relative ml-2">
                         <div class="absolute left-[7px] top-2 bottom-2 w-px bg-stone-300"></div>
 
                         ${day.events.map((event, eventIndex) => `
-                            <div class="relative pl-8 group" onclick="editEvent(${currentDayIndex}, ${eventIndex}); event.stopPropagation();">
+                            <div class="relative pl-8 group cursor-pointer" onclick="openEditEventModal(${currentDayIndex}, ${eventIndex})">
                                 <div class="absolute left-0 top-1.5 w-[15px] h-[15px] bg-[#F2F0E9] border ${event.bookingStatus === 'fixed' ? 'border-ink bg-ink' : 'border-stone-400'} rounded-full z-10 flex items-center justify-center">
                                     <div class="w-1.5 h-1.5 rounded-full ${event.important ? 'bg-accent' : (event.bookingStatus === 'fixed' ? 'bg-paper' : 'bg-stone-300')}"></div>
                                 </div>
-                                
-                                <div class="transition-all duration-300 hover:translate-x-1 ${event.bookingStatus === 'fixed' ? 'relative' : ''}">
+                                <div class="transition-all duration-300 hover:translate-x-1 ${event.bookingStatus === 'fixed' ? 'event-reserved' : 'relative'}">
                                     <div class="flex items-center gap-3 mb-1">
                                         <span class="font-display text-xl ${event.important ? 'text-accent' : 'text-ink'} w-14 leading-none">${event.time}</span>
                                         <div class="flex gap-2">
                                             <span class="text-[10px] font-bold uppercase tracking-wider text-subtle border border-stone-200 px-1.5 py-0.5 rounded">${event.type}</span>
-                                            ${event.bookingStatus === 'fixed' ? '<span class="stamp-reserved">RESERVED</span>' : ''}
+                                            ${event.bookingStatus === 'fixed' ? '<span class="stamp-reserved bg-paper">RESERVED</span>' : ''}
                                         </div>
                                     </div>
-                                    
                                     <h3 class="font-serif text-lg font-bold text-ink mb-1 group-active:text-bronze transition-colors flex items-center gap-2">
-                                        ${event.title}
-                                        ${getTransportIcon(event)}
+                                        ${event.title} ${getTransportIcon(event)}
                                     </h3>
-                                    
-                                    ${event.openingHours ? `
-                                        <div class="text-[10px] text-subtle mb-2 font-mono flex items-center gap-1.5">
-                                            <i class="fa-regular fa-clock text-stone-400"></i> ${event.openingHours}
-                                        </div>
-                                    ` : ''}
-                                    
-                                    <div class="text-sm text-stone-500 font-light leading-relaxed border-l-2 ${event.important ? 'border-accent/30' : 'border-transparent'} pl-2 -ml-2">
+                                    ${event.openingHours ? `<div class="text-[10px] text-subtle mb-2 font-mono flex items-center gap-1.5"><i class="fa-regular fa-clock text-stone-400"></i> ${event.openingHours}</div>` : ''}
+                                    <div class="text-sm text-stone-500 font-light leading-relaxed border-l-2 ${event.important && event.bookingStatus !== 'fixed' ? 'border-accent/30' : 'border-transparent'} pl-2 -ml-2">
                                         <div class="mb-1">${event.desc}</div>
                                         ${event.transportRoute ? `<div class="text-xs font-mono text-bronze bg-bronze/5 px-2 py-1 inline-block rounded mt-1"><i class="fa-solid fa-route mr-1"></i>${event.transportRoute}</div>` : ''}
                                     </div>
-
-                                    <div class="mt-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-3">
-                                        ${getEventActions(event)}
+                                    <div class="absolute right-0 top-1 text-stone-300 opacity-0 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-pen"></i></div>
+                                    
+                                    ${event.showMap ? `
+                                    <!-- Google Map Link Button -->
+                                    <div class="mt-3 flex items-center justify-between">
+                                        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.title + ' Hokkaido')}" 
+                                           target="_blank" 
+                                           onclick="event.stopPropagation()"
+                                           class="group/map flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-stone-400 hover:text-white hover:bg-bronze border border-stone-200 hover:border-bronze rounded-full px-3 py-1.5 transition-all">
+                                           <i class="fa-solid fa-location-dot group-hover/map:text-white transition-colors"></i> 
+                                           <span>Google Map</span>
+                                        </a>
                                     </div>
+                                    ` : ''}
                                 </div>
                             </div>
                         `).join('')}
                     </div>
                     
-                    <button onclick="addEvent(${currentDayIndex})" class="mt-8 w-full py-3 border border-dashed border-stone-300 rounded-xl text-stone-400 text-xs hover:text-bronze hover:border-bronze transition-all flex items-center justify-center gap-2">
+                    <button onclick="openAddEventModal(${currentDayIndex})" class="mt-8 w-full py-3 border border-dashed border-stone-300 rounded-xl text-stone-400 text-xs hover:text-bronze hover:border-bronze transition-all flex items-center justify-center gap-2">
                         <i class="fa-solid fa-plus"></i> Add Event to ${day.date}
                     </button>
-
-                    ${currentDayIndex < itinerary.length - 1 ? `
-                        <div class="mt-8 pt-6 border-t border-stone-200">
-                            <button onclick="switchDay(${currentDayIndex + 1})" class="w-full bg-white border border-stone-200 shadow-sm p-4 rounded-xl flex justify-between items-center group hover:border-bronze transition-colors">
-                                <span class="text-xs text-subtle uppercase tracking-widest">Next Day</span>
-                                <div class="text-right">
-                                    <div class="font-serif font-bold text-ink">前往 Day ${itinerary[currentDayIndex + 1].day}：${itinerary[currentDayIndex + 1].title}</div>
-                                </div>
-                                <i class="fa-solid fa-arrow-right text-stone-300 group-hover:text-bronze"></i>
-                            </button>
-                        </div>
-                    ` : ''}
-                    
-                    <div class="h-20"></div>
+                    ${currentDayIndex < itinerary.length - 1 ? `<div class="mt-8 pt-6 border-t border-stone-200"><button onclick="switchDay(${currentDayIndex + 1})" class="w-full bg-white border border-stone-200 shadow-sm p-4 rounded-xl flex justify-between items-center group hover:bg-stone-50 transition-colors"><div class="text-left"><div class="text-xs text-stone-400">Next Day</div><div class="font-serif font-bold text-ink">${itinerary[currentDayIndex + 1].title}</div></div><i class="fa-solid fa-arrow-right text-stone-300 group-hover:text-ink transition-colors"></i></button></div>` : ''}
                 </div>
             `;
-
             html += `</div>`;
             appContent.innerHTML = html;
         }
 
-        function switchDay(index) {
-            if (index >= 0 && index < itinerary.length) {
-                currentDayIndex = index;
-                renderPlan();
-            }
-        }
-
-        function getTransportIcon(event) {
-            if (event.type !== 'transport' || !event.transportType) return '';
-            const icons = { 'charter': 'fa-van-shuttle', 'public': 'fa-train-subway', 'walk': 'fa-person-walking', 'taxi': 'fa-taxi' };
-            return `<i class="fa-solid ${icons[event.transportType] || 'fa-bus'} text-xs text-stone-400"></i>`;
-        }
-
-        function getEventActions(event) {
-            const query = encodeURIComponent(event.title + " " + (event.location || "北海道"));
-            return `<a href="https://www.google.com/maps/search/?api=1&query=${query}" target="_blank" class="text-xs text-stone-400 hover:text-ink underline decoration-stone-300 underline-offset-4">Google Maps</a>`;
-        }
-
-        // --- RENDER: WEATHER ---
         function renderWeather() {
             setActiveTab('weather');
-            
-            let html = `
-            <div class="fade-in space-y-10 pb-20">
-                <div>
-                    <h2 class="font-display text-4xl text-ink mb-2 italic">Weather</h2>
-                    <p class="text-xs text-subtle font-serif">當地即時氣象</p>
-                </div>
-
-                <div class="bg-white p-5 rounded-xl shadow-gallery border border-stone-100">
-                    <h3 class="font-serif text-lg font-bold text-ink mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-snowflake text-bronze"></i> Live Weather
-                    </h3>
-                    <div id="weather-grid" class="grid grid-cols-2 gap-3">
-                        <div class="col-span-2 text-center text-xs text-stone-400 py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading Weather...</div>
-                    </div>
-                    <div class="text-[9px] text-stone-300 text-center mt-2 flex justify-between px-1">
-                        <span>Data from Open-Meteo</span>
-                        <span><i class="fa-solid fa-umbrella text-[9px] mr-1"></i>Precipitation %</span>
-                    </div>
-                </div>
-            </div>`;
-            appContent.innerHTML = html;
-            fetchWeather();
-        }
-
-        // --- Weather Logic ---
-        async function fetchWeather() {
-            const locs = [
-                { name: "札幌", lat: 43.0618, lon: 141.3545 },
-                { name: "小樽", lat: 43.1907, lon: 140.9947 },
-                { name: "洞爺湖", lat: 42.5863, lon: 140.8247 },
-                { name: "旭川", lat: 43.7706, lon: 142.3649 }
+            const LOCS = [
+                { name: "札幌", en: "Sapporo", temp: "-3°", rain: "10%", snow: "80%", icon: "snowflake" },
+                { name: "洞爺湖", en: "Lake Toya", temp: "-1°", rain: "20%", snow: "60%", icon: "cloud-showers-heavy" },
+                { name: "旭川", en: "Asahikawa", temp: "-8°", rain: "0%", snow: "90%", icon: "snowflake" },
+                { name: "小樽", en: "Otaru", temp: "-2°", rain: "30%", snow: "70%", icon: "cloud-meatball" }
             ];
-
-            const cacheKey = 'weather_cache';
-            const cacheTimeKey = 'weather_ts';
-            const now = Date.now();
-            const cached = JSON.parse(localStorage.getItem(cacheKey));
-            const ts = parseInt(localStorage.getItem(cacheTimeKey) || '0');
-
-            if (cached && (now - ts < 1800000)) {
-                renderWeatherGrid(cached);
-                return;
-            }
-
-            try {
-                const requests = locs.map(loc => 
-                    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,weather_code,precipitation_probability&timezone=Asia%2FTokyo`)
-                    .then(res => res.json())
-                    .then(data => ({
-                        name: loc.name,
-                        temp: data.current.temperature_2m,
-                        code: data.current.weather_code,
-                        pop: data.current.precipitation_probability
-                    }))
-                );
-
-                const results = await Promise.all(requests);
-                localStorage.setItem(cacheKey, JSON.stringify(results));
-                localStorage.setItem(cacheTimeKey, now);
-                renderWeatherGrid(results);
-
-            } catch (e) {
-                document.getElementById('weather-grid').innerHTML = `<div class="col-span-2 text-center text-xs text-alert py-2">無法取得氣象資訊</div>`;
-            }
-        }
-
-        function renderWeatherGrid(data) {
-            const grid = document.getElementById('weather-grid');
-            if(!grid) return;
-            
-            grid.innerHTML = data.map(city => {
-                const icon = getWeatherIcon(city.code);
-                const popColor = city.pop > 50 ? 'text-blue-500 font-bold' : 'text-stone-400';
-                
-                return `
-                <div class="bg-stone-50 p-3 rounded-lg flex items-center justify-between">
-                    <div>
-                        <div class="text-xs text-subtle font-bold mb-1">${city.name}</div>
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-xl font-display font-bold text-ink">${city.temp}°</span>
-                            <span class="text-xs ${popColor} flex items-center">
-                                <i class="fa-solid fa-umbrella text-[9px] mr-1"></i>${city.pop}%
-                            </span>
-                        </div>
-                    </div>
-                    <div class="text-2xl text-bronze opacity-80">${icon}</div>
-                </div>`;
-            }).join('');
-        }
-
-        function getWeatherIcon(code) {
-            if (code === 0) return '<i class="fa-solid fa-sun"></i>';
-            if (code >= 1 && code <= 3) return '<i class="fa-solid fa-cloud-sun"></i>';
-            if (code >= 45 && code <= 48) return '<i class="fa-solid fa-smog"></i>';
-            if (code >= 51 && code <= 67) return '<i class="fa-solid fa-cloud-rain"></i>';
-            if (code >= 71 && code <= 77) return '<i class="fa-regular fa-snowflake"></i>';
-            if (code >= 80 && code <= 82) return '<i class="fa-solid fa-cloud-showers-heavy"></i>';
-            if (code >= 85 && code <= 86) return '<i class="fa-solid fa-snowflake"></i>';
-            if (code >= 95) return '<i class="fa-solid fa-bolt"></i>';
-            return '<i class="fa-solid fa-cloud"></i>';
-        }
-
-        // --- RENDER: WALLET (FIXED MODAL & ALERT) ---
-        function renderWallet() {
-            setActiveTab('wallet');
-            
-            const totalCashSpent = expenses.filter(e => !e.method || e.method === 'cash').reduce((acc, curr) => acc + curr.amount, 0);
-            const cashBalance = initialBudget - totalCashSpent;
-            const totalSpent = expenses.reduce((acc, curr) => acc + curr.amount, 0);
-
-            let html = `
-            <div class="fade-in">
-                <!-- Quick Converter -->
-                <div class="bg-white p-5 rounded-xl shadow-gallery mb-6 border-t-4 border-accent">
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="font-serif text-lg font-bold text-ink"><i class="fa-solid fa-calculator text-accent mr-2"></i>Quick Converter</h3>
-                        <button onclick="fetchLiveRate()" class="text-[10px] text-bronze hover:text-ink border border-bronze/30 px-2 py-1 rounded transition-colors"><i class="fa-solid fa-rotate mr-1"></i>抓取線上匯率</button>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="flex-1 relative">
-                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 font-mono text-sm">¥</span>
-                            <input type="text" id="calc-input" oninput="updateCalc()" class="w-full pl-8 py-2 text-xl font-display font-bold text-ink bg-stone-50 rounded border-none focus:ring-0 placeholder:text-stone-300" placeholder="JPY Amount">
-                        </div>
-                        <i class="fa-solid fa-arrow-right-long text-stone-300"></i>
-                        <div class="flex-1 text-right">
-                            <div id="calc-result" class="text-xl font-display font-bold text-accent">NT$ 0</div>
-                            <div class="text-[9px] text-subtle mt-1">Rate: ${exchangeRate}</div>
-                        </div>
-                    </div>
-                    <div class="text-[10px] text-stone-400 mt-2 text-right">*支援算式 (如 500*3)</div>
-                </div>
-
-                <!-- Initial Budget Card -->
-                <div class="bg-ink text-paper p-5 rounded-xl shadow-float relative mb-6 overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
-                    <div class="flex justify-between items-start mb-4 relative z-10">
-                        <div>
-                            <span class="text-[10px] uppercase tracking-widest opacity-60">Cash Balance (On Hand)</span>
-                            <div class="font-display text-4xl mt-1">¥ ${cashBalance.toLocaleString()}</div>
-                        </div>
-                        <button onclick="editBudget()" class="text-xs border border-white/20 px-2 py-1 rounded hover:bg-white/10 transition-colors">
-                            <i class="fa-solid fa-pen mr-1"></i>設定初始金額
-                        </button>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 border-t border-white/10 pt-3 relative z-10">
-                         <div>
-                            <div class="text-[9px] uppercase tracking-widest opacity-60">Initial Cash</div>
-                            <div class="font-mono text-sm">¥ ${initialBudget.toLocaleString()}</div>
-                         </div>
-                         <div class="text-right">
-                             <div class="text-[9px] uppercase tracking-widest opacity-60">Total Spent</div>
-                             <div class="font-mono text-sm">¥ ${totalSpent.toLocaleString()}</div>
-                         </div>
-                    </div>
-                </div>
-
-                <!-- Expense Input -->
-                <div class="bg-white p-5 rounded-xl shadow-gallery border border-stone-100 mb-8">
-                    <div class="flex gap-3 mb-3">
-                        <input type="text" id="expense-item" placeholder="Item Name" class="w-7/12 bg-transparent text-ink font-serif placeholder:text-stone-300">
-                        <input type="text" id="expense-calc" placeholder="¥ Price" class="w-5/12 bg-transparent text-right font-display text-lg placeholder:text-stone-300">
-                    </div>
-                    <div class="flex gap-2 mb-4">
-                        <label class="flex-1 cursor-pointer">
-                            <input type="radio" name="pay-method" value="cash" class="peer sr-only" checked>
-                            <div class="w-full text-center py-2 rounded border border-stone-200 text-xs text-stone-400 peer-checked:bg-ink peer-checked:text-white peer-checked:border-ink transition-all">
-                                <i class="fa-solid fa-coins mr-1"></i> Cash
-                            </div>
-                        </label>
-                        <label class="flex-1 cursor-pointer">
-                            <input type="radio" name="pay-method" value="card" class="peer sr-only">
-                            <div class="w-full text-center py-2 rounded border border-stone-200 text-xs text-stone-400 peer-checked:bg-ink peer-checked:text-white peer-checked:border-ink transition-all">
-                                <i class="fa-regular fa-credit-card mr-1"></i> Card
-                            </div>
-                        </label>
-                        <label class="flex-1 cursor-pointer">
-                            <input type="radio" name="pay-method" value="ic" class="peer sr-only">
-                            <div class="w-full text-center py-2 rounded border border-stone-200 text-xs text-stone-400 peer-checked:bg-ink peer-checked:text-white peer-checked:border-ink transition-all">
-                                <i class="fa-solid fa-train-subway mr-1"></i> Suica
-                            </div>
-                        </label>
-                    </div>
-                    <button onclick="addExpense()" class="w-full py-3 bg-bronze text-white text-xs uppercase tracking-widest hover:bg-ink transition-colors font-bold shadow-lg shadow-bronze/20">
-                        Add Expense
-                    </button>
-                    <div class="text-center mt-3"><button onclick="editRate()" class="text-[10px] text-stone-400 border-b border-stone-300 pb-0.5">Rate: ${exchangeRate} (TWD)</button></div>
-                </div>
-
-                <h3 class="font-serif text-lg font-bold text-ink mb-4 pl-1">History</h3>
-                <div class="space-y-3 pb-20">
-                    ${expenses.length === 0 ? '<div class="text-center text-stone-300 font-serif italic py-4">No transactions yet.</div>' : ''}
-                    ${expenses.slice().reverse().map((ex, idx) => `
-                        <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border-l-4 ${getMethodColor(ex.method)} group">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-0.5">
-                                    <span class="text-[10px] font-bold uppercase tracking-wider text-white px-1.5 py-0.5 rounded ${getMethodBg(ex.method)}">${ex.method || 'cash'}</span>
-                                    <span class="text-[10px] text-stone-400 font-mono">${ex.date.slice(5)}</span>
-                                </div>
-                                <div class="font-serif text-ink text-base">${ex.item}</div>
-                            </div>
-                            <div class="text-right">
-                                <div class="font-display text-lg text-ink">¥${ex.amount.toLocaleString()}</div>
-                                <div class="text-[10px] text-subtle">≈ NT$ ${Math.round(ex.amount * exchangeRate).toLocaleString()}</div>
-                            </div>
-                            <button onclick="deleteExpense(${expenses.length - 1 - idx})" class="ml-3 w-8 h-8 flex items-center justify-center text-stone-300 hover:text-alert hover:bg-alert/5 rounded-full opacity-0 group-hover:opacity-100 transition-all">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>`;
-            appContent.innerHTML = html;
-        }
-
-        function getMethodColor(method) {
-            if(method === 'card') return 'border-blue-500';
-            if(method === 'ic') return 'border-green-500';
-            return 'border-bronze'; // Cash default
-        }
-        function getMethodBg(method) {
-            if(method === 'card') return 'bg-blue-500';
-            if(method === 'ic') return 'bg-green-500';
-            return 'bg-bronze'; // Cash default
-        }
-
-        // --- NEW: EDIT BUDGET with MODAL (Fixes "No Response") ---
-        function editBudget() {
-            const html = `
-                <div class="space-y-6 font-serif">
-                    <h3 class="font-display text-3xl italic text-ink border-b border-ink pb-2 mb-4">Initial Cash</h3>
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Total JPY Cash</label>
-                        <input type="number" id="m-budget" class="w-full text-2xl font-bold py-2 placeholder:text-stone-300" value="${initialBudget}" placeholder="0">
-                        <p class="text-[10px] text-stone-400 mt-2">請輸入您這次旅行攜帶的日幣現金總額，用於計算剩餘現金。</p>
-                    </div>
-                    <button onclick="saveBudgetLogic()" class="w-full bg-ink text-white py-3 font-display text-lg italic hover:bg-bronze transition-colors shadow-lg mt-4">Save Budget</button>
-                </div>
-            `;
-            modalContent.innerHTML = html;
-            modal.classList.remove('hidden');
-        }
-
-        function saveBudgetLogic() {
-            const val = document.getElementById('m-budget').value;
-            if(val === '') {
-                alert("請輸入金額");
-                return;
-            }
-            initialBudget = parseFloat(val);
-            saveAll();
-            closeModal();
-            renderWallet();
-        }
-
-        // --- NEW: ADD EXPENSE with ERROR CHECKING ---
-        function addExpense() {
-            const itemInput = document.getElementById('expense-item');
-            const calcInput = document.getElementById('expense-calc');
-            const methodInput = document.querySelector('input[name="pay-method"]:checked');
-            
-            if (!itemInput || !calcInput) return;
-            
-            // Check for empty inputs
-            if (!itemInput.value.trim() || !calcInput.value.trim()) {
-                alert("請輸入「品項」與「金額」！");
-                return;
-            }
-            
-            let amount = 0;
-            try {
-                // Remove non-math characters
-                const sanitized = calcInput.value.replace(/[^0-9+\-*/().]/g, '');
-                if(!sanitized) throw new Error("Empty");
-                amount = Function('"use strict";return (' + sanitized + ')')();
-            } catch (e) { 
-                alert("金額格式錯誤，請輸入數字或算式 (例如: 500*2)"); 
-                return; 
-            }
-            
-            expenses.push({ 
-                item: itemInput.value, 
-                amount: Math.round(amount), 
-                date: new Date().toLocaleDateString(),
-                method: methodInput ? methodInput.value : 'cash' 
-            });
-            saveAll(); 
-            renderWallet();
-        }
-        
-        function deleteExpense(index) {
-            if(confirm("Delete item?")) { expenses.splice(index, 1); saveAll(); renderWallet(); }
-        }
-        
-        function editRate() {
-            const newRate = prompt("Exchange Rate:", exchangeRate);
-            if(newRate && !isNaN(newRate)) { exchangeRate = parseFloat(newRate); saveAll(); renderWallet(); }
-        }
-
-        function updateCalc() {
-            const input = document.getElementById('calc-input').value;
-            const resultDisplay = document.getElementById('calc-result');
-            if (!input) {
-                resultDisplay.innerText = "NT$ 0";
-                return;
-            }
-            try {
-                const sanitized = input.replace(/[^0-9+\-*/().]/g, '');
-                const amount = Function('"use strict";return (' + sanitized + ')')();
-                const twd = Math.round(amount * exchangeRate);
-                resultDisplay.innerText = "≈ NT$ " + twd.toLocaleString();
-            } catch (e) {
-                resultDisplay.innerText = "...";
-            }
-        }
-
-        async function fetchLiveRate() {
-            try {
-                const res = await fetch('https://api.exchangerate-api.com/v4/latest/JPY');
-                const data = await res.json();
-                const newRate = data.rates.TWD;
-                if (newRate) {
-                    if(confirm(`找到線上即時匯率: 1 JPY = ${newRate} TWD\n是否更新您的設定？`)) {
-                        exchangeRate = newRate;
-                        saveAll();
-                        renderWallet();
-                        alert("匯率已更新！");
-                    }
-                }
-            } catch (e) {
-                alert("無法取得線上匯率，請檢查網路連線或稍後再試。\n(目前將維持手動輸入模式)");
-            }
-        }
-
-        // --- RENDER: LISTS (FIXED for Mobile) ---
-        function renderLists() {
-            setActiveTab('lists');
-            let html = `
-            <div class="fade-in space-y-10">
-                <div>
-                    <h2 class="font-display text-4xl text-ink mb-6 italic">Checklist</h2>
-                    
-                    <div class="flex gap-2 mb-6 border-b border-stone-200 pb-2">
-                        <!-- Added onkeydown for Enter key support -->
-                        <input type="text" id="new-check-item" onkeydown="if(event.key === 'Enter') addChecklistItem()" placeholder="+ Add new item" class="flex-1 bg-transparent border-none text-ink font-serif placeholder:text-stone-300 focus:ring-0">
-                        <button onclick="addChecklistItem()" class="text-bronze hover:text-ink px-2 font-bold font-display italic">Add</button>
-                    </div>
-
-                    <div class="pl-2">
-                        ${checklist.map((item, idx) => `
-                            <div class="flex items-center justify-between mb-4 group hover:bg-white/50 p-2 rounded transition-colors -ml-2">
-                                <label class="flex items-center cursor-pointer flex-1">
-                                    <div class="relative w-5 h-5 mr-4 flex-none border border-ink/30 transition-colors group-hover:border-bronze">
-                                        <input type="checkbox" onchange="toggleCheck(${idx})" ${item.done ? 'checked' : ''} class="peer appearance-none w-full h-full cursor-pointer">
-                                        <i class="fa-solid fa-check absolute inset-0 flex items-center justify-center text-accent opacity-0 peer-checked:opacity-100 transition-opacity text-sm"></i>
-                                    </div>
-                                    <span class="font-serif text-lg ${item.done ? 'text-stone-300 line-through decoration-stone-300' : 'text-ink'} transition-colors">${item.text}</span>
-                                </label>
-                                <!-- FIXED: Changed opacity classes to be visible on mobile (default) and hidden on desktop until hover -->
-                                <button onclick="deleteChecklistItem(${idx})" class="text-stone-300 hover:text-alert opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity p-2"><i class="fa-solid fa-trash-can"></i></button>
+            appContent.innerHTML = `
+                <div class="fade-in">
+                    <h2 class="font-serif text-3xl font-bold text-ink mb-6">Snow Forecast</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        ${LOCS.map(loc => `
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-stone-100 flex items-center justify-between">
+                                <div class="flex items-center gap-4"><div class="w-12 h-12 rounded-full bg-stone-50 flex items-center justify-center text-stone-400 text-xl"><i class="fa-solid fa-${loc.icon}"></i></div><div><div class="font-serif text-lg font-bold text-ink">${loc.name}</div><div class="text-[10px] text-stone-400 uppercase tracking-widest">${loc.en}</div></div></div>
+                                <div class="text-right"><div class="text-2xl font-mono font-bold text-ink mb-1">${loc.temp}</div><div class="flex gap-2 text-[10px] font-mono text-stone-500"><span class="flex items-center"><i class="fa-solid fa-droplet mr-1 text-blue-300"></i>${loc.rain}</span><span class="flex items-center"><i class="fa-solid fa-snowflake mr-1 text-stone-300"></i>${loc.snow}</span></div></div>
                             </div>
                         `).join('')}
                     </div>
-
-                    <!-- RESET BUTTON -->
-                    <button onclick="resetChecklist()" class="mt-10 w-full py-3 text-xs text-stone-400 hover:text-alert border border-dashed border-stone-200 hover:border-alert transition-colors rounded-lg">
-                        <i class="fa-solid fa-rotate-left mr-2"></i> ↺ 重置為預設清單
-                    </button>
-                </div>
-                
-                <div>
-                    <h2 class="font-display text-4xl text-ink mb-4 italic">Notes</h2>
-                    <div class="bg-white p-6 shadow-gallery relative">
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-2 bg-[#F0E6D2]/50"></div>
-                        <textarea id="memo-area" oninput="saveMemo(this.value)" class="w-full h-48 bg-transparent text-ink font-serif leading-8 border-none focus:ring-0 resize-none p-0" style="background-image: linear-gradient(transparent 95%, #E5E2D9 95%); background-size: 100% 2rem; line-height: 2rem;" placeholder="Write something...">${memos}</textarea>
-                    </div>
-                    <div id="link-preview" class="mt-4 space-y-2">${extractLinks(memos)}</div>
-                </div>
-            </div>`;
-            appContent.innerHTML = html;
-        }
-
-        // --- RENDER: DOCS ---
-        function renderDocs() {
-            setActiveTab('docs');
-            const categories = [
-                { id: 'flight', icon: 'fa-plane', label: 'Flight' },
-                { id: 'hotel', icon: 'fa-hotel', label: 'Hotel' },
-                { id: 'food', icon: 'fa-utensils', label: 'Restaurant' },
-                { id: 'activity', icon: 'fa-snowboarding', label: 'Activity' },
-                { id: 'other', icon: 'fa-file', label: 'Other' },
-            ];
-
-            let html = `
-            <div class="fade-in space-y-10 pb-20">
-                <!-- Header -->
-                <div>
-                    <h2 class="font-display text-4xl text-ink mb-2 italic">Documents</h2>
-                    <p class="text-xs text-subtle font-serif">票券、預約單、電子憑證集中管理</p>
-                </div>
-
-                <!-- Add Button -->
-                <button onclick="addDocument()" class="w-full py-4 border border-dashed border-bronze/50 rounded-xl text-bronze hover:bg-bronze/5 transition-colors font-serif flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-plus"></i> Add New Record
-                </button>
-
-                <!-- Doc List -->
-                <div class="space-y-4">
-                    ${documents.length === 0 ? '<div class="text-center text-stone-300 font-serif italic py-4">No documents yet.</div>' : ''}
-                    
-                    ${documents.map((doc, idx) => `
-                        <div class="bg-white p-5 rounded-xl shadow-gallery border-l-4 border-bronze relative group">
-                            <button onclick="deleteDocument(${idx})" class="absolute top-3 right-3 text-stone-300 hover:text-alert opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-trash"></i></button>
-                            
-                            <div class="flex items-start gap-4">
-                                <div class="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center text-bronze flex-none">
-                                    <i class="fa-solid ${categories.find(c => c.id === doc.cat)?.icon || 'fa-file'}"></i>
-                                </div>
-                                <div class="flex-1 overflow-hidden">
-                                    <div class="text-[10px] uppercase tracking-widest text-subtle mb-0.5">${categories.find(c => c.id === doc.cat)?.label}</div>
-                                    <h3 class="font-serif text-xl font-bold text-ink truncate">${doc.title}</h3>
-                                    
-                                    ${doc.ref ? `
-                                        <div class="mt-2 bg-stone-50 inline-block px-2 py-1 rounded border border-stone-200">
-                                            <span class="text-[10px] text-stone-400 uppercase mr-1">Booking ID:</span>
-                                            <span class="font-mono text-sm font-bold text-ink select-all">${doc.ref}</span>
-                                        </div>
-                                    ` : ''}
-
-                                    ${doc.link ? `
-                                        <a href="${doc.link}" target="_blank" class="mt-3 flex items-center gap-2 text-sm text-blue-600 hover:underline">
-                                            <i class="fa-solid fa-link text-xs"></i> Open File / Link
-                                        </a>
-                                    ` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>`;
-            appContent.innerHTML = html;
-        }
-
-        // --- LOGIC: Documents ---
-        function addDocument() {
-            const html = `
-                <div class="space-y-4 font-serif">
-                    <h3 class="font-display text-3xl italic text-ink border-b border-ink pb-2 mb-4">Add Document</h3>
-                    
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Category</label>
-                        <div class="grid grid-cols-5 gap-2">
-                            ${['flight','hotel','food','activity','other'].map(c => `
-                                <label class="cursor-pointer text-center">
-                                    <input type="radio" name="d-cat" value="${c}" class="peer sr-only" ${c==='flight'?'checked':''}>
-                                    <div class="w-full aspect-square rounded bg-stone-100 peer-checked:bg-bronze peer-checked:text-white flex items-center justify-center text-stone-400 text-lg transition-colors">
-                                        <i class="fa-solid ${c==='flight'?'fa-plane':c==='hotel'?'fa-hotel':c==='food'?'fa-utensils':c==='activity'?'fa-snowboarding':'fa-file'}"></i>
-                                    </div>
-                                    <span class="text-[9px] uppercase mt-1 block opacity-50 peer-checked:opacity-100">${c}</span>
-                                </label>
-                            `).join('')}
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Title</label>
-                        <input type="text" id="d-title" class="w-full text-xl font-bold py-2 placeholder:text-stone-300" placeholder="e.g. CI130 E-Ticket">
-                    </div>
-
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Booking Ref / ID (Optional)</label>
-                        <input type="text" id="d-ref" class="w-full font-mono text-sm py-2 bg-stone-50 px-2 rounded border-none" placeholder="#12345678">
-                    </div>
-
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Link to File (Google Drive / URL)</label>
-                        <input type="url" id="d-link" class="w-full text-sm py-2 placeholder:text-stone-300" placeholder="https://...">
-                        <p class="text-[10px] text-stone-400 mt-1">* 建議將 PDF 上傳至雲端硬碟，在此貼上分享連結。</p>
-                    </div>
-
-                    <button onclick="saveDocumentLogic()" class="w-full bg-ink text-white py-3 font-display text-lg italic hover:bg-bronze transition-colors shadow-lg mt-4">Save Record</button>
                 </div>
             `;
-            modalContent.innerHTML = html;
-            modal.classList.remove('hidden');
         }
 
-        function saveDocumentLogic() {
-            const title = document.getElementById('d-title').value;
-            const cat = document.querySelector('input[name="d-cat"]:checked').value;
-            const ref = document.getElementById('d-ref').value;
-            const link = document.getElementById('d-link').value;
+        function renderLists() {
+            setActiveTab('lists');
+            let html = `
+                <div class="fade-in pb-20">
+                    <h2 class="font-serif text-3xl font-bold text-ink mb-2">Checklist</h2>
+                    <div class="text-xs text-stone-400 mb-6 font-mono tracking-widest">WINTER ESSENTIALS</div>
+                    
+                    <div class="flex gap-2 mb-6">
+                        <input type="text" id="new-checklist-item" placeholder="Add new item..." class="flex-1 bg-white border-b border-stone-300 py-2 px-3 focus:border-bronze outline-none text-sm font-serif rounded">
+                        <button onclick="addChecklistItem()" class="bg-bronze text-white w-10 h-10 rounded flex items-center justify-center hover:bg-[#7a6145] transition-colors shadow-sm"><i class="fa-solid fa-plus"></i></button>
+                    </div>
 
-            if(!title) return alert("Please enter a title");
+                    <div class="space-y-2 mb-8">
+            `;
+            
+            checklist.forEach((item, index) => {
+                html += `
+                    <div class="flex items-start gap-3 p-3 rounded-lg hover:bg-white transition-colors group relative border border-transparent hover:border-stone-100">
+                        <div class="relative flex items-center mt-1 cursor-pointer">
+                            <input type="checkbox" onchange="toggleCheck(${index})" class="peer appearance-none w-5 h-5 border border-stone-300 rounded checked:bg-bronze checked:border-bronze transition-all" ${item.done ? 'checked' : ''}>
+                            <i class="fa-solid fa-check text-white text-xs absolute left-1 top-1 opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
+                        </div>
+                        <span class="flex-1 text-sm font-light text-ink leading-relaxed ${item.done ? 'line-through text-stone-300 decoration-stone-300' : ''}">${item.text}</span>
+                        <button onclick="deleteChecklistItem(${index})" class="text-stone-300 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 px-2"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                `;
+            });
 
-            documents.push({ id: Date.now(), title, cat, ref, link });
+            html += `</div>
+            
+            <!-- Memo Pad -->
+            <div class="bg-white rounded-lg shadow-sm border border-stone-100 overflow-hidden">
+                <div class="bg-[#F9F8F6] px-4 py-2 border-b border-stone-100 flex items-center justify-between">
+                    <span class="text-xs font-bold text-stone-400 uppercase tracking-widest">MEMO / NOTES</span>
+                    <i class="fa-regular fa-note-sticky text-stone-300"></i>
+                </div>
+                <textarea id="memo-pad" oninput="saveMemos(this.value)" class="w-full h-48 p-4 text-sm font-serif text-ink leading-relaxed resize-none outline-none bg-transparent" placeholder="Type your notes here...">${memos}</textarea>
+            </div>
+            </div>`;
+            appContent.innerHTML = html;
+        }
+
+        function renderWallet() {
+            setActiveTab('wallet');
+            const cashSpent = expenses.filter(e => e.method === 'cash').reduce((a, c) => a + c.amount, 0);
+            const cardSpent = expenses.filter(e => e.method === 'card').reduce((a, c) => a + c.amount, 0);
+            const suicaSpent = expenses.filter(e => e.method === 'suica').reduce((a, c) => a + c.amount, 0);
+            const totalSpent = cashSpent + cardSpent + suicaSpent;
+            const currentCash = initialBudget - cashSpent;
+            const filteredExpenses = expenses.slice().reverse().filter(e => currentWalletFilter === 'all' || e.method === currentWalletFilter);
+
+            appContent.innerHTML = `
+                <div class="fade-in pb-10">
+                    <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-5 mb-6 relative overflow-hidden">
+                        <div class="h-1 bg-accent absolute top-0 left-0 right-0"></div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="font-serif text-xl font-bold text-ink flex items-center gap-2"><i class="fa-solid fa-calculator text-accent"></i> Quick Converter</h2>
+                            <button onclick="openRateModal()" class="text-[10px] border border-stone-300 hover:border-bronze hover:text-bronze px-2 py-1 rounded transition-colors flex items-center gap-1"><i class="fa-solid fa-rotate"></i> 抓取線上匯率</button>
+                        </div>
+                        <div class="flex items-center justify-between gap-4 mb-2">
+                             <div class="flex-1 relative"><span class="absolute left-0 top-1/2 -translate-y-1/2 text-stone-300 text-lg">¥</span><input type="text" id="converter-input" oninput="calculateConverter()" placeholder="JPY Amount" class="w-full pl-6 py-2 text-xl font-serif text-ink border-b border-stone-200 focus:border-accent outline-none bg-transparent placeholder-stone-200"></div>
+                             <i class="fa-solid fa-arrow-right text-stone-300"></i>
+                             <div class="text-right"><div class="text-2xl font-display font-bold text-accent" id="converter-output">NT$ 0</div></div>
+                        </div>
+                        <div class="text-right text-[10px] text-stone-400 font-mono">Rate: <span id="display-rate">${exchangeRate.toFixed(3)}</span></div>
+                    </div>
+
+                    <div class="bg-[#1A1A1A] rounded-2xl shadow-float p-6 text-white relative overflow-hidden mb-6">
+                        <div class="absolute -right-4 -bottom-4 text-9xl text-white/5"><i class="fa-solid fa-yen-sign"></i></div>
+                        
+                        <!-- Top Right Edit Button -->
+                        <button onclick="openBudgetModal()" class="absolute top-4 right-4 text-[10px] border border-stone-600 px-2 py-1 rounded hover:bg-stone-800 transition-colors bg-stone-900/50 backdrop-blur-sm">
+                            <i class="fa-solid fa-pen mr-1"></i> 設定初始金額
+                        </button>
+
+                        <div class="mb-8 mt-2">
+                            <div class="text-[10px] text-stone-400 uppercase tracking-widest mb-1">CASH BALANCE (ON HAND)</div>
+                            <div class="text-5xl font-display font-light tracking-wide">¥ ${currentCash.toLocaleString()}</div>
+                        </div>
+                        
+                        <div class="flex justify-between items-end border-t border-white/10 pt-4">
+                            <div>
+                                <div class="text-[9px] text-stone-500 uppercase tracking-widest mb-1">INITIAL CASH</div>
+                                <div class="font-mono text-sm tracking-wider">¥ ${initialBudget.toLocaleString()}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[9px] text-stone-500 uppercase tracking-widest mb-1">TOTAL SPENT</div>
+                                <div class="font-mono text-sm tracking-wider">¥ ${totalSpent.toLocaleString()}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                         <div class="bg-white p-3 rounded-xl border border-stone-100 shadow-sm"><div class="text-[9px] text-stone-400 uppercase font-bold mb-1">Total Spent</div><div class="font-mono font-bold text-ink">¥${totalSpent.toLocaleString()}</div></div>
+                         <div class="bg-white p-3 rounded-xl border border-stone-100 shadow-sm"><div class="text-[9px] text-yellow-600 uppercase font-bold mb-1">Cash Spent</div><div class="font-mono text-stone-600">¥${cashSpent.toLocaleString()}</div></div>
+                         <div class="bg-white p-3 rounded-xl border border-stone-100 shadow-sm"><div class="text-[9px] text-blue-600 uppercase font-bold mb-1">Card Spent</div><div class="font-mono text-stone-600">¥${cardSpent.toLocaleString()}</div></div>
+                         <div class="bg-white p-3 rounded-xl border border-stone-100 shadow-sm"><div class="text-[9px] text-green-600 uppercase font-bold mb-1">Suica Spent</div><div class="font-mono text-stone-600">¥${suicaSpent.toLocaleString()}</div></div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-5 mb-8">
+                        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                            <input type="text" id="expense-name" placeholder="Item Name" class="wallet-input flex-[2]">
+                            <div class="flex items-center flex-1 relative"><span class="text-stone-300 mr-2">¥</span><input type="number" id="expense-amount" placeholder="Price" class="wallet-input w-full"></div>
+                        </div>
+                        <div class="flex gap-2 mb-6">
+                            <button id="btn-pay-cash" onclick="setPaymentMethod('cash')" class="flex-1 py-2.5 rounded border transition-all flex items-center justify-center gap-2 text-sm ${currentPaymentMethod === 'cash' ? 'bg-ink text-paper border-ink' : 'bg-white text-stone-400 border-stone-200 hover:border-stone-400'}"><i class="fa-solid fa-coins"></i> Cash</button>
+                            <button id="btn-pay-card" onclick="setPaymentMethod('card')" class="flex-1 py-2.5 rounded border transition-all flex items-center justify-center gap-2 text-sm ${currentPaymentMethod === 'card' ? 'bg-ink text-paper border-ink' : 'bg-white text-stone-400 border-stone-200 hover:border-stone-400'}"><i class="fa-regular fa-credit-card"></i> Card</button>
+                            <button id="btn-pay-suica" onclick="setPaymentMethod('suica')" class="flex-1 py-2.5 rounded border transition-all flex items-center justify-center gap-2 text-sm ${currentPaymentMethod === 'suica' ? 'bg-ink text-paper border-ink' : 'bg-white text-stone-400 border-stone-200 hover:border-stone-400'}"><i class="fa-solid fa-train"></i> Suica</button>
+                        </div>
+                        <button onclick="addExpense()" class="w-full bg-[#8C7051] text-white py-3 rounded font-bold tracking-wide hover:bg-[#7a6145] transition-colors shadow-lg shadow-orange-900/10">ADD EXPENSE</button>
+                    </div>
+
+                    <div class="mb-4 flex items-center justify-between"><h3 class="font-bold text-ink text-sm">History</h3><div class="flex bg-stone-200/50 p-1 rounded-lg">${['all', 'cash', 'card', 'suica'].map(t => `<button onclick="setFilter('${t}')" class="px-3 py-1 text-[10px] uppercase font-bold rounded-md transition-all ${currentWalletFilter === t ? 'bg-white text-ink shadow-sm' : 'text-stone-400 hover:text-stone-600'}">${t}</button>`).join('')}</div></div>
+                    <div class="space-y-3">${filteredExpenses.map(e => {
+                        let iconClass, iconBg;
+                        if (e.method === 'cash') { iconClass = 'fa-coins text-yellow-600'; iconBg = 'bg-yellow-50'; }
+                        else if (e.method === 'card') { iconClass = 'fa-credit-card text-blue-600'; iconBg = 'bg-blue-50'; }
+                        else { iconClass = 'fa-train text-green-600'; iconBg = 'bg-green-50'; }
+                        return `<div class="flex justify-between items-center py-3 border-b border-stone-200/50 group"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full ${iconBg} flex items-center justify-center ${iconClass} text-sm"><i class="fa-solid ${e.method === 'card' ? 'fa-regular fa-credit-card' : (e.method === 'suica' ? 'fa-train' : 'fa-coins')}"></i></div><div><div class="font-serif text-ink">${e.desc}</div><div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div></div></div><div class="text-right"><div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div><div class="text-[10px] text-stone-400">NT$ ${Math.round(e.amount * exchangeRate).toLocaleString()}</div></div></div>`
+                    }).join('') || '<div class="text-center text-stone-300 text-sm py-10 italic">No records found.</div>'}</div>
+                </div>
+            `;
+        }
+
+        function renderDocs() {
+            setActiveTab('docs');
+            appContent.innerHTML = `
+                <div class="fade-in pb-10">
+                    <div class="mb-2">
+                        <div class="text-[10px] font-bold text-accent uppercase tracking-widest mb-1"><span class="w-2 h-2 bg-accent rounded-full inline-block mr-2"></span>WINTER JOURNEY</div>
+                        <h2 class="font-serif text-4xl font-light text-ink mb-1">2025</h2>
+                        <h2 class="font-serif text-3xl text-ink">北海道</h2>
+                    </div>
+                    <div class="text-xs text-stone-400 border-b border-stone-200 pb-4 mb-6">票券、預約單、電子憑證集中管理</div>
+                    <button onclick="openAddDocModal()" class="w-full py-4 border border-dashed border-[#8C7051] rounded-lg bg-[#F2F0E9] text-[#8C7051] font-serif text-lg mb-8 hover:bg-[#eae6db] transition-colors flex items-center justify-center gap-2"><i class="fa-solid fa-plus"></i> Add New Record</button>
+                    <div class="space-y-4">
+                        ${documents.map(doc => `
+                            <div class="bg-white rounded-l border-l-4 border-bronze shadow-sm p-5 relative overflow-hidden group hover:shadow-md transition-all">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-paper flex items-center justify-center text-xl text-ink"><i class="fa-solid ${getDocIcon(doc.type)}"></i></div>
+                                    <div class="flex-1">
+                                        <div class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">${doc.type}</div>
+                                        <h3 class="font-serif text-2xl text-ink mb-2">${doc.title}</h3>
+                                        ${doc.bookingId ? `<div class="inline-block border border-stone-200 rounded px-2 py-0.5 text-[10px] text-stone-500 font-mono bg-stone-50 mb-3">BOOKING ID: <span class="text-ink font-bold">${doc.bookingId}</span></div>` : ''}
+                                        <div>
+                                            <button ${doc.link ? `onclick="window.open('${doc.link}', '_blank')"` : `onclick="alert('No link attached')"`} class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1 transition-colors">
+                                                <i class="fa-solid fa-link"></i> Open File / Link
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- MODAL CONTENT FUNCTIONS ---
+
+        function openEditEventModal(dayIndex, eventIndex) {
+            const event = itinerary[dayIndex].events[eventIndex];
+            showModal(`
+                <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
+                <h2 class="font-serif text-3xl text-ink mb-6 italic border-b border-stone-200 pb-2">Edit Event</h2>
+                <div class="flex gap-4 mb-6">
+                    <div class="flex-1"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Time</label><input type="time" id="edit-time" value="${event.time}" class="w-full text-xl font-serif border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
+                    <div class="flex-1"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Day (Move)</label><select id="edit-day" class="w-full text-lg font-serif border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent appearance-none">${itinerary.map((d, i) => `<option value="${i}" ${i === dayIndex ? 'selected' : ''}>Day ${d.day} (${d.date})</option>`).join('')}</select></div>
+                </div>
+                <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Type</label><select id="edit-type" class="w-full text-lg font-serif border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent" onchange="toggleTransportFields()"><option value="sight" ${event.type === 'sight' ? 'selected' : ''}>Sightseeing</option><option value="food" ${event.type === 'food' ? 'selected' : ''}>Food / Restaurant</option><option value="transport" ${event.type === 'transport' ? 'selected' : ''}>Transport</option><option value="hotel" ${event.type === 'hotel' ? 'selected' : ''}>Hotel</option><option value="flight" ${event.type === 'flight' ? 'selected' : ''}>Flight</option></select></div>
+                <div class="bg-stone-50 p-3 rounded-lg mb-6 flex gap-4"><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bookingStatus" value="flexible" ${event.bookingStatus !== 'fixed' ? 'checked' : ''} class="accent-bronze"><span class="text-sm text-stone-600">Flexible</span></label><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bookingStatus" value="fixed" ${event.bookingStatus === 'fixed' ? 'checked' : ''} class="accent-bronze"><span class="text-sm font-bold text-ink">Fixed / Booked</span></label></div>
+                <div id="transport-fields" class="${event.type === 'transport' ? '' : 'hidden'} border border-stone-200 rounded-lg p-4 mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Transport Mode</label><select id="edit-transport-type" class="w-full text-base border-b border-stone-200 pb-1 mb-3 bg-transparent"><option value="train" ${event.transportType === 'train' ? 'selected' : ''}>Train / Subway</option><option value="bus" ${event.transportType === 'bus' ? 'selected' : ''}>Bus</option><option value="walk" ${event.transportType === 'walk' ? 'selected' : ''}>Walk</option><option value="charter" ${event.transportType === 'charter' ? 'selected' : ''}>Charter / Taxi</option><option value="flight" ${event.transportType === 'flight' ? 'selected' : ''}>Flight</option></select><input type="text" id="edit-transport-route" value="${event.transportRoute || ''}" placeholder="Route (e.g. Hotel -> Station)" class="w-full text-sm border-b border-stone-200 pb-1 bg-transparent"></div>
+                <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Event Title</label><input type="text" id="edit-title" value="${event.title}" class="w-full text-2xl font-serif font-bold text-ink border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
+                <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Opening Hours</label><input type="text" id="edit-hours" value="${event.openingHours || ''}" placeholder="e.g. 09:00 - 18:00" class="w-full text-sm font-mono text-stone-500 border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
+                <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Description</label><textarea id="edit-desc" rows="3" class="w-full text-base text-stone-600 border-b border-stone-300 focus:border-bronze outline-none bg-transparent resize-none">${event.desc}</textarea></div>
+                <div class="mb-8 flex flex-col gap-3">
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <div class="w-5 h-5 border-2 border-stone-300 rounded-full flex items-center justify-center transition-colors group-hover:border-accent"><div class="w-2.5 h-2.5 rounded-full bg-accent opacity-0 transition-opacity ${event.important ? 'opacity-100' : ''}" id="important-indicator"></div></div>
+                        <input type="checkbox" id="edit-important" class="hidden" ${event.important ? 'checked' : ''} onchange="document.getElementById('important-indicator').classList.toggle('opacity-100')">
+                        <span class="text-sm text-stone-500 group-hover:text-accent transition-colors">Highlight this event</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <div class="w-5 h-5 border-2 border-stone-300 rounded-full flex items-center justify-center transition-colors group-hover:border-bronze"><div class="w-2.5 h-2.5 rounded-full bg-bronze opacity-0 transition-opacity ${event.showMap ? 'opacity-100' : ''}" id="map-indicator"></div></div>
+                        <input type="checkbox" id="edit-showMap" class="hidden" ${event.showMap ? 'checked' : ''} onchange="document.getElementById('map-indicator').classList.toggle('opacity-100')">
+                        <span class="text-sm text-stone-500 group-hover:text-bronze transition-colors">Show Google Map Button</span>
+                    </label>
+                </div>
+                <div class="flex justify-between items-center pt-4 border-t border-stone-100"><button onclick="deleteEvent(${dayIndex}, ${eventIndex})" class="text-xs text-red-400 hover:text-red-600 uppercase tracking-widest font-bold px-2 py-2">Delete</button><button onclick="saveEvent(${dayIndex}, ${eventIndex})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Changes</button></div>
+            `);
+        }
+
+        function openAddEventModal(dayIndex) {
+            showModal(`
+                <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
+                <h2 class="font-serif text-3xl text-ink mb-6 italic border-b border-stone-200 pb-2">Add Event</h2>
+                <div class="flex gap-4 mb-6">
+                    <div class="flex-1"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Time</label><input type="time" id="edit-time" value="09:00" class="w-full text-xl font-serif border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
+                    <div class="flex-1"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Day</label><select id="edit-day" class="w-full text-lg font-serif border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent appearance-none">${itinerary.map((d, i) => `<option value="${i}" ${i === dayIndex ? 'selected' : ''}>Day ${d.day} (${d.date})</option>`).join('')}</select></div>
+                </div>
+                <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Type</label><select id="edit-type" class="w-full text-lg font-serif border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent" onchange="toggleTransportFields()"><option value="sight" selected>Sightseeing</option><option value="food">Food / Restaurant</option><option value="transport">Transport</option><option value="hotel">Hotel</option></select></div>
+                <div class="bg-stone-50 p-3 rounded-lg mb-6 flex gap-4"><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bookingStatus" value="flexible" checked class="accent-bronze"><span class="text-sm text-stone-600">Flexible</span></label><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bookingStatus" value="fixed" class="accent-bronze"><span class="text-sm font-bold text-ink">Fixed / Booked</span></label></div>
+                <div id="transport-fields" class="hidden border border-stone-200 rounded-lg p-4 mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Transport Mode</label><select id="edit-transport-type" class="w-full text-base border-b border-stone-200 pb-1 mb-3 bg-transparent"><option value="train">Train / Subway</option><option value="bus">Bus</option><option value="walk">Walk</option><option value="charter">Charter / Taxi</option></select><input type="text" id="edit-transport-route" placeholder="Route" class="w-full text-sm border-b border-stone-200 pb-1 bg-transparent"></div>
+                <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Event Title</label><input type="text" id="edit-title" placeholder="New Event" class="w-full text-2xl font-serif font-bold text-ink border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
+                <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Opening Hours</label><input type="text" id="edit-hours" placeholder="e.g. 09:00 - 18:00" class="w-full text-sm font-mono text-stone-500 border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
+                <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Description</label><textarea id="edit-desc" rows="3" placeholder="Add details..." class="w-full text-base text-stone-600 border-b border-stone-300 focus:border-bronze outline-none bg-transparent resize-none"></textarea></div>
+                <div class="mb-8 flex flex-col gap-3">
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <div class="w-5 h-5 border-2 border-stone-300 rounded-full flex items-center justify-center transition-colors group-hover:border-accent"><div class="w-2.5 h-2.5 rounded-full bg-accent opacity-0 transition-opacity" id="important-indicator"></div></div>
+                        <input type="checkbox" id="edit-important" class="hidden" onchange="document.getElementById('important-indicator').classList.toggle('opacity-100')">
+                        <span class="text-sm text-stone-500 group-hover:text-accent transition-colors">Highlight this event</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <div class="w-5 h-5 border-2 border-stone-300 rounded-full flex items-center justify-center transition-colors group-hover:border-bronze"><div class="w-2.5 h-2.5 rounded-full bg-bronze opacity-0 transition-opacity" id="map-indicator"></div></div>
+                        <input type="checkbox" id="edit-showMap" class="hidden" onchange="document.getElementById('map-indicator').classList.toggle('opacity-100')">
+                        <span class="text-sm text-stone-500 group-hover:text-bronze transition-colors">Show Google Map Button</span>
+                    </label>
+                </div>
+                <div class="flex justify-end items-center pt-4 border-t border-stone-100"><button onclick="createNewEvent()" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Add Event</button></div>
+            `);
+        }
+
+        function openAddDocModal() {
+            showModal(`
+                 <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
+                 <h2 class="font-serif text-3xl text-ink mb-2 italic">Add Document</h2>
+                 <hr class="border-stone-200 mb-6">
+                 
+                 <label class="text-[10px] font-bold text-stone-400 uppercase mb-2 block">CATEGORY</label>
+                 <div class="grid grid-cols-5 gap-2 mb-6">
+                    ${['flight', 'hotel', 'food', 'skiing', 'file'].map(t => `
+                        <div onclick="selectDocType(this, '${t}')" class="doc-type-btn cursor-pointer flex flex-col items-center justify-center p-2 rounded-lg bg-stone-50 hover:bg-stone-100 border border-transparent hover:border-bronze transition-all ${t === 'flight' ? 'bg-[#8C7051] text-white' : 'text-stone-400'}">
+                            <i class="fa-solid ${getDocIcon(t)} text-xl mb-1"></i>
+                            <span class="text-[8px] uppercase font-bold tracking-widest">${t === 'file' ? 'OTHER' : t.toUpperCase()}</span>
+                        </div>
+                    `).join('')}
+                    <input type="hidden" id="doc-type" value="flight">
+                 </div>
+
+                 <div class="mb-6">
+                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">TITLE</label>
+                    <input type="text" id="doc-title" placeholder="e.g. CI130 E-Ticket" class="w-full text-2xl font-serif font-bold text-ink border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
+                 </div>
+
+                 <div class="mb-6">
+                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">BOOKING REF / ID (OPTIONAL)</label>
+                    <input type="text" id="doc-id" placeholder="#12345678" class="w-full text-lg font-mono text-stone-600 bg-stone-100 rounded px-3 py-2 border-none focus:ring-1 focus:ring-bronze">
+                 </div>
+
+                 <div class="mb-8">
+                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">LINK TO FILE</label>
+                    <input type="text" id="doc-link" placeholder="https://..." class="w-full text-base font-serif text-stone-500 border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
+                    <div class="text-[10px] text-stone-300 mt-1">* 建議將 PDF 上傳至雲端硬碟，在此貼上分享連結。</div>
+                 </div>
+
+                 <button onclick="saveNewDoc()" class="w-full bg-ink text-white py-4 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Record</button>
+            `);
+        }
+        
+        function selectDocType(el, type) {
+            document.querySelectorAll('.doc-type-btn').forEach(b => {
+                b.classList.remove('bg-[#8C7051]', 'text-white');
+                b.classList.add('bg-stone-50', 'text-stone-400');
+            });
+            el.classList.remove('bg-stone-50', 'text-stone-400');
+            el.classList.add('bg-[#8C7051]', 'text-white');
+            document.getElementById('doc-type').value = type;
+        }
+
+        function saveNewDoc() {
+            const title = document.getElementById('doc-title').value;
+            if(!title) return alert('Title is required');
+            
+            documents.push({
+                id: Date.now(),
+                title: title,
+                type: document.getElementById('doc-type').value,
+                bookingId: document.getElementById('doc-id').value,
+                link: document.getElementById('doc-link').value
+            });
             saveAll();
             closeModal();
             renderDocs();
         }
 
-        function deleteDocument(index) {
-            if(confirm("確定要刪除此紀錄嗎？")) {
-                documents.splice(index, 1);
-                saveAll();
-                renderDocs();
-            }
-        }
-
-        // --- EVENT EDITING LOGIC ---
-        let currentEditingDay = null;
-        let currentEditingEventIndex = null;
-
-        function editDay(dayIndex) {
-            const day = itinerary[dayIndex];
-            let html = `
-                <div class="space-y-6 font-serif">
-                    <h3 class="font-display text-3xl italic text-ink border-b border-ink pb-2 mb-4">Edit Day ${day.day}</h3>
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Title (中文)</label>
-                        <input type="text" id="d-title-edit" class="w-full text-2xl font-bold py-2 placeholder:text-stone-300" value="${day.title}">
-                    </div>
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Subtitle (English/Description)</label>
-                        <input type="text" id="d-subtitle-edit" class="w-full text-lg py-2 placeholder:text-stone-300" value="${day.subtitle || ''}">
-                    </div>
-                    <button onclick="saveDayLogic(${dayIndex})" class="w-full bg-ink text-white py-3 font-display text-lg italic hover:bg-bronze transition-colors shadow-lg mt-4">Save Changes</button>
+        function openBudgetModal() {
+            showModal(`
+                <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
+                <h2 class="font-serif text-3xl text-ink mb-4 italic text-center">Initial Cash</h2>
+                <hr class="w-16 mx-auto border-stone-300 mb-6">
+                
+                <div class="mb-8 text-center">
+                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-2 block tracking-widest">TOTAL JPY CASH</label>
+                    <input type="number" id="budget-input" value="${initialBudget}" class="w-full text-5xl font-serif text-center border-b border-stone-200 py-2 focus:border-bronze outline-none bg-transparent font-bold text-ink">
+                    <div class="text-[10px] text-stone-400 mt-4">請輸入您這次旅行攜帶的日幣現金總額，用於計算剩餘現金。</div>
                 </div>
-            `;
-            modalContent.innerHTML = html;
-            modal.classList.remove('hidden');
+                <button onclick="saveBudget()" class="w-full bg-ink text-white py-4 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Budget</button>
+            `);
         }
 
-        function saveDayLogic(dayIndex) {
-            const title = document.getElementById('d-title-edit').value;
-            const subtitle = document.getElementById('d-subtitle-edit').value;
-            
-            if(!title) return alert("Title cannot be empty");
-            
-            itinerary[dayIndex].title = title;
-            itinerary[dayIndex].subtitle = subtitle;
-            
+        function openRateModal() {
+            showModal(`
+                <div class="text-center py-8">
+                    <div class="mb-4"><i class="fa-solid fa-circle-notch fa-spin text-4xl text-bronze"></i></div>
+                    <h3 class="font-serif text-xl text-ink mb-2">Fetching Live Rate...</h3>
+                    <p class="text-xs text-stone-400">Connecting to currency exchange service</p>
+                </div>
+            `);
+            setTimeout(() => {
+                const newRate = 0.20 + (Math.random() * 0.02);
+                exchangeRate = newRate;
+                saveAll();
+                showModal(`
+                    <div class="text-center py-4">
+                        <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fa-solid fa-check"></i></div>
+                        <h3 class="font-serif text-2xl text-ink mb-1">Rate Updated</h3>
+                        <div class="text-4xl font-mono font-bold text-bronze my-4">${newRate.toFixed(4)}</div>
+                        <p class="text-xs text-stone-400 mb-6">Current JPY to TWD exchange rate</p>
+                        <button onclick="closeModal(); renderWallet();" class="w-full bg-ink text-white py-3 rounded-lg">Done</button>
+                    </div>
+                `);
+            }, 1000);
+        }
+
+        // --- DATA SAVING & LOGIC ---
+
+        function toggleTransportFields() {
+            const type = document.getElementById('edit-type').value;
+            const fields = document.getElementById('transport-fields');
+            if (type === 'transport') fields.classList.remove('hidden'); else fields.classList.add('hidden');
+        }
+
+        function saveEvent(originalDayIndex, eventIndex) {
+            const newDayIndex = parseInt(document.getElementById('edit-day').value);
+            const updatedEvent = {
+                id: Date.now(),
+                time: document.getElementById('edit-time').value,
+                title: document.getElementById('edit-title').value,
+                desc: document.getElementById('edit-desc').value,
+                type: document.getElementById('edit-type').value,
+                bookingStatus: document.querySelector('input[name="bookingStatus"]:checked').value,
+                important: document.getElementById('edit-important').checked,
+                showMap: document.getElementById('edit-showMap').checked,
+                openingHours: document.getElementById('edit-hours').value,
+                transportType: document.getElementById('edit-type').value === 'transport' ? document.getElementById('edit-transport-type').value : null,
+                transportRoute: document.getElementById('edit-type').value === 'transport' ? document.getElementById('edit-transport-route').value : null
+            };
+            itinerary[originalDayIndex].events.splice(eventIndex, 1);
+            itinerary[newDayIndex].events.push(updatedEvent);
+            itinerary[newDayIndex].events.sort((a, b) => a.time.localeCompare(b.time));
             saveAll();
             closeModal();
-            renderPlan();
+            originalDayIndex !== newDayIndex ? switchDay(newDayIndex) : renderPlan();
         }
 
-
-        function addEvent(dayIndex) {
-            currentEditingDay = dayIndex; currentEditingEventIndex = null;
-            showEventModal();
-        }
-        function editEvent(dayIndex, eventIndex) {
-            currentEditingDay = dayIndex; currentEditingEventIndex = eventIndex;
-            showEventModal(itinerary[dayIndex].events[eventIndex]);
-        }
-        
-        function handleTypeChange(select) {
-            const transportFields = document.getElementById('transport-fields');
-            if(select.value === 'transport') {
-                transportFields.classList.remove('hidden');
-            } else {
-                transportFields.classList.add('hidden');
-            }
-        }
-
-        function showEventModal(data = null) {
-            const isEdit = data !== null;
-            const isTransport = data ? data.type === 'transport' : false;
-            
-            let html = `
-                <div class="space-y-6 font-serif">
-                    <h3 class="font-display text-3xl italic text-ink border-b border-ink pb-2 mb-4">${isEdit ? 'Edit' : 'New'} Event</h3>
-                    
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="col-span-1">
-                             <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Time</label>
-                             <input type="time" id="m-time" class="w-full py-1 text-lg font-display" value="${data ? data.time : '12:00'}">
-                        </div>
-                        <div class="col-span-2">
-                             <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Type</label>
-                             <select id="m-type" class="w-full py-1 text-base" onchange="handleTypeChange(this)">
-                                <option value="sight" ${data?.type === 'sight'?'selected':''}>Sight</option>
-                                <option value="food" ${data?.type === 'food'?'selected':''}>Food</option>
-                                <option value="transport" ${data?.type === 'transport'?'selected':''}>Transport</option>
-                                <option value="hotel" ${data?.type === 'hotel'?'selected':''}>Hotel</option>
-                                <option value="flight" ${data?.type === 'flight'?'selected':''}>Flight</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Booking Status -->
-                    <div class="flex items-center gap-3 bg-stone-100 p-2 rounded">
-                        <label class="text-[10px] uppercase tracking-widest text-subtle">Status:</label>
-                        <div class="flex gap-4">
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="m-booking" value="flexible" ${!data || data.bookingStatus !== 'fixed' ? 'checked' : ''} class="accent-bronze mr-1">
-                                <span class="text-xs">Flexible</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="m-booking" value="fixed" ${data && data.bookingStatus === 'fixed' ? 'checked' : ''} class="accent-ink mr-1">
-                                <span class="text-xs font-bold text-ink">Fixed / Booked</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Transport Fields (Conditional) -->
-                    <div id="transport-fields" class="${isTransport ? '' : 'hidden'} bg-stone-50 p-3 rounded border border-stone-200 space-y-3">
-                         <div>
-                            <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Transport Mode</label>
-                            <select id="m-transport-type" class="w-full py-1 text-sm bg-transparent">
-                                <option value="charter" ${data?.transportType === 'charter'?'selected':''}>包車 (Charter)</option>
-                                <option value="public" ${data?.transportType === 'public'?'selected':''}>大眾運輸 (Public)</option>
-                                <option value="walk" ${data?.transportType === 'walk'?'selected':''}>走路 (Walk)</option>
-                                <option value="taxi" ${data?.transportType === 'taxi'?'selected':''}>計程車 (Taxi)</option>
-                            </select>
-                         </div>
-                         <div>
-                            <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Route (From -> To)</label>
-                            <input type="text" id="m-transport-route" class="w-full text-sm py-1 placeholder:text-stone-300" value="${data && data.transportRoute ? data.transportRoute : ''}" placeholder="e.g. Hotel -> Station">
-                         </div>
-                    </div>
-
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Event Title</label>
-                        <input type="text" id="m-title" class="w-full text-2xl font-bold py-2 placeholder:text-stone-300" value="${data ? data.title : ''}" placeholder="Title">
-                    </div>
-                    
-                    <!-- NEW: Opening Hours Input -->
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Opening Hours (Optional)</label>
-                        <input type="text" id="m-opening" class="w-full text-sm py-2 placeholder:text-stone-300 font-mono" value="${data && data.openingHours ? data.openingHours : ''}" placeholder="e.g. 09:00 - 18:00">
-                    </div>
-
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-subtle block mb-1">Description / Notes</label>
-                        <textarea id="m-desc" class="w-full h-20 py-2 resize-none text-stone-600 placeholder:text-stone-300" placeholder="Details...">${data ? data.desc : ''}</textarea>
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                         <div class="relative w-5 h-5 border border-stone-300 rounded-full">
-                            <input type="checkbox" id="m-important" ${data && data.important ? 'checked' : ''} class="peer appearance-none w-full h-full rounded-full checked:bg-accent cursor-pointer">
-                         </div>
-                         <label for="m-important" class="text-sm text-subtle cursor-pointer">Highlight this event (Important)</label>
-                    </div>
-                    
-                    <div class="flex gap-4 pt-4 mt-8 border-t border-stone-100">
-                        ${isEdit ? `<button onclick="deleteEvent()" class="px-4 py-2 text-xs text-alert hover:bg-alert/5 transition-colors uppercase tracking-widest">Delete</button>` : ''}
-                        <button onclick="saveEventLogic()" class="flex-1 bg-ink text-white py-3 font-display text-lg italic hover:bg-bronze transition-colors shadow-lg">Save Changes</button>
-                    </div>
-                </div>
-            `;
-            modalContent.innerHTML = html;
-            modal.classList.remove('hidden');
-        }
-        function closeModal() { modal.classList.add('hidden'); }
-        
-        function saveEventLogic() {
-            const time = document.getElementById('m-time').value;
-            const title = document.getElementById('m-title').value;
-            const desc = document.getElementById('m-desc').value;
-            const type = document.getElementById('m-type').value;
-            const important = document.getElementById('m-important').checked;
-            
-            // New Fields
-            const openingHours = document.getElementById('m-opening').value;
-            
-            const bookingStatus = document.querySelector('input[name="m-booking"]:checked').value;
-            let transportType = null;
-            let transportRoute = null;
-
-            if (type === 'transport') {
-                transportType = document.getElementById('m-transport-type').value;
-                transportRoute = document.getElementById('m-transport-route').value;
-            }
-
-            if(!title) return;
-            const newEvent = { 
-                id: Date.now(), 
-                time, title, desc, type, important,
-                bookingStatus, transportType, transportRoute, openingHours 
+        function createNewEvent() {
+            const dayIndex = parseInt(document.getElementById('edit-day').value);
+             const newEvent = {
+                id: Date.now(),
+                time: document.getElementById('edit-time').value,
+                title: document.getElementById('edit-title').value,
+                desc: document.getElementById('edit-desc').value,
+                type: document.getElementById('edit-type').value,
+                bookingStatus: document.querySelector('input[name="bookingStatus"]:checked').value,
+                important: document.getElementById('edit-important').checked,
+                showMap: document.getElementById('edit-showMap').checked,
+                openingHours: document.getElementById('edit-hours').value,
+                transportType: document.getElementById('edit-type').value === 'transport' ? document.getElementById('edit-transport-type').value : null,
+                transportRoute: document.getElementById('edit-type').value === 'transport' ? document.getElementById('edit-transport-route').value : null
             };
-
-            if (currentEditingEventIndex === null) itinerary[currentEditingDay].events.push(newEvent);
-            else itinerary[currentEditingDay].events[currentEditingEventIndex] = newEvent;
-            
-            itinerary[currentEditingDay].events.sort((a, b) => a.time.localeCompare(b.time));
-            saveAll(); closeModal(); renderPlan();
+            itinerary[dayIndex].events.push(newEvent);
+            itinerary[dayIndex].events.sort((a, b) => a.time.localeCompare(b.time));
+            saveAll();
+            closeModal();
+            switchDay(dayIndex);
         }
-        function deleteEvent() {
-            if(confirm("Confirm delete?")) {
-                itinerary[currentEditingDay].events.splice(currentEditingEventIndex, 1);
-                saveAll(); closeModal(); renderPlan();
+
+        function deleteEvent(dayIndex, eventIndex) {
+            if(confirm('Are you sure you want to delete this event?')) {
+                itinerary[dayIndex].events.splice(eventIndex, 1);
+                saveAll();
+                closeModal();
+                renderPlan();
+            }
+        }
+        
+        function editDayTitle(dayIndex) {
+            const day = itinerary[dayIndex];
+            const newTitle = prompt("Enter new title for this day:", day.title);
+            if(newTitle) {
+                day.title = newTitle;
+                const newSub = prompt("Enter subtitle:", day.subtitle);
+                if(newSub) day.subtitle = newSub;
+                saveAll();
+                renderPlan();
             }
         }
 
-        // --- LOGIC: Checklist ---
-        function addChecklistItem() {
-            const input = document.getElementById('new-check-item');
-            if(!input.value) return;
-            checklist.push({ text: input.value, done: false });
+        function saveBudget() {
+            const val = document.getElementById('budget-input').value;
+            if(val) { initialBudget = parseFloat(val); saveAll(); renderWallet(); closeModal(); }
+        }
+
+        function calculateConverter() {
+            const input = document.getElementById('converter-input').value;
+            const output = document.getElementById('converter-output');
+            try {
+                if (!input) { output.innerText = "NT$ 0"; return; }
+                if (/[^0-9+\-*/.()\s]/.test(input)) { output.innerText = "Error"; return; }
+                const jpy = eval(input);
+                const twd = Math.round(jpy * exchangeRate);
+                output.innerText = `NT$ ${twd.toLocaleString()}`;
+            } catch (e) { }
+        }
+
+        function setPaymentMethod(method) {
+            currentPaymentMethod = method;
+            // Direct DOM update to prevent input clearing
+            const activeClass = "flex-1 py-2.5 rounded border transition-all flex items-center justify-center gap-2 text-sm bg-ink text-paper border-ink";
+            const inactiveClass = "flex-1 py-2.5 rounded border transition-all flex items-center justify-center gap-2 text-sm bg-white text-stone-400 border-stone-200 hover:border-stone-400";
+            
+            document.getElementById('btn-pay-cash').className = method === 'cash' ? activeClass : inactiveClass;
+            document.getElementById('btn-pay-card').className = method === 'card' ? activeClass : inactiveClass;
+            document.getElementById('btn-pay-suica').className = method === 'suica' ? activeClass : inactiveClass;
+        }
+
+        function setFilter(filter) { currentWalletFilter = filter; renderWallet(); }
+        
+        function addExpense() {
+            const name = document.getElementById('expense-name').value;
+            const amountStr = document.getElementById('expense-amount').value;
+            if (!name || !amountStr) { alert("Please fill in both name and amount"); return; }
+            expenses.push({ desc: name, amount: parseFloat(amountStr), method: currentPaymentMethod, date: new Date().toISOString() });
             saveAll();
-            renderLists();
+            renderWallet();
+        }
+
+        function switchDay(index) { if (index >= 0 && index < itinerary.length) { currentDayIndex = index; renderPlan(); } }
+        
+        function getTransportIcon(event) {
+            if (event.type !== 'transport') return '';
+            let icon = 'bus';
+            if (event.transportType === 'flight') icon = 'plane-up';
+            if (event.transportType === 'train') icon = 'train-subway';
+            if (event.transportType === 'walk') icon = 'person-walking';
+            if (event.transportType === 'charter') icon = 'van-shuttle';
+            return `<i class="fa-solid fa-${icon} text-stone-300 text-sm ml-1"></i>`;
+        }
+
+        function getDocIcon(type) {
+            switch(type) {
+                case 'flight': return 'fa-plane'; case 'hotel': return 'fa-hotel'; case 'food': return 'fa-utensils'; case 'skiing': return 'fa-person-skiing'; case 'file': return 'fa-file-lines'; default: return 'fa-folder';
+            }
+        }
+
+        function toggleCheck(index) { checklist[index].done = !checklist[index].done; saveAll(); renderLists(); }
+
+        function addChecklistItem() {
+            const input = document.getElementById('new-checklist-item');
+            const text = input.value.trim();
+            if(text) {
+                checklist.push({ text: text, done: false });
+                saveAll();
+                renderLists();
+            }
         }
 
         function deleteChecklistItem(index) {
-            if(confirm("Remove this item?")) {
+            if(confirm('Delete this item?')) {
                 checklist.splice(index, 1);
                 saveAll();
                 renderLists();
             }
         }
-        
-        // Reset Helper
-        function resetChecklist() {
-            if(confirm("確定要重置清單嗎？這將會清除您目前的勾選狀態與新增項目，並恢復為預設清單。")) {
-                checklist = JSON.parse(JSON.stringify(DEFAULT_CHECKLIST)); // Deep copy
-                saveAll();
-                renderLists();
-            }
+
+        function saveMemos(value) {
+            memos = value;
+            saveAll();
         }
 
-        // --- COMMON LOGIC ---
-        function toggleCheck(index) { checklist[index].done = !checklist[index].done; saveAll(); renderLists(); }
-        function saveMemo(val) { 
-            memos = val; saveAll(); 
-            clearTimeout(window.memoTimer);
-            window.memoTimer = setTimeout(() => { document.getElementById('link-preview').innerHTML = extractLinks(val); }, 1000);
+        window.onload = function() {
+            if (expenses.length > 0 && !expenses[0].method) { expenses.forEach(e => e.method = 'cash'); saveAll(); }
+            renderPlan();
         }
-        function extractLinks(text) {
-            const matches = text.match(/(https?:\/\/[^\s]+)/g);
-            if (!matches) return '';
-            return matches.map(url => `<a href="${url}" target="_blank" class="block text-xs text-subtle truncate border-b border-stone-200 pb-1 hover:text-bronze font-mono">${url}</a>`).join('');
-        }
-
-        window.onload = function() { renderPlan(); };
-
-        // Close modal on outside click
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
     </script>
 </body>
 </html>
