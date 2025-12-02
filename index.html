@@ -247,7 +247,6 @@
 
         // State
         let itinerary = JSON.parse(localStorage.getItem('itinerary_v4')) || DEFAULT_ITINERARY;
-        // Migration check for old data structure
         itinerary.forEach(day => {
             day.events.forEach(event => {
                 if(event.showMap === undefined) event.showMap = false;
@@ -255,6 +254,12 @@
         });
 
         let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+        // Ensure expenses have IDs for editing
+        if (expenses.length > 0 && !expenses[0].id) {
+            expenses = expenses.map((e, i) => ({ ...e, id: Date.now() + i }));
+            localStorage.setItem('expenses', JSON.stringify(expenses));
+        }
+
         let checklist = [];
         try {
             const savedChecklist = JSON.parse(localStorage.getItem('checklist_v6'));
@@ -273,6 +278,7 @@
         let currentWalletFilter = 'all'; 
         let currentPaymentMethod = 'cash'; 
         let currentDayIndex = 0;
+        let pendingConfirmAction = null; // New global for confirmation
 
         function saveAll() {
             localStorage.setItem('itinerary_v4', JSON.stringify(itinerary)); 
@@ -309,7 +315,33 @@
             
             setTimeout(() => {
                 modal.classList.add('hidden');
+                pendingConfirmAction = null; // Clear pending action
             }, 200);
+        }
+
+        // --- NEW CONFIRM MODAL ---
+        function openConfirmModal(message, actionCallback) {
+            pendingConfirmAction = actionCallback;
+            showModal(`
+                <div class="text-center py-6">
+                    <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <h3 class="font-serif text-xl text-ink mb-2">Are you sure?</h3>
+                    <p class="text-sm text-stone-500 mb-6 px-4 leading-relaxed">${message}</p>
+                    <div class="flex gap-3">
+                        <button onclick="closeModal()" class="flex-1 py-3 rounded-lg border border-stone-300 text-stone-500 font-bold text-xs uppercase tracking-widest hover:bg-stone-50 transition-colors">Cancel</button>
+                        <button onclick="executeConfirmAction()" class="flex-1 py-3 rounded-lg bg-red-500 text-white font-bold text-xs uppercase tracking-widest hover:bg-red-600 shadow-lg shadow-red-200 transition-colors">Delete</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        function executeConfirmAction() {
+            if (pendingConfirmAction) {
+                pendingConfirmAction();
+            }
+            closeModal();
         }
 
         function setActiveTab(tabName) {
@@ -339,6 +371,11 @@
                         </summary>
                         <div class="p-5 border-t border-stone-100 bg-white">
                             ${FLIGHT_DATA.map(f => `<div class="mb-6 last:mb-0 relative"><div class="flex justify-between items-end mb-2"><div class="text-xs font-bold text-bronze uppercase tracking-widest border border-bronze/30 px-2 py-0.5 rounded">${f.type}</div><div class="text-sm font-mono text-stone-400">${f.date}</div></div><div class="flex justify-between items-center font-serif text-ink mb-1"><div class="text-center"><div class="text-2xl font-bold leading-none">${f.fromCode}</div><div class="text-[10px] text-subtle mt-1">${f.timeDep}</div></div><div class="flex-1 px-4 text-center"><div class="border-t border-dashed border-stone-300 relative top-1.5"></div><i class="fa-solid fa-plane text-stone-300 text-xs relative bg-white px-1"></i><div class="text-[9px] text-stone-400 mt-1">${f.duration}</div></div><div class="text-center"><div class="text-2xl font-bold leading-none">${f.toCode}</div><div class="text-[10px] text-subtle mt-1">${f.timeArr}</div></div></div></div>`).join('<div class="h-px bg-stone-100 my-4 w-full"></div>')}
+                            <div class="mt-4 pt-4 border-t border-stone-100 flex justify-center">
+                                <a href="https://www.china-airlines.com/tw/zh/fly/flight-status/index" target="_blank" class="text-xs bg-[#8C7051] text-white px-4 py-2 rounded-full hover:bg-[#7a6145] transition-colors flex items-center gap-2">
+                                    <i class="fa-solid fa-plane-circle-check"></i> 中華航空航班動態
+                                </a>
+                            </div>
                         </div>
                     </details>
                 </div>
@@ -567,7 +604,28 @@
                         if (e.method === 'cash') { iconClass = 'fa-coins text-yellow-600'; iconBg = 'bg-yellow-50'; }
                         else if (e.method === 'card') { iconClass = 'fa-credit-card text-blue-600'; iconBg = 'bg-blue-50'; }
                         else { iconClass = 'fa-train text-green-600'; iconBg = 'bg-green-50'; }
-                        return `<div class="flex justify-between items-center py-3 border-b border-stone-200/50 group"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full ${iconBg} flex items-center justify-center ${iconClass} text-sm"><i class="fa-solid ${e.method === 'card' ? 'fa-regular fa-credit-card' : (e.method === 'suica' ? 'fa-train' : 'fa-coins')}"></i></div><div><div class="font-serif text-ink">${e.desc}</div><div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div></div></div><div class="text-right"><div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div><div class="text-[10px] text-stone-400">NT$ ${Math.round(e.amount * exchangeRate).toLocaleString()}</div></div></div>`
+                        return `
+                        <div class="flex justify-between items-center py-3 border-b border-stone-200/50 group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-full ${iconBg} flex items-center justify-center ${iconClass} text-sm">
+                                    <i class="fa-solid ${e.method === 'card' ? 'fa-regular fa-credit-card' : (e.method === 'suica' ? 'fa-train' : 'fa-coins')}"></i>
+                                </div>
+                                <div>
+                                    <div class="font-serif text-ink">${e.desc}</div>
+                                    <div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="text-right">
+                                    <div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div>
+                                    <div class="text-[10px] text-stone-400">NT$ ${Math.round(e.amount * exchangeRate).toLocaleString()}</div>
+                                </div>
+                                <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onclick="openEditExpenseModal(${e.id})" class="text-stone-300 hover:text-ink text-xs p-1"><i class="fa-solid fa-pen"></i></button>
+                                    <button onclick="openConfirmModal('Delete this expense record?', () => deleteExpense(${e.id}))" class="text-stone-300 hover:text-red-500 text-xs p-1"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>`
                     }).join('') || '<div class="text-center text-stone-300 text-sm py-10 italic">No records found.</div>'}</div>
                 </div>
             `;
@@ -585,8 +643,12 @@
                     <div class="text-xs text-stone-400 border-b border-stone-200 pb-4 mb-6">票券、預約單、電子憑證集中管理</div>
                     <button onclick="openAddDocModal()" class="w-full py-4 border border-dashed border-[#8C7051] rounded-lg bg-[#F2F0E9] text-[#8C7051] font-serif text-lg mb-8 hover:bg-[#eae6db] transition-colors flex items-center justify-center gap-2"><i class="fa-solid fa-plus"></i> Add New Record</button>
                     <div class="space-y-4">
-                        ${documents.map(doc => `
-                            <div class="bg-white rounded-l border-l-4 border-bronze shadow-sm p-5 relative overflow-hidden group hover:shadow-md transition-all">
+                        ${documents.map((doc, index) => `
+                            <div class="bg-white rounded-l border-l-4 border-bronze shadow-sm p-5 relative overflow-hidden group hover:shadow-md transition-all cursor-pointer" onclick="openEditDocModal(${index})">
+                                <div class="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onclick="openEditDocModal(${index}); event.stopPropagation();" class="text-stone-400 hover:text-ink"><i class="fa-solid fa-pen"></i></button>
+                                    <button onclick="openConfirmModal('Delete this document?', () => deleteDoc(${index})); event.stopPropagation();" class="text-stone-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button>
+                                </div>
                                 <div class="flex items-start gap-4">
                                     <div class="w-12 h-12 rounded-full bg-paper flex items-center justify-center text-xl text-ink"><i class="fa-solid ${getDocIcon(doc.type)}"></i></div>
                                     <div class="flex-1">
@@ -594,7 +656,7 @@
                                         <h3 class="font-serif text-2xl text-ink mb-2">${doc.title}</h3>
                                         ${doc.bookingId ? `<div class="inline-block border border-stone-200 rounded px-2 py-0.5 text-[10px] text-stone-500 font-mono bg-stone-50 mb-3">BOOKING ID: <span class="text-ink font-bold">${doc.bookingId}</span></div>` : ''}
                                         <div>
-                                            <button ${doc.link ? `onclick="window.open('${doc.link}', '_blank')"` : `onclick="alert('No link attached')"`} class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1 transition-colors">
+                                            <button ${doc.link ? `onclick="window.open('${doc.link}', '_blank'); event.stopPropagation();"` : `onclick="alert('No link attached'); event.stopPropagation();"`} class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1 transition-colors">
                                                 <i class="fa-solid fa-link"></i> Open File / Link
                                             </button>
                                         </div>
@@ -622,6 +684,13 @@
                 <div class="bg-stone-50 p-3 rounded-lg mb-6 flex gap-4"><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bookingStatus" value="flexible" ${event.bookingStatus !== 'fixed' ? 'checked' : ''} class="accent-bronze"><span class="text-sm text-stone-600">Flexible</span></label><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bookingStatus" value="fixed" ${event.bookingStatus === 'fixed' ? 'checked' : ''} class="accent-bronze"><span class="text-sm font-bold text-ink">Fixed / Booked</span></label></div>
                 <div id="transport-fields" class="${event.type === 'transport' ? '' : 'hidden'} border border-stone-200 rounded-lg p-4 mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Transport Mode</label><select id="edit-transport-type" class="w-full text-base border-b border-stone-200 pb-1 mb-3 bg-transparent"><option value="train" ${event.transportType === 'train' ? 'selected' : ''}>Train / Subway</option><option value="bus" ${event.transportType === 'bus' ? 'selected' : ''}>Bus</option><option value="walk" ${event.transportType === 'walk' ? 'selected' : ''}>Walk</option><option value="charter" ${event.transportType === 'charter' ? 'selected' : ''}>Charter / Taxi</option><option value="flight" ${event.transportType === 'flight' ? 'selected' : ''}>Flight</option></select><input type="text" id="edit-transport-route" value="${event.transportRoute || ''}" placeholder="Route (e.g. Hotel -> Station)" class="w-full text-sm border-b border-stone-200 pb-1 bg-transparent"></div>
                 <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Event Title</label><input type="text" id="edit-title" value="${event.title}" class="w-full text-2xl font-serif font-bold text-ink border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
+                
+                <div class="mb-6">
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.title + ' Hokkaido')}" target="_blank" class="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 font-medium border border-blue-100 bg-blue-50 px-3 py-2 rounded-lg transition-colors">
+                        <i class="fa-solid fa-map-location-dot"></i> View on Google Maps
+                    </a>
+                </div>
+
                 <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Opening Hours</label><input type="text" id="edit-hours" value="${event.openingHours || ''}" placeholder="e.g. 09:00 - 18:00" class="w-full text-sm font-mono text-stone-500 border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
                 <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Description</label><textarea id="edit-desc" rows="3" class="w-full text-base text-stone-600 border-b border-stone-300 focus:border-bronze outline-none bg-transparent resize-none">${event.desc}</textarea></div>
                 <div class="mb-8 flex flex-col gap-3">
@@ -636,7 +705,7 @@
                         <span class="text-sm text-stone-500 group-hover:text-bronze transition-colors">Show Google Map Button</span>
                     </label>
                 </div>
-                <div class="flex justify-between items-center pt-4 border-t border-stone-100"><button onclick="deleteEvent(${dayIndex}, ${eventIndex})" class="text-xs text-red-400 hover:text-red-600 uppercase tracking-widest font-bold px-2 py-2">Delete</button><button onclick="saveEvent(${dayIndex}, ${eventIndex})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Changes</button></div>
+                <div class="flex justify-between items-center pt-4 border-t border-stone-100"><button onclick="openConfirmModal('Delete this event?', () => deleteEvent(${dayIndex}, ${eventIndex}))" class="text-xs text-red-400 hover:text-red-600 uppercase tracking-widest font-bold px-2 py-2">Delete</button><button onclick="saveEvent(${dayIndex}, ${eventIndex})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Changes</button></div>
             `);
         }
 
@@ -670,40 +739,119 @@
             `);
         }
 
+        // --- NEW EXPENSE EDIT MODAL ---
+        function openEditExpenseModal(id) {
+            const expense = expenses.find(e => e.id === id);
+            if (!expense) return;
+
+            showModal(`
+                <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
+                <h2 class="font-serif text-3xl text-ink mb-6 italic border-b border-stone-200 pb-2">Edit Expense</h2>
+                
+                <div class="mb-6">
+                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Item Name</label>
+                    <input type="text" id="edit-exp-name" value="${expense.desc}" class="w-full text-xl font-serif border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
+                </div>
+
+                <div class="mb-6">
+                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Amount (JPY)</label>
+                    <input type="number" id="edit-exp-amount" value="${expense.amount}" class="w-full text-2xl font-serif font-bold text-ink border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
+                </div>
+
+                <div class="mb-6">
+                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Payment Method</label>
+                    <select id="edit-exp-method" class="w-full text-lg font-serif border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
+                        <option value="cash" ${expense.method === 'cash' ? 'selected' : ''}>Cash</option>
+                        <option value="card" ${expense.method === 'card' ? 'selected' : ''}>Card</option>
+                        <option value="suica" ${expense.method === 'suica' ? 'selected' : ''}>Suica</option>
+                    </select>
+                </div>
+
+                <div class="mb-8">
+                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Date</label>
+                    <input type="date" id="edit-exp-date" value="${new Date(expense.date).toISOString().split('T')[0]}" class="w-full text-base font-serif text-stone-600 border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
+                </div>
+
+                <div class="flex justify-between items-center pt-4 border-t border-stone-100">
+                    <button onclick="closeModal()" class="text-xs text-stone-400 hover:text-ink uppercase tracking-widest font-bold px-2 py-2">Cancel</button>
+                    <button onclick="saveExpense(${id})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Update</button>
+                </div>
+            `);
+        }
+
+        function saveExpense(id) {
+            const name = document.getElementById('edit-exp-name').value;
+            const amount = parseFloat(document.getElementById('edit-exp-amount').value);
+            const method = document.getElementById('edit-exp-method').value;
+            const date = document.getElementById('edit-exp-date').value;
+
+            if (!name || isNaN(amount) || !date) {
+                alert("Please fill in all fields");
+                return;
+            }
+
+            const expenseIndex = expenses.findIndex(e => e.id === id);
+            if (expenseIndex !== -1) {
+                expenses[expenseIndex] = {
+                    ...expenses[expenseIndex],
+                    desc: name,
+                    amount: amount,
+                    method: method,
+                    date: new Date(date).toISOString()
+                };
+                saveAll();
+                renderWallet();
+                closeModal();
+            }
+        }
+
+        function deleteExpense(id) {
+            expenses = expenses.filter(e => e.id !== id);
+            saveAll();
+            renderWallet();
+        }
+
         function openAddDocModal() {
+            openEditDocModal(null);
+        }
+
+        function openEditDocModal(index) {
+            const isEdit = index !== null;
+            const doc = isEdit ? documents[index] : { type: 'flight', title: '', bookingId: '', link: '' };
+            
             showModal(`
                  <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
-                 <h2 class="font-serif text-3xl text-ink mb-2 italic">Add Document</h2>
+                 <h2 class="font-serif text-3xl text-ink mb-2 italic">${isEdit ? 'Edit Document' : 'Add Document'}</h2>
                  <hr class="border-stone-200 mb-6">
                  
                  <label class="text-[10px] font-bold text-stone-400 uppercase mb-2 block">CATEGORY</label>
                  <div class="grid grid-cols-5 gap-2 mb-6">
                     ${['flight', 'hotel', 'food', 'skiing', 'file'].map(t => `
-                        <div onclick="selectDocType(this, '${t}')" class="doc-type-btn cursor-pointer flex flex-col items-center justify-center p-2 rounded-lg bg-stone-50 hover:bg-stone-100 border border-transparent hover:border-bronze transition-all ${t === 'flight' ? 'bg-[#8C7051] text-white' : 'text-stone-400'}">
+                        <div onclick="selectDocType(this, '${t}')" class="doc-type-btn cursor-pointer flex flex-col items-center justify-center p-2 rounded-lg bg-stone-50 hover:bg-stone-100 border border-transparent hover:border-bronze transition-all ${t === doc.type ? 'bg-[#8C7051] text-white' : 'text-stone-400'}">
                             <i class="fa-solid ${getDocIcon(t)} text-xl mb-1"></i>
                             <span class="text-[8px] uppercase font-bold tracking-widest">${t === 'file' ? 'OTHER' : t.toUpperCase()}</span>
                         </div>
                     `).join('')}
-                    <input type="hidden" id="doc-type" value="flight">
+                    <input type="hidden" id="doc-type" value="${doc.type}">
                  </div>
 
                  <div class="mb-6">
                     <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">TITLE</label>
-                    <input type="text" id="doc-title" placeholder="e.g. CI130 E-Ticket" class="w-full text-2xl font-serif font-bold text-ink border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
+                    <input type="text" id="doc-title" value="${doc.title}" placeholder="e.g. CI130 E-Ticket" class="w-full text-2xl font-serif font-bold text-ink border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
                  </div>
 
                  <div class="mb-6">
                     <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">BOOKING REF / ID (OPTIONAL)</label>
-                    <input type="text" id="doc-id" placeholder="#12345678" class="w-full text-lg font-mono text-stone-600 bg-stone-100 rounded px-3 py-2 border-none focus:ring-1 focus:ring-bronze">
+                    <input type="text" id="doc-id" value="${doc.bookingId || ''}" placeholder="#12345678" class="w-full text-lg font-mono text-stone-600 bg-stone-100 rounded px-3 py-2 border-none focus:ring-1 focus:ring-bronze">
                  </div>
 
                  <div class="mb-8">
                     <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">LINK TO FILE</label>
-                    <input type="text" id="doc-link" placeholder="https://..." class="w-full text-base font-serif text-stone-500 border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
+                    <input type="text" id="doc-link" value="${doc.link || ''}" placeholder="https://..." class="w-full text-base font-serif text-stone-500 border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
                     <div class="text-[10px] text-stone-300 mt-1">* 建議將 PDF 上傳至雲端硬碟，在此貼上分享連結。</div>
                  </div>
 
-                 <button onclick="saveNewDoc()" class="w-full bg-ink text-white py-4 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Record</button>
+                 <button onclick="saveDoc(${isEdit ? index : -1})" class="w-full bg-ink text-white py-4 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Record</button>
             `);
         }
         
@@ -717,19 +865,32 @@
             document.getElementById('doc-type').value = type;
         }
 
-        function saveNewDoc() {
+        function saveDoc(index) {
             const title = document.getElementById('doc-title').value;
             if(!title) return alert('Title is required');
             
-            documents.push({
-                id: Date.now(),
+            const docData = {
+                id: index !== -1 ? documents[index].id : Date.now(),
                 title: title,
                 type: document.getElementById('doc-type').value,
                 bookingId: document.getElementById('doc-id').value,
                 link: document.getElementById('doc-link').value
-            });
+            };
+
+            if (index !== -1) {
+                documents[index] = docData;
+            } else {
+                documents.push(docData);
+            }
+            
             saveAll();
             closeModal();
+            renderDocs();
+        }
+
+        function deleteDoc(index) {
+            documents.splice(index, 1);
+            saveAll();
             renderDocs();
         }
 
@@ -826,12 +987,10 @@
         }
 
         function deleteEvent(dayIndex, eventIndex) {
-            if(confirm('Are you sure you want to delete this event?')) {
-                itinerary[dayIndex].events.splice(eventIndex, 1);
-                saveAll();
-                closeModal();
-                renderPlan();
-            }
+            itinerary[dayIndex].events.splice(eventIndex, 1);
+            saveAll();
+            closeModal();
+            renderPlan();
         }
         
         function editDayTitle(dayIndex) {
@@ -880,7 +1039,13 @@
             const name = document.getElementById('expense-name').value;
             const amountStr = document.getElementById('expense-amount').value;
             if (!name || !amountStr) { alert("Please fill in both name and amount"); return; }
-            expenses.push({ desc: name, amount: parseFloat(amountStr), method: currentPaymentMethod, date: new Date().toISOString() });
+            expenses.push({ 
+                id: Date.now(),
+                desc: name, 
+                amount: parseFloat(amountStr), 
+                method: currentPaymentMethod, 
+                date: new Date().toISOString() 
+            });
             saveAll();
             renderWallet();
         }
