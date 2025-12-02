@@ -509,7 +509,7 @@
                             <i class="fa-solid fa-check text-white text-xs absolute left-1 top-1 opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
                         </div>
                         <span class="flex-1 text-sm font-light text-ink leading-relaxed ${item.done ? 'line-through text-stone-300 decoration-stone-300' : ''}">${item.text}</span>
-                        <button onclick="deleteChecklistItem(${index})" class="text-stone-300 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 px-2"><i class="fa-solid fa-trash-can"></i></button>
+                        <button onclick="openConfirmModal('Delete this item?', () => deleteChecklistItem(${index}))" class="text-stone-300 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 px-2"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 `;
             });
@@ -809,6 +809,7 @@
             expenses = expenses.filter(e => e.id !== id);
             saveAll();
             renderWallet();
+            closeModal(); // Close confirm modal
         }
 
         function openAddDocModal() {
@@ -892,6 +893,7 @@
             documents.splice(index, 1);
             saveAll();
             renderDocs();
+            closeModal(); // Close confirm modal
         }
 
         function openBudgetModal() {
@@ -1081,11 +1083,10 @@
         }
 
         function deleteChecklistItem(index) {
-            if(confirm('Delete this item?')) {
-                checklist.splice(index, 1);
-                saveAll();
-                renderLists();
-            }
+            checklist.splice(index, 1);
+            saveAll();
+            renderLists();
+            closeModal(); // Close confirm modal
         }
 
         function saveMemos(value) {
