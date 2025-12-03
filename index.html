@@ -254,7 +254,6 @@
         });
 
         let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
-        // Ensure expenses have IDs for editing
         if (expenses.length > 0 && !expenses[0].id) {
             expenses = expenses.map((e, i) => ({ ...e, id: Date.now() + i }));
             localStorage.setItem('expenses', JSON.stringify(expenses));
@@ -265,28 +264,51 @@
             const savedChecklist = JSON.parse(localStorage.getItem('checklist_v6'));
             checklist = Array.isArray(savedChecklist) ? savedChecklist : DEFAULT_CHECKLIST;
         } catch (e) { checklist = DEFAULT_CHECKLIST; }
+        
+        let shoppingList = [];
+        try {
+            const savedShoppingList = JSON.parse(localStorage.getItem('shoppingList'));
+            if (Array.isArray(savedShoppingList)) {
+                shoppingList = savedShoppingList;
+            }
+        } catch (e) { shoppingList = []; }
 
         let memos = localStorage.getItem('memos') || "";
         let exchangeRate = parseFloat(localStorage.getItem('exchangeRate')) || 0.215;
-        let documents = JSON.parse(localStorage.getItem('documents')) || [
-            {id: 1, title: 'Flight E-Ticket', type: 'flight', bookingId: 'REF-88293', date: '2025/12/24'},
-            {id: 2, title: 'Toya Nonokaze Resort', type: 'hotel', bookingId: 'AGODA-112', date: '2025/12/24'},
-            {id: 3, title: 'Travel Insurance', type: 'file', bookingId: 'INS-999', date: 'Valid'},
+        let documents = JSON.parse(localStorage.getItem('documents_v2')) || [
+            {id: 1, title: '機票訂位(燦星)', type: 'flight', bookingId: '00146092', link: 'https://drive.google.com/file/d/1JsNjzrh-3QQL8e-hihzgXAWqvbNAI1TR/view?usp=drive_link'},
+            {id: 2, title: '電子機票(廖浚錴)', type: 'flight', bookingId: '6MP7BS', link: 'https://drive.google.com/file/d/1mqhIXUaqgzG2-2lKRkdP_2LDG5wDWzI6/view?usp=drive_link'},
+            {id: 3, title: '電子機票(廖尉翔)', type: 'flight', bookingId: '6MP7BS', link: 'https://drive.google.com/file/d/1cogmQC93_hViNbxSH6OntxI7T3Nc6554/view?usp=drive_link'},
+            {id: 4, title: '電子機票(顏雯憶)', type: 'flight', bookingId: '6MP7BS', link: 'https://drive.google.com/file/d/1bdCPJ5YS0hQPiXROaVWrCVn5JNbxMoJ1/view?usp=drive_link'},
+            {id: 5, title: '機場到洞爺湖接駁車訂購紀錄', type: 'file', bookingId: '', link: 'https://drive.google.com/file/d/1JMqOjuINijSzLkXsyg1pFXdN_FErjkpz/view?usp=drive_link'},
+            {id: 6, title: '洞爺乃之風訂購紀錄', type: 'hotel', bookingId: '6123851357', link: 'https://drive.google.com/file/d/1UKPpIQwH-U1EUSwgXiy4gYSNvDOKdK8K/view?usp=drive_link'},
+            {id: 7, title: '洞爺湖湯屋預約紀錄', type: 'hotel', bookingId: '', link: 'https://drive.google.com/file/d/1dWU_FbmHBEgW1xbse5Ah6Mc5jhCCclNW/view?usp=drive_link'},
+            {id: 8, title: '乃之風到札幌接駁預約紀錄', type: 'file', bookingId: '', link: 'https://drive.google.com/file/d/1HEXWN2-l05RighTOIViwmgAPEAfq7JmW/view?usp=drive_link'},
+            {id: 9, title: 'VESSEL1225至1228廖訂房紀錄', type: 'hotel', bookingId: '2438-7225-9949', link: 'https://drive.google.com/file/d/1VAgAtjc0BOlCI6iEoj1rCAse0tP2bEsf/view?usp=drive_link'},
+            {id: 10, title: 'VESSEL1228至1229張訂房紀錄', type: 'hotel', bookingId: '2441-3249-1571', link: 'https://drive.google.com/file/d/1b6k_yf6I-BRjoXYG-0qFbm-q6Jn69NRj/view?usp=drive_link'},
+            {id: 11, title: 'VESSEL1228至1229廖訂房紀錄', type: 'hotel', bookingId: '2441-3248-7585', link: 'https://drive.google.com/file/d/1EwwjAn_FBCKu3J8BYAnPrXpcE7pXbaVq/view?usp=drive_link'},
+            {id: 12, title: '四季彩之秋預約紀錄', type: 'file', bookingId: '', link: 'https://drive.google.com/file/d/1VVvtUy7Ruxu43YvRXXTi9heut_0NeDXF/view?usp=drive_link'},
+            {id: 13, title: '1225日炭火兜18點預約紀錄', type: 'food', bookingId: 'VZ639M5HNG', link: 'https://drive.google.com/file/d/1RJPleQ4zp7187xlCSuG_jsCazjdRULxk/view?usp=drive_link'},
+            {id: 14, title: '1227難陀19點吃到飽預約紀錄', type: 'food', bookingId: '', link: 'https://drive.google.com/file/d/1Ou8jke7i8ew5ebxAYEpcZYPJ3IG4sBRq/view?usp=drive_link'},
+            {id: 15, title: '廖浚錴旅平險1224~1230', type: 'file', bookingId: '', link: 'https://drive.google.com/file/d/1yD30_QqJ7s0FyM_qLB0dh5MsctzD7uL6/view?usp=drive_link'},
+            {id: 16, title: '顏雯憶廖尉翔1224~1230', type: 'file', bookingId: '', link: 'https://drive.google.com/file/d/12scvumwAHbWxUpqdlTgH2HgD6eN1rKdy/view?usp=drive_link'},
         ];
         
         let initialBudget = parseFloat(localStorage.getItem('initialBudget')) || 100000;
         let currentWalletFilter = 'all'; 
         let currentPaymentMethod = 'cash'; 
         let currentDayIndex = 0;
-        let pendingConfirmAction = null; // New global for confirmation
+        let pendingConfirmAction = null;
+        let activeListTab = 'packing'; // 'packing' or 'shopping'
 
         function saveAll() {
             localStorage.setItem('itinerary_v4', JSON.stringify(itinerary)); 
             localStorage.setItem('expenses', JSON.stringify(expenses));
             localStorage.setItem('checklist_v6', JSON.stringify(checklist));
+            localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
             localStorage.setItem('memos', memos);
             localStorage.setItem('exchangeRate', exchangeRate);
-            localStorage.setItem('documents', JSON.stringify(documents)); 
+            localStorage.setItem('documents_v2', JSON.stringify(documents)); 
             localStorage.setItem('initialBudget', initialBudget);
         }
 
@@ -315,11 +337,10 @@
             
             setTimeout(() => {
                 modal.classList.add('hidden');
-                pendingConfirmAction = null; // Clear pending action
+                pendingConfirmAction = null;
             }, 200);
         }
 
-        // --- NEW CONFIRM MODAL ---
         function openConfirmModal(message, actionCallback) {
             pendingConfirmAction = actionCallback;
             showModal(`
@@ -338,9 +359,7 @@
         }
 
         function executeConfirmAction() {
-            if (pendingConfirmAction) {
-                pendingConfirmAction();
-            }
+            if (pendingConfirmAction) pendingConfirmAction();
             closeModal();
         }
 
@@ -352,10 +371,41 @@
             window.scrollTo(0,0);
         }
 
+        // --- HELPER FOR ROUTE MAP ---
+        function openDayRouteMap(dayIndex) {
+            const day = itinerary[dayIndex];
+            const locations = day.events
+                .filter(e => ['sight', 'food', 'hotel'].includes(e.type))
+                .map(e => {
+                     // Enhanced query string for better matching
+                     let query = e.title;
+                     if (e.subtitle) query += " " + e.subtitle;
+                     query += " Hokkaido";
+                     return encodeURIComponent(query);
+                });
+            
+            if (locations.length < 2) {
+                alert("Need at least 2 locations (Sight, Food, Hotel) to create a route.");
+                return;
+            }
+
+            const origin = locations[0];
+            const destination = locations[locations.length - 1];
+            const waypoints = locations.slice(1, -1).join('|');
+            
+            // Force travelmode to driving for better chaining
+            let url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=driving`;
+            if (waypoints) url += `&waypoints=${waypoints}`;
+            
+            window.open(url, '_blank');
+        }
+
         // --- RENDER FUNCTIONS ---
 
         function renderPlan() {
             setActiveTab('plan');
+            const day = itinerary[currentDayIndex];
+            
             let html = `<div class="fade-in pb-10 flex flex-col h-full">`;
             
             // Flights Details
@@ -399,15 +449,17 @@
                 </div>
             `;
 
-            // Day Content
-            const day = itinerary[currentDayIndex];
+            // Day Content (Title + Route Map Button)
             html += `
                 <div class="flex-1 px-1 animate-[fadeIn_0.4s_ease-out]">
-                    <div class="mb-6 flex justify-between items-end group/header cursor-pointer" onclick="editDayTitle(${currentDayIndex})">
-                        <div>
+                    <div class="mb-6 flex justify-between items-end group/header cursor-pointer">
+                        <div onclick="editDayTitle(${currentDayIndex})">
                             <h2 class="font-serif text-3xl font-bold text-ink leading-none mb-1">${day.title}</h2>
                             <div class="text-xs tracking-[0.2em] uppercase text-bronze font-bold">${day.subtitle || 'Journey'}</div>
                         </div>
+                        <button onclick="openDayRouteMap(${currentDayIndex})" class="text-[10px] border border-stone-300 px-3 py-1.5 rounded-full text-stone-500 hover:bg-bronze hover:text-white hover:border-bronze transition-all flex items-center gap-1">
+                            <i class="fa-solid fa-map-location-dot"></i> Route Map
+                        </button>
                     </div>
                     
                     <div class="space-y-6 relative ml-2">
@@ -437,7 +489,6 @@
                                     <div class="absolute right-0 top-1 text-stone-300 opacity-0 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-pen"></i></div>
                                     
                                     ${event.showMap ? `
-                                    <!-- Google Map Link Button -->
                                     <div class="mt-3 flex items-center justify-between">
                                         <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.title + ' Hokkaido')}" 
                                            target="_blank" 
@@ -472,9 +523,9 @@
                 { name: "小樽", en: "Otaru", temp: "-2°", rain: "30%", snow: "70%", icon: "cloud-meatball" }
             ];
             appContent.innerHTML = `
-                <div class="fade-in">
+                <div class="fade-in pb-10">
                     <h2 class="font-serif text-3xl font-bold text-ink mb-6">Snow Forecast</h2>
-                    <div class="grid grid-cols-1 gap-4">
+                    <div class="grid grid-cols-1 gap-4 mb-8">
                         ${LOCS.map(loc => `
                             <div class="bg-white p-5 rounded-2xl shadow-sm border border-stone-100 flex items-center justify-between">
                                 <div class="flex items-center gap-4"><div class="w-12 h-12 rounded-full bg-stone-50 flex items-center justify-center text-stone-400 text-xl"><i class="fa-solid fa-${loc.icon}"></i></div><div><div class="font-serif text-lg font-bold text-ink">${loc.name}</div><div class="text-[10px] text-stone-400 uppercase tracking-widest">${loc.en}</div></div></div>
@@ -482,42 +533,115 @@
                             </div>
                         `).join('')}
                     </div>
+                    
+                    <!-- Live Cameras Section -->
+                    <h2 class="font-serif text-3xl font-bold text-ink mb-4">Live Cameras</h2>
+                    <div class="grid grid-cols-2 gap-3 mb-8">
+                         <a href="https://www.youtube.com/watch?v=RBHsITnIoI0" target="_blank" class="bg-white border border-stone-200 rounded-xl p-3 flex flex-col items-center text-center hover:border-red-500 transition-all">
+                             <i class="fa-brands fa-youtube text-2xl text-red-500 mb-2"></i>
+                             <div class="text-xs font-bold text-ink">札幌大通公園</div>
+                         </a>
+                         <a href="https://www.youtube.com/watch?v=74OOcuVMDzE" target="_blank" class="bg-white border border-stone-200 rounded-xl p-3 flex flex-col items-center text-center hover:border-red-500 transition-all">
+                             <i class="fa-brands fa-youtube text-2xl text-red-500 mb-2"></i>
+                             <div class="text-xs font-bold text-ink">小樽運河</div>
+                         </a>
+                         <a href="https://www.youtube.com/watch?v=FmtX2lJLoJY" target="_blank" class="bg-white border border-stone-200 rounded-xl p-3 flex flex-col items-center text-center hover:border-red-500 transition-all">
+                             <i class="fa-brands fa-youtube text-2xl text-red-500 mb-2"></i>
+                             <div class="text-xs font-bold text-ink">藻岩山</div>
+                         </a>
+                    </div>
+
+                    <h2 class="font-serif text-3xl font-bold text-ink mb-6">官方即時資訊連結</h2>
+                    <div class="grid grid-cols-2 gap-3 mb-6">
+                        <a href="https://www.jrhokkaido.co.jp/global/chinese/" target="_blank" class="bg-stone-800 text-white p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-black transition-colors"><i class="fa-solid fa-train text-2xl"></i><span class="text-xs font-bold tracking-wider">JR 北海道運行</span></a>
+                        <a href="https://www.hokkaido-airports.com/zh-CHT/new-chitose/airport/fis/" target="_blank" class="bg-stone-800 text-white p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-black transition-colors"><i class="fa-solid fa-plane-departure text-2xl"></i><span class="text-xs font-bold tracking-wider">新千歲航班</span></a>
+                        <a href="https://www.jma.go.jp/bosai/warning/#area_type=offices&area_code=016000&lang=zh_tw" target="_blank" class="bg-stone-800 text-white p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-black transition-colors"><i class="fa-solid fa-cloud-bolt text-2xl"></i><span class="text-xs font-bold tracking-wider">氣象廳警報</span></a>
+                    </div>
+
+                    <h2 class="font-serif text-3xl font-bold text-ink mb-6 mt-8">緊急聯絡與救援</h2>
+                    <div class="space-y-3">
+                        <div class="bg-red-50 border border-red-100 p-4 rounded-xl flex justify-between items-center"><div><div class="font-bold text-red-800">緊急報案 (警察)</div><div class="text-xs text-red-600">Police (與台灣相同)</div></div><a href="tel:110" class="bg-red-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-red-600 transition-colors"><i class="fa-solid fa-phone mr-1"></i> 110 (與台灣相同)</a></div>
+                        <div class="bg-red-50 border border-red-100 p-4 rounded-xl flex justify-between items-center"><div><div class="font-bold text-red-800">火警 / 救護車</div><div class="text-xs text-red-600">Fire / Ambulance (與台灣相同)</div></div><a href="tel:119" class="bg-red-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-red-600 transition-colors"><i class="fa-solid fa-phone mr-1"></i> 119 (與台灣相同)</a></div>
+                        <div class="bg-white border border-stone-200 p-4 rounded-xl shadow-sm"><div class="flex items-start gap-3 mb-2"><div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-building-flag"></i></div><div><div class="font-bold text-ink">台北駐日經濟文化代表處 (札幌分處)</div><div class="text-xs text-stone-500">遺失護照、急難救助</div></div></div><div class="pl-13 space-y-2"><a href="tel:+81-11-222-2930" class="block text-sm text-stone-600 hover:text-bronze"><i class="fa-solid fa-phone mr-2 w-4"></i> 011-222-2930 (上班時間)</a><a href="tel:+81-80-1460-2568" class="block text-sm text-red-500 hover:text-red-700 font-bold"><i class="fa-solid fa-mobile-screen mr-2 w-4"></i> 080-1460-2568 (緊急聯絡)</a><a href="https://maps.app.goo.gl/6QxJ8Z8Q8Q8Q8Q8Q8" target="_blank" class="block text-xs text-stone-400 hover:text-stone-600 mt-1"><i class="fa-solid fa-location-dot mr-2 w-4"></i> 札幌市中央區北4條西4丁目1番地 伊藤大樓5樓</a></div></div>
+                        <div class="bg-white border border-stone-200 p-4 rounded-xl shadow-sm flex justify-between items-center"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-stone-100 text-stone-500 rounded-full flex items-center justify-center"><i class="fa-solid fa-headset"></i></div><div><div class="font-bold text-ink">日本旅遊諮詢熱線</div><div class="text-xs text-stone-500">JNTO (24小時/中英日)</div></div></div><a href="tel:050-3816-2787" class="text-stone-400 hover:text-ink text-xl"><i class="fa-solid fa-phone"></i></a></div>
+                    </div>
                 </div>
             `;
         }
 
         function renderLists() {
             setActiveTab('lists');
+            
+            // Filter and Calculations for Shopping List
+            const shoppingTotal = shoppingList.reduce((acc, item) => acc + (item.price || 0), 0);
+
             let html = `
                 <div class="fade-in pb-20">
-                    <h2 class="font-serif text-3xl font-bold text-ink mb-2">Checklist</h2>
-                    <div class="text-xs text-stone-400 mb-6 font-mono tracking-widest">WINTER ESSENTIALS</div>
-                    
+                    <div class="flex justify-center mb-6 border-b border-stone-200">
+                        <button onclick="switchListTab('packing')" class="px-6 py-2 text-sm font-bold uppercase tracking-widest border-b-2 transition-colors ${activeListTab === 'packing' ? 'border-bronze text-ink' : 'border-transparent text-stone-400'}">Packing</button>
+                        <button onclick="switchListTab('shopping')" class="px-6 py-2 text-sm font-bold uppercase tracking-widest border-b-2 transition-colors ${activeListTab === 'shopping' ? 'border-bronze text-ink' : 'border-transparent text-stone-400'}">Shopping</button>
+                    </div>
+            `;
+
+            if (activeListTab === 'packing') {
+                html += `
+                    <div class="text-xs text-stone-400 mb-4 font-mono tracking-widest text-center">WINTER ESSENTIALS</div>
                     <div class="flex gap-2 mb-6">
                         <input type="text" id="new-checklist-item" placeholder="Add new item..." class="flex-1 bg-white border-b border-stone-300 py-2 px-3 focus:border-bronze outline-none text-sm font-serif rounded">
                         <button onclick="addChecklistItem()" class="bg-bronze text-white w-10 h-10 rounded flex items-center justify-center hover:bg-[#7a6145] transition-colors shadow-sm"><i class="fa-solid fa-plus"></i></button>
                     </div>
-
                     <div class="space-y-2 mb-8">
-            `;
-            
-            checklist.forEach((item, index) => {
-                html += `
-                    <div class="flex items-start gap-3 p-3 rounded-lg hover:bg-white transition-colors group relative border border-transparent hover:border-stone-100">
-                        <div class="relative flex items-center mt-1 cursor-pointer">
-                            <input type="checkbox" onchange="toggleCheck(${index})" class="peer appearance-none w-5 h-5 border border-stone-300 rounded checked:bg-bronze checked:border-bronze transition-all" ${item.done ? 'checked' : ''}>
-                            <i class="fa-solid fa-check text-white text-xs absolute left-1 top-1 opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
-                        </div>
-                        <span class="flex-1 text-sm font-light text-ink leading-relaxed ${item.done ? 'line-through text-stone-300 decoration-stone-300' : ''}">${item.text}</span>
-                        <button onclick="openConfirmModal('Delete this item?', () => deleteChecklistItem(${index}))" class="text-stone-300 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 px-2"><i class="fa-solid fa-trash-can"></i></button>
+                        ${checklist.map((item, index) => `
+                            <div class="flex items-start gap-3 p-3 rounded-lg hover:bg-white transition-colors group relative border border-transparent hover:border-stone-100">
+                                <div class="relative flex items-center mt-1 cursor-pointer">
+                                    <input type="checkbox" onchange="toggleCheck(${index})" class="peer appearance-none w-5 h-5 border border-stone-300 rounded checked:bg-bronze checked:border-bronze transition-all" ${item.done ? 'checked' : ''}>
+                                    <i class="fa-solid fa-check text-white text-xs absolute left-1 top-1 opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
+                                </div>
+                                <span class="flex-1 text-sm font-light text-ink leading-relaxed ${item.done ? 'line-through text-stone-300 decoration-stone-300' : ''}">${item.text}</span>
+                                <button onclick="confirmDeleteChecklistItem(${index})" class="text-stone-300 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 px-2"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        `).join('')}
                     </div>
                 `;
-            });
+            } else {
+                // Shopping List Render
+                 html += `
+                    <div class="text-xs text-stone-400 mb-4 font-mono tracking-widest text-center">SOUVENIRS & GIFTS</div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-stone-100 mb-6">
+                        <div class="flex gap-2 mb-2">
+                            <input type="text" id="new-shop-item" placeholder="Item name..." class="flex-[2] bg-stone-50 border-b border-stone-300 py-2 px-3 focus:border-bronze outline-none text-sm font-serif rounded">
+                            <input type="number" id="new-shop-price" placeholder="¥ Est." class="flex-1 bg-stone-50 border-b border-stone-300 py-2 px-3 focus:border-bronze outline-none text-sm font-serif rounded">
+                        </div>
+                        <button onclick="addShoppingItem()" class="w-full bg-ink text-white py-2 rounded text-xs uppercase font-bold tracking-widest hover:bg-black">Add to List</button>
+                    </div>
 
-            html += `</div>
-            
+                    <div class="space-y-2 mb-6">
+                        ${shoppingList.map((item, index) => `
+                            <div class="flex items-center gap-3 p-3 rounded-lg bg-white border border-stone-100 shadow-sm group">
+                                <div class="relative flex items-center cursor-pointer">
+                                    <input type="checkbox" onchange="toggleShopCheck(${index})" class="peer appearance-none w-5 h-5 border border-stone-300 rounded checked:bg-accent checked:border-accent transition-all" ${item.done ? 'checked' : ''}>
+                                    <i class="fa-solid fa-check text-white text-xs absolute left-1 top-1 opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-sm font-serif text-ink ${item.done ? 'line-through text-stone-300' : ''}">${item.text}</div>
+                                </div>
+                                <div class="text-xs font-mono text-stone-500">¥${(item.price || 0).toLocaleString()}</div>
+                                <button onclick="confirmDeleteShoppingItem(${index})" class="text-stone-300 hover:text-red-400 px-2"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        `).join('')}
+                        ${shoppingList.length === 0 ? '<div class="text-center text-stone-300 text-xs py-4">No items yet.</div>' : ''}
+                    </div>
+
+                    <div class="bg-stone-100 p-4 rounded-xl flex justify-between items-center">
+                        <span class="text-xs font-bold text-stone-500 uppercase tracking-widest">Estimated Total</span>
+                        <span class="text-xl font-serif font-bold text-ink">¥ ${shoppingTotal.toLocaleString()}</span>
+                    </div>
+                 `;
+            }
+
+            html += `
             <!-- Memo Pad -->
-            <div class="bg-white rounded-lg shadow-sm border border-stone-100 overflow-hidden">
+            <div class="bg-white rounded-lg shadow-sm border border-stone-100 overflow-hidden mt-8">
                 <div class="bg-[#F9F8F6] px-4 py-2 border-b border-stone-100 flex items-center justify-between">
                     <span class="text-xs font-bold text-stone-400 uppercase tracking-widest">MEMO / NOTES</span>
                     <i class="fa-regular fa-note-sticky text-stone-300"></i>
@@ -604,28 +728,7 @@
                         if (e.method === 'cash') { iconClass = 'fa-coins text-yellow-600'; iconBg = 'bg-yellow-50'; }
                         else if (e.method === 'card') { iconClass = 'fa-credit-card text-blue-600'; iconBg = 'bg-blue-50'; }
                         else { iconClass = 'fa-train text-green-600'; iconBg = 'bg-green-50'; }
-                        return `
-                        <div class="flex justify-between items-center py-3 border-b border-stone-200/50 group">
-                            <div class="flex items-center gap-3">
-                                <div class="w-9 h-9 rounded-full ${iconBg} flex items-center justify-center ${iconClass} text-sm">
-                                    <i class="fa-solid ${e.method === 'card' ? 'fa-regular fa-credit-card' : (e.method === 'suica' ? 'fa-train' : 'fa-coins')}"></i>
-                                </div>
-                                <div>
-                                    <div class="font-serif text-ink">${e.desc}</div>
-                                    <div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <div class="text-right">
-                                    <div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div>
-                                    <div class="text-[10px] text-stone-400">NT$ ${Math.round(e.amount * exchangeRate).toLocaleString()}</div>
-                                </div>
-                                <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button onclick="openEditExpenseModal(${e.id})" class="text-stone-300 hover:text-ink text-xs p-1"><i class="fa-solid fa-pen"></i></button>
-                                    <button onclick="openConfirmModal('Delete this expense record?', () => deleteExpense(${e.id}))" class="text-stone-300 hover:text-red-500 text-xs p-1"><i class="fa-solid fa-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>`
+                        return `<div class="flex justify-between items-center py-3 border-b border-stone-200/50 group"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full ${iconBg} flex items-center justify-center ${iconClass} text-sm"><i class="fa-solid ${e.method === 'card' ? 'fa-regular fa-credit-card' : (e.method === 'suica' ? 'fa-train' : 'fa-coins')}"></i></div><div><div class="font-serif text-ink">${e.desc}</div><div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div></div></div><div class="text-right"><div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div><div class="text-[10px] text-stone-400">NT$ ${Math.round(e.amount * exchangeRate).toLocaleString()}</div></div></div>`
                     }).join('') || '<div class="text-center text-stone-300 text-sm py-10 italic">No records found.</div>'}</div>
                 </div>
             `;
@@ -647,7 +750,7 @@
                             <div class="bg-white rounded-l border-l-4 border-bronze shadow-sm p-5 relative overflow-hidden group hover:shadow-md transition-all cursor-pointer" onclick="openEditDocModal(${index})">
                                 <div class="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <button onclick="openEditDocModal(${index}); event.stopPropagation();" class="text-stone-400 hover:text-ink"><i class="fa-solid fa-pen"></i></button>
-                                    <button onclick="openConfirmModal('Delete this document?', () => deleteDoc(${index})); event.stopPropagation();" class="text-stone-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button>
+                                    <button onclick="confirmDeleteDoc(${index}); event.stopPropagation();" class="text-stone-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                                 <div class="flex items-start gap-4">
                                     <div class="w-12 h-12 rounded-full bg-paper flex items-center justify-center text-xl text-ink"><i class="fa-solid ${getDocIcon(doc.type)}"></i></div>
@@ -684,13 +787,6 @@
                 <div class="bg-stone-50 p-3 rounded-lg mb-6 flex gap-4"><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bookingStatus" value="flexible" ${event.bookingStatus !== 'fixed' ? 'checked' : ''} class="accent-bronze"><span class="text-sm text-stone-600">Flexible</span></label><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bookingStatus" value="fixed" ${event.bookingStatus === 'fixed' ? 'checked' : ''} class="accent-bronze"><span class="text-sm font-bold text-ink">Fixed / Booked</span></label></div>
                 <div id="transport-fields" class="${event.type === 'transport' ? '' : 'hidden'} border border-stone-200 rounded-lg p-4 mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Transport Mode</label><select id="edit-transport-type" class="w-full text-base border-b border-stone-200 pb-1 mb-3 bg-transparent"><option value="train" ${event.transportType === 'train' ? 'selected' : ''}>Train / Subway</option><option value="bus" ${event.transportType === 'bus' ? 'selected' : ''}>Bus</option><option value="walk" ${event.transportType === 'walk' ? 'selected' : ''}>Walk</option><option value="charter" ${event.transportType === 'charter' ? 'selected' : ''}>Charter / Taxi</option><option value="flight" ${event.transportType === 'flight' ? 'selected' : ''}>Flight</option></select><input type="text" id="edit-transport-route" value="${event.transportRoute || ''}" placeholder="Route (e.g. Hotel -> Station)" class="w-full text-sm border-b border-stone-200 pb-1 bg-transparent"></div>
                 <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Event Title</label><input type="text" id="edit-title" value="${event.title}" class="w-full text-2xl font-serif font-bold text-ink border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
-                
-                <div class="mb-6">
-                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.title + ' Hokkaido')}" target="_blank" class="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 font-medium border border-blue-100 bg-blue-50 px-3 py-2 rounded-lg transition-colors">
-                        <i class="fa-solid fa-map-location-dot"></i> View on Google Maps
-                    </a>
-                </div>
-
                 <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Opening Hours</label><input type="text" id="edit-hours" value="${event.openingHours || ''}" placeholder="e.g. 09:00 - 18:00" class="w-full text-sm font-mono text-stone-500 border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
                 <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Description</label><textarea id="edit-desc" rows="3" class="w-full text-base text-stone-600 border-b border-stone-300 focus:border-bronze outline-none bg-transparent resize-none">${event.desc}</textarea></div>
                 <div class="mb-8 flex flex-col gap-3">
@@ -705,7 +801,7 @@
                         <span class="text-sm text-stone-500 group-hover:text-bronze transition-colors">Show Google Map Button</span>
                     </label>
                 </div>
-                <div class="flex justify-between items-center pt-4 border-t border-stone-100"><button onclick="openConfirmModal('Delete this event?', () => deleteEvent(${dayIndex}, ${eventIndex}))" class="text-xs text-red-400 hover:text-red-600 uppercase tracking-widest font-bold px-2 py-2">Delete</button><button onclick="saveEvent(${dayIndex}, ${eventIndex})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Changes</button></div>
+                <div class="flex justify-between items-center pt-4 border-t border-stone-100"><button onclick="confirmDeleteEvent(${dayIndex}, ${eventIndex})" class="text-xs text-red-400 hover:text-red-600 uppercase tracking-widest font-bold px-2 py-2">Delete</button><button onclick="saveEvent(${dayIndex}, ${eventIndex})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Changes</button></div>
             `);
         }
 
@@ -737,79 +833,6 @@
                 </div>
                 <div class="flex justify-end items-center pt-4 border-t border-stone-100"><button onclick="createNewEvent()" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Add Event</button></div>
             `);
-        }
-
-        // --- NEW EXPENSE EDIT MODAL ---
-        function openEditExpenseModal(id) {
-            const expense = expenses.find(e => e.id === id);
-            if (!expense) return;
-
-            showModal(`
-                <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
-                <h2 class="font-serif text-3xl text-ink mb-6 italic border-b border-stone-200 pb-2">Edit Expense</h2>
-                
-                <div class="mb-6">
-                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Item Name</label>
-                    <input type="text" id="edit-exp-name" value="${expense.desc}" class="w-full text-xl font-serif border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
-                </div>
-
-                <div class="mb-6">
-                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Amount (JPY)</label>
-                    <input type="number" id="edit-exp-amount" value="${expense.amount}" class="w-full text-2xl font-serif font-bold text-ink border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
-                </div>
-
-                <div class="mb-6">
-                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Payment Method</label>
-                    <select id="edit-exp-method" class="w-full text-lg font-serif border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
-                        <option value="cash" ${expense.method === 'cash' ? 'selected' : ''}>Cash</option>
-                        <option value="card" ${expense.method === 'card' ? 'selected' : ''}>Card</option>
-                        <option value="suica" ${expense.method === 'suica' ? 'selected' : ''}>Suica</option>
-                    </select>
-                </div>
-
-                <div class="mb-8">
-                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Date</label>
-                    <input type="date" id="edit-exp-date" value="${new Date(expense.date).toISOString().split('T')[0]}" class="w-full text-base font-serif text-stone-600 border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent">
-                </div>
-
-                <div class="flex justify-between items-center pt-4 border-t border-stone-100">
-                    <button onclick="closeModal()" class="text-xs text-stone-400 hover:text-ink uppercase tracking-widest font-bold px-2 py-2">Cancel</button>
-                    <button onclick="saveExpense(${id})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Update</button>
-                </div>
-            `);
-        }
-
-        function saveExpense(id) {
-            const name = document.getElementById('edit-exp-name').value;
-            const amount = parseFloat(document.getElementById('edit-exp-amount').value);
-            const method = document.getElementById('edit-exp-method').value;
-            const date = document.getElementById('edit-exp-date').value;
-
-            if (!name || isNaN(amount) || !date) {
-                alert("Please fill in all fields");
-                return;
-            }
-
-            const expenseIndex = expenses.findIndex(e => e.id === id);
-            if (expenseIndex !== -1) {
-                expenses[expenseIndex] = {
-                    ...expenses[expenseIndex],
-                    desc: name,
-                    amount: amount,
-                    method: method,
-                    date: new Date(date).toISOString()
-                };
-                saveAll();
-                renderWallet();
-                closeModal();
-            }
-        }
-
-        function deleteExpense(id) {
-            expenses = expenses.filter(e => e.id !== id);
-            saveAll();
-            renderWallet();
-            closeModal(); // Close confirm modal
         }
 
         function openAddDocModal() {
@@ -889,11 +912,14 @@
             renderDocs();
         }
 
+        function confirmDeleteDoc(index) {
+            openConfirmModal('Delete this document?', function() { deleteDoc(index); });
+        }
+
         function deleteDoc(index) {
             documents.splice(index, 1);
             saveAll();
             renderDocs();
-            closeModal(); // Close confirm modal
         }
 
         function openBudgetModal() {
@@ -988,10 +1014,13 @@
             switchDay(dayIndex);
         }
 
+        function confirmDeleteEvent(dayIndex, eventIndex) {
+            openConfirmModal('Delete this event?', function() { deleteEvent(dayIndex, eventIndex); });
+        }
+
         function deleteEvent(dayIndex, eventIndex) {
             itinerary[dayIndex].events.splice(eventIndex, 1);
             saveAll();
-            closeModal();
             renderPlan();
         }
         
@@ -1070,6 +1099,12 @@
             }
         }
 
+        // --- LISTS TAB SWITCHING ---
+        function switchListTab(tab) {
+            activeListTab = tab;
+            renderLists();
+        }
+
         function toggleCheck(index) { checklist[index].done = !checklist[index].done; saveAll(); renderLists(); }
 
         function addChecklistItem() {
@@ -1082,11 +1117,42 @@
             }
         }
 
+        function confirmDeleteChecklistItem(index) {
+            openConfirmModal('Delete this item?', function() { deleteChecklistItem(index); });
+        }
+
         function deleteChecklistItem(index) {
             checklist.splice(index, 1);
             saveAll();
             renderLists();
-            closeModal(); // Close confirm modal
+        }
+
+        function addShoppingItem() {
+            const input = document.getElementById('new-shop-item');
+            const priceInput = document.getElementById('new-shop-price');
+            const text = input.value.trim();
+            const price = parseFloat(priceInput.value) || 0;
+            if(text) {
+                shoppingList.push({ text: text, price: price, done: false });
+                saveAll();
+                renderLists();
+            }
+        }
+
+        function toggleShopCheck(index) {
+            shoppingList[index].done = !shoppingList[index].done;
+            saveAll();
+            renderLists();
+        }
+
+        function confirmDeleteShoppingItem(index) {
+            openConfirmModal('Delete shopping item?', function() { deleteShoppingItem(index); });
+        }
+
+        function deleteShoppingItem(index) {
+            shoppingList.splice(index, 1);
+            saveAll();
+            renderLists();
         }
 
         function saveMemos(value) {
