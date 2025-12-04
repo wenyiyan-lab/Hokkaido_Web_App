@@ -242,7 +242,9 @@
         ];
 
         const DEFAULT_CHECKLIST = [
-            { text: "護照（有效期限6個月以上）", done: false }, { text: "身分證影本", done: false }, { text: "機票／電子登機證", done: false }, { text: "飯店預約資訊", done: false }, { text: "旅責險／旅平險保單", done: false }, { text: "日幣現金", done: false }, { text: "信用卡（Visa / JCB）", done: false }, { text: "西瓜卡 Suica / Kitaca", done: false }, { text: "行動電源", done: false }, { text: "充電線", done: false }, { text: "iPhone / Apple Watch 充電器", done: false }, { text: "相機 / 記憶卡", done: false }, { text: "耳機", done: false }, { text: "口罩", done: false }, { text: "濕紙巾／酒精", done: false }, { text: "小藥包", done: false }, { text: "Lucas 的個人用品", done: false }, { text: "發熱衣 2–3件", done: false }, { text: "羊毛針織或保暖中層", done: false }, { text: "羽絨外套", done: false }, { text: "保暖褲／刷毛褲", done: false }, { text: "厚襪／羊毛襪 3–5雙", done: false }, { text: "帽子", done: false }, { text: "圍巾", done: false }, { text: "手套", done: false }, { text: "防滑雪靴", done: false }, { text: "洗面乳", done: false }, { text: "乳液（極潤）", done: false }, { text: "護唇膏", done: false }, { text: "防曬乳", done: false }, { text: "卸妝用品", done: false }, { text: "牙膏牙刷", done: false }, { text: "髮油或整髮用品", done: false }, { text: "保養品", done: false }, { text: "折疊雨傘", done: false }, { text: "小玩具", done: false }, { text: "折凳", done: false }, { text: "夾鏈袋", done: false }
+            { text: "護照（有效期限6個月以上）", done: false }, { text: "身分證影本", done: false }, { text: "機票／電子登機證", done: false }, { text: "飯店預約資訊", done: false }, { text: "旅責險／旅平險保單", done: false }, { text: "日幣現金", done: false }, { text: "信用卡（Visa / JCB）", done: false }, { text: "西瓜卡 Suica / Kitaca", done: false }, { text: "行動電源", done: false }, { text: "充電線", done: false }, { text: "iPhone / Apple Watch 充電器", done: false }, { text: "相機 / 記憶卡", done: false }, { text: "耳機", done: false }, { text: "口罩", done: false }, { text: "濕紙巾／酒精", done: false }, { text: "小藥包", done: false }, 
+            { text: "墨鏡", done: false }, { text: "汙衣袋", done: false }, { text: "洗碗精", done: false }, { text: "眼鏡", done: false }, { text: "隱形眼鏡", done: false },
+            { text: "發熱衣 2–3件", done: false }, { text: "羊毛針織或保暖中層", done: false }, { text: "羽絨外套", done: false }, { text: "保暖褲／刷毛褲", done: false }, { text: "厚襪／羊毛襪 3–5雙", done: false }, { text: "帽子", done: false }, { text: "圍巾", done: false }, { text: "手套", done: false }, { text: "防滑雪靴", done: false }, { text: "洗面乳", done: false }, { text: "乳液（極潤）", done: false }, { text: "護唇膏", done: false }, { text: "防曬乳", done: false }, { text: "卸妝用品", done: false }, { text: "牙膏牙刷", done: false }, { text: "髮油或整髮用品", done: false }, { text: "保養品", done: false }, { text: "折疊雨傘", done: false }, { text: "小玩具", done: false }, { text: "折凳", done: false }, { text: "夾鏈袋", done: false }
         ];
 
         // State
@@ -275,7 +277,8 @@
 
         let memos = localStorage.getItem('memos') || "";
         let exchangeRate = parseFloat(localStorage.getItem('exchangeRate')) || 0.215;
-        let documents = JSON.parse(localStorage.getItem('documents_v2')) || [
+        // Update documents_v3 to include new record
+        let documents = JSON.parse(localStorage.getItem('documents_v3')) || [
             {id: 1, title: '機票訂位(燦星)', type: 'flight', bookingId: '00146092', link: 'https://drive.google.com/file/d/1JsNjzrh-3QQL8e-hihzgXAWqvbNAI1TR/view?usp=drive_link'},
             {id: 2, title: '電子機票(廖浚錴)', type: 'flight', bookingId: '6MP7BS', link: 'https://drive.google.com/file/d/1mqhIXUaqgzG2-2lKRkdP_2LDG5wDWzI6/view?usp=drive_link'},
             {id: 3, title: '電子機票(廖尉翔)', type: 'flight', bookingId: '6MP7BS', link: 'https://drive.google.com/file/d/1cogmQC93_hViNbxSH6OntxI7T3Nc6554/view?usp=drive_link'},
@@ -285,6 +288,7 @@
             {id: 7, title: '洞爺湖湯屋預約紀錄', type: 'hotel', bookingId: '', link: 'https://drive.google.com/file/d/1dWU_FbmHBEgW1xbse5Ah6Mc5jhCCclNW/view?usp=drive_link'},
             {id: 8, title: '乃之風到札幌接駁預約紀錄', type: 'file', bookingId: '', link: 'https://drive.google.com/file/d/1HEXWN2-l05RighTOIViwmgAPEAfq7JmW/view?usp=drive_link'},
             {id: 9, title: 'VESSEL1225至1228廖訂房紀錄', type: 'hotel', bookingId: '2438-7225-9949', link: 'https://drive.google.com/file/d/1VAgAtjc0BOlCI6iEoj1rCAse0tP2bEsf/view?usp=drive_link'},
+            {id: 17, title: 'VESSEL1225至1228張訂房紀錄', type: 'hotel', bookingId: '2438-7332-9820', link: 'https://drive.google.com/file/d/177-qghodjcjVDKe9kcJWk2xaKRjNmJ3l/view?usp=drive_link'},
             {id: 10, title: 'VESSEL1228至1229張訂房紀錄', type: 'hotel', bookingId: '2441-3249-1571', link: 'https://drive.google.com/file/d/1b6k_yf6I-BRjoXYG-0qFbm-q6Jn69NRj/view?usp=drive_link'},
             {id: 11, title: 'VESSEL1228至1229廖訂房紀錄', type: 'hotel', bookingId: '2441-3248-7585', link: 'https://drive.google.com/file/d/1EwwjAn_FBCKu3J8BYAnPrXpcE7pXbaVq/view?usp=drive_link'},
             {id: 12, title: '四季彩之秋預約紀錄', type: 'file', bookingId: '', link: 'https://drive.google.com/file/d/1VVvtUy7Ruxu43YvRXXTi9heut_0NeDXF/view?usp=drive_link'},
@@ -308,7 +312,7 @@
             localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
             localStorage.setItem('memos', memos);
             localStorage.setItem('exchangeRate', exchangeRate);
-            localStorage.setItem('documents_v2', JSON.stringify(documents)); 
+            localStorage.setItem('documents_v3', JSON.stringify(documents)); 
             localStorage.setItem('initialBudget', initialBudget);
         }
 
@@ -549,6 +553,14 @@
                              <i class="fa-brands fa-youtube text-2xl text-red-500 mb-2"></i>
                              <div class="text-xs font-bold text-ink">藻岩山</div>
                          </a>
+                         <a href="https://www.youtube.com/watch?v=CF1vS8DdBIk" target="_blank" class="bg-white border border-stone-200 rounded-xl p-3 flex flex-col items-center text-center hover:border-red-500 transition-all">
+                             <i class="fa-brands fa-youtube text-2xl text-red-500 mb-2"></i>
+                             <div class="text-xs font-bold text-ink">狸小路</div>
+                         </a>
+                         <a href="https://www.youtube.com/watch?v=0NAE8CwRQ68" target="_blank" class="bg-white border border-stone-200 rounded-xl p-3 flex flex-col items-center text-center hover:border-red-500 transition-all">
+                             <i class="fa-brands fa-youtube text-2xl text-red-500 mb-2"></i>
+                             <div class="text-xs font-bold text-ink">旭川</div>
+                         </a>
                     </div>
 
                     <h2 class="font-serif text-3xl font-bold text-ink mb-6">官方即時資訊連結</h2>
@@ -560,8 +572,8 @@
 
                     <h2 class="font-serif text-3xl font-bold text-ink mb-6 mt-8">緊急聯絡與救援</h2>
                     <div class="space-y-3">
-                        <div class="bg-red-50 border border-red-100 p-4 rounded-xl flex justify-between items-center"><div><div class="font-bold text-red-800">緊急報案 (警察)</div><div class="text-xs text-red-600">Police (與台灣相同)</div></div><a href="tel:110" class="bg-red-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-red-600 transition-colors"><i class="fa-solid fa-phone mr-1"></i> 110 (與台灣相同)</a></div>
-                        <div class="bg-red-50 border border-red-100 p-4 rounded-xl flex justify-between items-center"><div><div class="font-bold text-red-800">火警 / 救護車</div><div class="text-xs text-red-600">Fire / Ambulance (與台灣相同)</div></div><a href="tel:119" class="bg-red-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-red-600 transition-colors"><i class="fa-solid fa-phone mr-1"></i> 119 (與台灣相同)</a></div>
+                        <div class="bg-red-50 border border-red-100 p-4 rounded-xl flex justify-between items-center"><div><div class="font-bold text-red-800">緊急報案 (警察)</div><div class="text-xs text-red-600">Police</div></div><a href="tel:110" class="bg-red-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-red-600 transition-colors"><i class="fa-solid fa-phone mr-1"></i> 110</a></div>
+                        <div class="bg-red-50 border border-red-100 p-4 rounded-xl flex justify-between items-center"><div><div class="font-bold text-red-800">火警 / 救護車</div><div class="text-xs text-red-600">Fire / Ambulance</div></div><a href="tel:119" class="bg-red-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-red-600 transition-colors"><i class="fa-solid fa-phone mr-1"></i> 119</a></div>
                         <div class="bg-white border border-stone-200 p-4 rounded-xl shadow-sm"><div class="flex items-start gap-3 mb-2"><div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-building-flag"></i></div><div><div class="font-bold text-ink">台北駐日經濟文化代表處 (札幌分處)</div><div class="text-xs text-stone-500">遺失護照、急難救助</div></div></div><div class="pl-13 space-y-2"><a href="tel:+81-11-222-2930" class="block text-sm text-stone-600 hover:text-bronze"><i class="fa-solid fa-phone mr-2 w-4"></i> 011-222-2930 (上班時間)</a><a href="tel:+81-80-1460-2568" class="block text-sm text-red-500 hover:text-red-700 font-bold"><i class="fa-solid fa-mobile-screen mr-2 w-4"></i> 080-1460-2568 (緊急聯絡)</a><a href="https://maps.app.goo.gl/6QxJ8Z8Q8Q8Q8Q8Q8" target="_blank" class="block text-xs text-stone-400 hover:text-stone-600 mt-1"><i class="fa-solid fa-location-dot mr-2 w-4"></i> 札幌市中央區北4條西4丁目1番地 伊藤大樓5樓</a></div></div>
                         <div class="bg-white border border-stone-200 p-4 rounded-xl shadow-sm flex justify-between items-center"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-stone-100 text-stone-500 rounded-full flex items-center justify-center"><i class="fa-solid fa-headset"></i></div><div><div class="font-bold text-ink">日本旅遊諮詢熱線</div><div class="text-xs text-stone-500">JNTO (24小時/中英日)</div></div></div><a href="tel:050-3816-2787" class="text-stone-400 hover:text-ink text-xl"><i class="fa-solid fa-phone"></i></a></div>
                     </div>
@@ -598,7 +610,7 @@
                                     <i class="fa-solid fa-check text-white text-xs absolute left-1 top-1 opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
                                 </div>
                                 <span class="flex-1 text-sm font-light text-ink leading-relaxed ${item.done ? 'line-through text-stone-300 decoration-stone-300' : ''}">${item.text}</span>
-                                <button onclick="confirmDeleteChecklistItem(${index})" class="text-stone-300 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 px-2"><i class="fa-solid fa-trash-can"></i></button>
+                                <button onclick="openConfirmModal('Delete this item?', () => deleteChecklistItem(${index}))" class="text-stone-300 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 px-2"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                         `).join('')}
                     </div>
@@ -626,7 +638,7 @@
                                     <div class="text-sm font-serif text-ink ${item.done ? 'line-through text-stone-300' : ''}">${item.text}</div>
                                 </div>
                                 <div class="text-xs font-mono text-stone-500">¥${(item.price || 0).toLocaleString()}</div>
-                                <button onclick="confirmDeleteShoppingItem(${index})" class="text-stone-300 hover:text-red-400 px-2"><i class="fa-solid fa-trash-can"></i></button>
+                                <button onclick="openConfirmModal('Delete shopping item?', () => deleteShoppingItem(${index}))" class="text-stone-300 hover:text-red-400 px-2"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                         `).join('')}
                         ${shoppingList.length === 0 ? '<div class="text-center text-stone-300 text-xs py-4">No items yet.</div>' : ''}
@@ -681,6 +693,7 @@
                         <div class="absolute -right-4 -bottom-4 text-9xl text-white/5"><i class="fa-solid fa-yen-sign"></i></div>
                         
                         <!-- Top Right Edit Button -->
+                        <button onclick="openBudgetModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
                         <button onclick="openBudgetModal()" class="absolute top-4 right-4 text-[10px] border border-stone-600 px-2 py-1 rounded hover:bg-stone-800 transition-colors bg-stone-900/50 backdrop-blur-sm">
                             <i class="fa-solid fa-pen mr-1"></i> 設定初始金額
                         </button>
@@ -728,7 +741,28 @@
                         if (e.method === 'cash') { iconClass = 'fa-coins text-yellow-600'; iconBg = 'bg-yellow-50'; }
                         else if (e.method === 'card') { iconClass = 'fa-credit-card text-blue-600'; iconBg = 'bg-blue-50'; }
                         else { iconClass = 'fa-train text-green-600'; iconBg = 'bg-green-50'; }
-                        return `<div class="flex justify-between items-center py-3 border-b border-stone-200/50 group"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full ${iconBg} flex items-center justify-center ${iconClass} text-sm"><i class="fa-solid ${e.method === 'card' ? 'fa-regular fa-credit-card' : (e.method === 'suica' ? 'fa-train' : 'fa-coins')}"></i></div><div><div class="font-serif text-ink">${e.desc}</div><div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div></div></div><div class="text-right"><div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div><div class="text-[10px] text-stone-400">NT$ ${Math.round(e.amount * exchangeRate).toLocaleString()}</div></div></div>`
+                        return `
+                        <div class="flex justify-between items-center py-3 border-b border-stone-200/50 group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-full ${iconBg} flex items-center justify-center ${iconClass} text-sm">
+                                    <i class="fa-solid ${e.method === 'card' ? 'fa-regular fa-credit-card' : (e.method === 'suica' ? 'fa-train' : 'fa-coins')}"></i>
+                                </div>
+                                <div>
+                                    <div class="font-serif text-ink">${e.desc}</div>
+                                    <div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="text-right">
+                                    <div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div>
+                                    <div class="text-[10px] text-stone-400">NT$ ${Math.round(e.amount * exchangeRate).toLocaleString()}</div>
+                                </div>
+                                <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onclick="openEditExpenseModal(${e.id})" class="text-stone-300 hover:text-ink text-xs p-1"><i class="fa-solid fa-pen"></i></button>
+                                    <button onclick="openConfirmModal('Delete this expense record?', () => deleteExpense(${e.id}))" class="text-stone-300 hover:text-red-500 text-xs p-1"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>`
                     }).join('') || '<div class="text-center text-stone-300 text-sm py-10 italic">No records found.</div>'}</div>
                 </div>
             `;
@@ -750,7 +784,7 @@
                             <div class="bg-white rounded-l border-l-4 border-bronze shadow-sm p-5 relative overflow-hidden group hover:shadow-md transition-all cursor-pointer" onclick="openEditDocModal(${index})">
                                 <div class="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <button onclick="openEditDocModal(${index}); event.stopPropagation();" class="text-stone-400 hover:text-ink"><i class="fa-solid fa-pen"></i></button>
-                                    <button onclick="confirmDeleteDoc(${index}); event.stopPropagation();" class="text-stone-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button>
+                                    <button onclick="openConfirmModal('Delete this document?', () => deleteDoc(${index})); event.stopPropagation();" class="text-stone-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                                 <div class="flex items-start gap-4">
                                     <div class="w-12 h-12 rounded-full bg-paper flex items-center justify-center text-xl text-ink"><i class="fa-solid ${getDocIcon(doc.type)}"></i></div>
@@ -777,6 +811,7 @@
         function openEditEventModal(dayIndex, eventIndex) {
             const event = itinerary[dayIndex].events[eventIndex];
             showModal(`
+                <button onclick="closeModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-ink transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
                 <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
                 <h2 class="font-serif text-3xl text-ink mb-6 italic border-b border-stone-200 pb-2">Edit Event</h2>
                 <div class="flex gap-4 mb-6">
@@ -787,6 +822,13 @@
                 <div class="bg-stone-50 p-3 rounded-lg mb-6 flex gap-4"><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bookingStatus" value="flexible" ${event.bookingStatus !== 'fixed' ? 'checked' : ''} class="accent-bronze"><span class="text-sm text-stone-600">Flexible</span></label><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bookingStatus" value="fixed" ${event.bookingStatus === 'fixed' ? 'checked' : ''} class="accent-bronze"><span class="text-sm font-bold text-ink">Fixed / Booked</span></label></div>
                 <div id="transport-fields" class="${event.type === 'transport' ? '' : 'hidden'} border border-stone-200 rounded-lg p-4 mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Transport Mode</label><select id="edit-transport-type" class="w-full text-base border-b border-stone-200 pb-1 mb-3 bg-transparent"><option value="train" ${event.transportType === 'train' ? 'selected' : ''}>Train / Subway</option><option value="bus" ${event.transportType === 'bus' ? 'selected' : ''}>Bus</option><option value="walk" ${event.transportType === 'walk' ? 'selected' : ''}>Walk</option><option value="charter" ${event.transportType === 'charter' ? 'selected' : ''}>Charter / Taxi</option><option value="flight" ${event.transportType === 'flight' ? 'selected' : ''}>Flight</option></select><input type="text" id="edit-transport-route" value="${event.transportRoute || ''}" placeholder="Route (e.g. Hotel -> Station)" class="w-full text-sm border-b border-stone-200 pb-1 bg-transparent"></div>
                 <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Event Title</label><input type="text" id="edit-title" value="${event.title}" class="w-full text-2xl font-serif font-bold text-ink border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
+                
+                <div class="mb-6">
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.title + ' Hokkaido')}" target="_blank" class="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 font-medium border border-blue-100 bg-blue-50 px-3 py-2 rounded-lg transition-colors">
+                        <i class="fa-solid fa-map-location-dot"></i> View on Google Maps
+                    </a>
+                </div>
+
                 <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Opening Hours</label><input type="text" id="edit-hours" value="${event.openingHours || ''}" placeholder="e.g. 09:00 - 18:00" class="w-full text-sm font-mono text-stone-500 border-b border-stone-300 pb-1 focus:border-bronze outline-none bg-transparent"></div>
                 <div class="mb-6"><label class="text-[10px] font-bold text-stone-400 uppercase mb-1 block">Description</label><textarea id="edit-desc" rows="3" class="w-full text-base text-stone-600 border-b border-stone-300 focus:border-bronze outline-none bg-transparent resize-none">${event.desc}</textarea></div>
                 <div class="mb-8 flex flex-col gap-3">
@@ -801,12 +843,13 @@
                         <span class="text-sm text-stone-500 group-hover:text-bronze transition-colors">Show Google Map Button</span>
                     </label>
                 </div>
-                <div class="flex justify-between items-center pt-4 border-t border-stone-100"><button onclick="confirmDeleteEvent(${dayIndex}, ${eventIndex})" class="text-xs text-red-400 hover:text-red-600 uppercase tracking-widest font-bold px-2 py-2">Delete</button><button onclick="saveEvent(${dayIndex}, ${eventIndex})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Changes</button></div>
+                <div class="flex justify-between items-center pt-4 border-t border-stone-100"><button onclick="openConfirmModal('Delete this event?', () => deleteEvent(${dayIndex}, ${eventIndex}))" class="text-xs text-red-400 hover:text-red-600 uppercase tracking-widest font-bold px-2 py-2">Delete</button><button onclick="saveEvent(${dayIndex}, ${eventIndex})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Changes</button></div>
             `);
         }
 
         function openAddEventModal(dayIndex) {
             showModal(`
+                <button onclick="closeModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-ink transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
                 <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
                 <h2 class="font-serif text-3xl text-ink mb-6 italic border-b border-stone-200 pb-2">Add Event</h2>
                 <div class="flex gap-4 mb-6">
@@ -844,6 +887,7 @@
             const doc = isEdit ? documents[index] : { type: 'flight', title: '', bookingId: '', link: '' };
             
             showModal(`
+                 <button onclick="closeModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-ink transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
                  <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
                  <h2 class="font-serif text-3xl text-ink mb-2 italic">${isEdit ? 'Edit Document' : 'Add Document'}</h2>
                  <hr class="border-stone-200 mb-6">
@@ -912,18 +956,16 @@
             renderDocs();
         }
 
-        function confirmDeleteDoc(index) {
-            openConfirmModal('Delete this document?', function() { deleteDoc(index); });
-        }
-
         function deleteDoc(index) {
             documents.splice(index, 1);
             saveAll();
             renderDocs();
+            closeModal(); // Close confirm modal
         }
 
         function openBudgetModal() {
             showModal(`
+                <button onclick="closeModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-ink transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
                 <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
                 <h2 class="font-serif text-3xl text-ink mb-4 italic text-center">Initial Cash</h2>
                 <hr class="w-16 mx-auto border-stone-300 mb-6">
@@ -939,6 +981,7 @@
 
         function openRateModal() {
             showModal(`
+                <button onclick="closeModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-ink transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
                 <div class="text-center py-8">
                     <div class="mb-4"><i class="fa-solid fa-circle-notch fa-spin text-4xl text-bronze"></i></div>
                     <h3 class="font-serif text-xl text-ink mb-2">Fetching Live Rate...</h3>
@@ -950,6 +993,7 @@
                 exchangeRate = newRate;
                 saveAll();
                 showModal(`
+                    <button onclick="closeModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-ink transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
                     <div class="text-center py-4">
                         <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fa-solid fa-check"></i></div>
                         <h3 class="font-serif text-2xl text-ink mb-1">Rate Updated</h3>
@@ -1014,13 +1058,10 @@
             switchDay(dayIndex);
         }
 
-        function confirmDeleteEvent(dayIndex, eventIndex) {
-            openConfirmModal('Delete this event?', function() { deleteEvent(dayIndex, eventIndex); });
-        }
-
         function deleteEvent(dayIndex, eventIndex) {
             itinerary[dayIndex].events.splice(eventIndex, 1);
             saveAll();
+            closeModal();
             renderPlan();
         }
         
