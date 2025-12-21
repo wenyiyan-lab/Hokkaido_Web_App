@@ -887,70 +887,142 @@
              appContent.innerHTML = html;
         }
 
+        function openSubwayMap() {
+            window.open('https://www.city.sapporo.jp/st/subway/route_time/documents/subway_route_map_en.pdf', '_blank');
+        }
+
         function renderWeather() {
             setActiveTab('weather');
+            
+            const today = new Date();
+            const month = today.getMonth() + 1;
+            const date = today.getDate();
+            const todayString = `${month}/${date}`;
+
+            // Fixed dates for the trip
+            const weekDates = ['12/24', '12/25', '12/26', '12/27', '12/28', '12/29'];
+            
+            // Forecast data aligned with 12/24 - 12/29
+            const forecastData = {
+                '札幌 (Sapporo)': [
+                    { icon: 'fa-cloud-rain', text: '7°/1°', cond: '偶雨' },       // 12/24
+                    { icon: 'fa-cloud-rain', text: '5°/-3°', cond: '雨夾雪' },    // 12/25
+                    { icon: 'fa-snowflake', text: '-3°/-7°', cond: '轉雪' },      // 12/26
+                    { icon: 'fa-snowflake', text: '-3°/-8°', cond: '雪' },        // 12/27
+                    { icon: 'fa-snowflake', text: '-2°/-6°', cond: '小雪' },      // 12/28
+                    { icon: 'fa-cloud', text: '-1°/-5°', cond: '多雲' }           // 12/29
+                ],
+                '洞爺湖 (Lake Toya)': [
+                    { icon: 'fa-cloud-rain', text: '8°/-2°', cond: '雨天' },      // 12/24
+                    { icon: 'fa-cloud', text: '2°/-5°', cond: '陰天' },           // 12/25
+                    { icon: 'fa-snowflake', text: '-1°/-6°', cond: '小雪' },      // 12/26
+                    { icon: 'fa-snowflake', text: '-3°/-7°', cond: '雪' },        // 12/27
+                    { icon: 'fa-snowflake', text: '-2°/-6°', cond: '小雪' },      // 12/28
+                    { icon: 'fa-cloud', text: '-1°/-4°', cond: '多雲' }           // 12/29
+                ],
+                '旭川 (Asahikawa)': [
+                    { icon: 'fa-cloud-rain', text: '5°/-7°', cond: '雨夾雪' },    // 12/24
+                    { icon: 'fa-snowflake', text: '2°/-6°', cond: '雪' },         // 12/25
+                    { icon: 'fa-snowflake', text: '-3°/-9°', cond: '大雪' },      // 12/26
+                    { icon: 'fa-snowflake', text: '-5°/-12°', cond: '大雪' },     // 12/27
+                    { icon: 'fa-snowflake', text: '-3°/-10°', cond: '雪' },       // 12/28
+                    { icon: 'fa-snowflake', text: '-2°/-8°', cond: '小雪' }       // 12/29
+                ],
+                '小樽 (Otaru)': [
+                    { icon: 'fa-cloud-rain', text: '8°/-1°', cond: '有雨' },      // 12/24
+                    { icon: 'fa-snowflake', text: '3°/-4°', cond: '雨雪' },       // 12/25
+                    { icon: 'fa-snowflake', text: '-2°/-6°', cond: '風雪' },      // 12/26
+                    { icon: 'fa-snowflake', text: '-3°/-7°', cond: '雪' },        // 12/27
+                    { icon: 'fa-snowflake', text: '-2°/-5°', cond: '小雪' },      // 12/28
+                    { icon: 'fa-cloud', text: '0°/-4°', cond: '陰天' }            // 12/29
+                ]
+            };
+
             let html = `
                 <div class="fade-in pb-10">
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-stone-100 mb-6">
-                         <h3 class="font-bold text-ink text-lg mb-2">今日天氣快報 (12/24)</h3>
-                         <div class="flex items-center gap-4 text-sm text-stone-500">
-                             <div class="flex items-center gap-1"><span class="bg-stone-100 text-ink px-2 py-0.5 rounded text-xs font-bold">札幌</span> <i class="fa-solid fa-cloud text-stone-400"></i> 多雲</div>
-                             <div class="flex items-center gap-1"><span class="bg-stone-100 text-ink px-2 py-0.5 rounded text-xs font-bold">洞爺湖</span> <i class="fa-solid fa-cloud text-stone-400"></i> 多雲</div>
-                             <div class="flex items-center gap-1"><span class="bg-stone-100 text-ink px-2 py-0.5 rounded text-xs font-bold">旭川</span> <i class="fa-solid fa-cloud text-stone-400"></i> 多雲</div>
-                             <div class="flex items-center gap-1"><span class="bg-stone-100 text-ink px-2 py-0.5 rounded text-xs font-bold">小樽</span> <i class="fa-solid fa-cloud text-stone-400"></i> 多雲</div>
+                         <div class="flex justify-between items-end mb-4">
+                            <h3 class="font-bold text-ink text-lg">今日天氣快報</h3>
+                            <span class="text-xs font-mono text-stone-400 bg-stone-100 px-2 py-1 rounded">${todayString} (Today)</span>
+                         </div>
+                         <div class="grid grid-cols-2 gap-3">
+                             <!-- Sapporo Today -->
+                             <div class="bg-stone-50 p-3 rounded-xl flex flex-col items-center justify-center text-center">
+                                <div class="text-sm font-bold text-ink mb-1">札幌</div>
+                                <i class="fa-solid fa-cloud-rain text-stone-400 text-2xl my-1"></i>
+                                <div class="text-xs text-stone-500 mb-1">有雨</div>
+                                <div class="text-sm font-bold text-bronze">7° / 0°</div>
+                             </div>
+                             <!-- Toya Today -->
+                             <div class="bg-stone-50 p-3 rounded-xl flex flex-col items-center justify-center text-center">
+                                <div class="text-sm font-bold text-ink mb-1">洞爺湖</div>
+                                <i class="fa-solid fa-cloud text-stone-400 text-2xl my-1"></i>
+                                <div class="text-xs text-stone-500 mb-1">多雲</div>
+                                <div class="text-sm font-bold text-bronze">6° / -2°</div>
+                             </div>
+                             <!-- Asahikawa Today -->
+                             <div class="bg-stone-50 p-3 rounded-xl flex flex-col items-center justify-center text-center">
+                                <div class="text-sm font-bold text-ink mb-1">旭川</div>
+                                <i class="fa-solid fa-snowflake text-stone-400 text-2xl my-1"></i>
+                                <div class="text-xs text-stone-500 mb-1">雨夾雪</div>
+                                <div class="text-sm font-bold text-bronze">6° / 0°</div>
+                             </div>
+                             <!-- Otaru Today -->
+                             <div class="bg-stone-50 p-3 rounded-xl flex flex-col items-center justify-center text-center">
+                                <div class="text-sm font-bold text-ink mb-1">小樽</div>
+                                <i class="fa-solid fa-cloud-rain text-stone-400 text-2xl my-1"></i>
+                                <div class="text-xs text-stone-500 mb-1">偶雨</div>
+                                <div class="text-sm font-bold text-bronze">7° / -1°</div>
+                             </div>
                          </div>
                     </div>
+
                     <h2 class="font-serif text-3xl font-bold text-ink mb-6">Weekly Weather Forecast</h2>
                     <div class="space-y-6">
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-stone-100">
-                            <h3 class="font-bold text-ink text-lg mb-3">札幌 (Sapporo)</h3>
-                            <div class="flex overflow-x-auto pb-4 gap-3 hide-scrollbar">
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/24</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">5°/-2°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/25</div><i class="fa-solid fa-cloud-sun text-stone-400 text-xl"></i><div class="text-xs font-bold">4°/-3°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/26</div><i class="fa-solid fa-snowflake text-blue-300 text-xl"></i><div class="text-xs font-bold">1°/-5°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/27</div><i class="fa-solid fa-snowflake text-blue-300 text-xl"></i><div class="text-xs font-bold">-1°/-6°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/28</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">0°/-4°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/29</div><i class="fa-solid fa-cloud-sun text-stone-400 text-xl"></i><div class="text-xs font-bold">2°/-3°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/30</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">1°/-5°</div></div>
+                        <!-- Loop for cities -->
+                        ${['札幌 (Sapporo)', '洞爺湖 (Lake Toya)', '旭川 (Asahikawa)', '小樽 (Otaru)'].map((city) => `
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-stone-100">
+                                <h3 class="font-bold text-ink text-lg mb-3">${city}</h3>
+                                <div class="grid grid-cols-6 gap-1 text-center text-xs"> 
+                                    ${weekDates.map((d, i) => {
+                                        const w = forecastData[city][i] || { icon: 'fa-cloud', text: '--', cond: '-' };
+                                        return `
+                                            <div class="flex flex-col items-center gap-1">
+                                                <div class="text-stone-400 text-[10px]">${d}</div>
+                                                <i class="fa-solid ${w.icon} text-stone-400 text-lg my-0.5"></i>
+                                                <div class="text-[10px] font-bold scale-90 sm:scale-100 text-nowrap">${w.text}</div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
                             </div>
-                        </div>
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-stone-100">
-                            <h3 class="font-bold text-ink text-lg mb-3">洞爺湖 (Lake Toya)</h3>
-                            <div class="flex overflow-x-auto pb-4 gap-3 hide-scrollbar">
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/24</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">5°/-3°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/25</div><i class="fa-solid fa-cloud-showers-heavy text-blue-400 text-xl"></i><div class="text-xs font-bold">6°/-2°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/26</div><i class="fa-solid fa-snowflake text-blue-300 text-xl"></i><div class="text-xs font-bold">2°/-4°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/27</div><i class="fa-solid fa-snowflake text-blue-300 text-xl"></i><div class="text-xs font-bold">0°/-5°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/28</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">2°/-3°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/29</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">3°/-2°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/30</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">1°/-4°</div></div>
-                            </div>
-                        </div>
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-stone-100">
-                            <h3 class="font-bold text-ink text-lg mb-3">旭川 (Asahikawa)</h3>
-                            <div class="flex overflow-x-auto pb-4 gap-3 hide-scrollbar">
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/24</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">1°/-12°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/25</div><i class="fa-solid fa-snowflake text-blue-300 text-xl"></i><div class="text-xs font-bold">-2°/-8°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/26</div><i class="fa-solid fa-snowflake text-blue-300 text-xl"></i><div class="text-xs font-bold">-4°/-10°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/27</div><i class="fa-solid fa-snowflake text-blue-300 text-xl"></i><div class="text-xs font-bold">-5°/-12°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/28</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">-3°/-9°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/29</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">-1°/-8°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/30</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">-2°/-10°</div></div>
-                            </div>
-                        </div>
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-stone-100">
-                            <h3 class="font-bold text-ink text-lg mb-3">小樽 (Otaru)</h3>
-                            <div class="flex overflow-x-auto pb-4 gap-3 hide-scrollbar">
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/24</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">4°/-3°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/25</div><i class="fa-solid fa-cloud-showers-heavy text-blue-400 text-xl"></i><div class="text-xs font-bold">5°/-2°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/26</div><i class="fa-solid fa-snowflake text-blue-300 text-xl"></i><div class="text-xs font-bold">1°/-4°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/27</div><i class="fa-solid fa-snowflake text-blue-300 text-xl"></i><div class="text-xs font-bold">-1°/-5°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/28</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">2°/-3°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/29</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">3°/-2°</div></div>
-                                <div class="min-w-[70px] bg-stone-50 rounded-xl p-3 flex flex-col items-center justify-between h-28 border border-stone-100 flex-shrink-0"><div class="text-stone-400 text-[10px]">12/30</div><i class="fa-solid fa-cloud text-stone-400 text-xl"></i><div class="text-xs font-bold">1°/-4°</div></div>
-                            </div>
-                        </div>
+                        `).join('')}
                     </div>
+
+                    <h2 class="font-serif text-3xl font-bold text-ink mb-6 mt-8">交通速查 (Transport Maps)</h2>
+                    <div class="grid grid-cols-1 gap-4 mb-8">
+                        <div class="bg-white border border-stone-200 rounded-xl p-4 flex items-center justify-between shadow-sm hover:border-bronze transition-colors cursor-pointer" onclick="openSubwayMap()">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-green-600 text-xl"><i class="fa-solid fa-train-subway"></i></div>
+                                <div>
+                                    <div class="font-bold text-ink">札幌市營地下鐵路線圖</div>
+                                    <div class="text-xs text-stone-400">Sapporo Subway Route Map</div>
+                                </div>
+                            </div>
+                            <button class="bg-stone-100 text-stone-500 hover:bg-bronze hover:text-white px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all">View Map</button>
+                        </div>
+                        <a href="https://www.jrhokkaido.co.jp/global/chinese/pdf/route_map.pdf" target="_blank" class="bg-white border border-stone-200 rounded-xl p-4 flex items-center justify-between shadow-sm hover:border-bronze transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 text-xl"><i class="fa-solid fa-train"></i></div>
+                                <div>
+                                    <div class="font-bold text-ink">JR 北海道路線圖</div>
+                                    <div class="text-xs text-stone-400">JR Hokkaido Route Map (PDF)</div>
+                                </div>
+                            </div>
+                            <div class="bg-stone-100 text-stone-500 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">Open PDF</div>
+                        </a>
+                    </div>
+
                     <h2 class="font-serif text-3xl font-bold text-ink mb-4 mt-8">Live Cameras</h2>
                     <div class="grid grid-cols-2 gap-3 mb-8">
                          <a href="https://www.youtube.com/watch?v=RBHsITnIoI0" target="_blank" class="bg-white border border-stone-200 rounded-xl p-3 flex flex-col items-center text-center hover:border-red-500 transition-all"><i class="fa-brands fa-youtube text-2xl text-red-500 mb-2"></i><div class="text-xs font-bold text-ink">札幌大通公園</div></a>
