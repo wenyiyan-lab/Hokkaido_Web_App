@@ -144,6 +144,47 @@
         let currentPayer = 'me';
 
         // --- DATA CONSTANTS ---
+        const FORECAST_DATA = {
+            '札幌 (Sapporo)': [
+                { icon: 'fa-cloud-rain', text: '7°/1°', cond: '偶雨' },       // 12/24
+                { icon: 'fa-cloud-rain', text: '5°/-3°', cond: '雨夾雪' },    // 12/25
+                { icon: 'fa-snowflake', text: '-3°/-7°', cond: '轉雪' },      // 12/26
+                { icon: 'fa-snowflake', text: '-3°/-8°', cond: '雪' },        // 12/27
+                { icon: 'fa-snowflake', text: '-2°/-6°', cond: '小雪' },      // 12/28
+                { icon: 'fa-cloud', text: '-1°/-5°', cond: '多雲' }           // 12/29
+            ],
+            '洞爺湖 (Lake Toya)': [
+                { icon: 'fa-cloud-rain', text: '8°/-2°', cond: '雨天' },      // 12/24
+                { icon: 'fa-cloud', text: '2°/-5°', cond: '陰天' },           // 12/25
+                { icon: 'fa-snowflake', text: '-1°/-6°', cond: '小雪' },      // 12/26
+                { icon: 'fa-snowflake', text: '-3°/-7°', cond: '雪' },        // 12/27
+                { icon: 'fa-snowflake', text: '-2°/-6°', cond: '小雪' },      // 12/28
+                { icon: 'fa-cloud', text: '-1°/-4°', cond: '多雲' }           // 12/29
+            ],
+            '旭川 (Asahikawa)': [
+                { icon: 'fa-cloud-rain', text: '5°/-7°', cond: '雨夾雪' },    // 12/24
+                { icon: 'fa-snowflake', text: '2°/-6°', cond: '雪' },         // 12/25
+                { icon: 'fa-snowflake', text: '-3°/-9°', cond: '大雪' },      // 12/26
+                { icon: 'fa-snowflake', text: '-5°/-12°', cond: '大雪' },     // 12/27
+                { icon: 'fa-snowflake', text: '-3°/-10°', cond: '雪' },       // 12/28
+                { icon: 'fa-snowflake', text: '-2°/-8°', cond: '小雪' }       // 12/29
+            ],
+            '小樽 (Otaru)': [
+                { icon: 'fa-cloud-rain', text: '8°/-1°', cond: '有雨' },      // 12/24
+                { icon: 'fa-snowflake', text: '3°/-4°', cond: '雨雪' },       // 12/25
+                { icon: 'fa-snowflake', text: '-2°/-6°', cond: '風雪' },      // 12/26
+                { icon: 'fa-snowflake', text: '-3°/-7°', cond: '雪' },        // 12/27
+                { icon: 'fa-snowflake', text: '-2°/-5°', cond: '小雪' },      // 12/28
+                { icon: 'fa-cloud', text: '0°/-4°', cond: '陰天' }            // 12/29
+            ]
+        };
+
+        const DEFAULT_CHECKLIST = [
+            { text: "護照（有效期限6個月以上）", done: false }, { text: "身分證影本", done: false }, { text: "機票／電子登機證", done: false }, { text: "飯店預約資訊", done: false }, { text: "旅責險／旅平險保單", done: false }, { text: "日幣現金", done: false }, { text: "信用卡（Visa / JCB）", done: false }, { text: "西瓜卡 Suica / Kitaca", done: false }, { text: "行動電源", done: false }, { text: "充電線", done: false }, { text: "iPhone / Apple Watch 充電器", done: false }, { text: "相機 / 記憶卡", done: false }, { text: "耳機", done: false }, { text: "口罩", done: false }, { text: "濕紙巾／酒精", done: false }, { text: "小藥包", done: false }, 
+            { text: "墨鏡", done: false }, { text: "汙衣袋", done: false }, { text: "洗碗精", done: false }, { text: "眼鏡", done: false }, { text: "隱形眼鏡", done: false },
+            { text: "發熱衣 2–3件", done: false }, { text: "羊毛針織或保暖中層", done: false }, { text: "羽絨外套", done: false }, { text: "保暖褲／刷毛褲", done: false }, { text: "厚襪／羊毛襪 3–5雙", done: false }, { text: "帽子", done: false }, { text: "圍巾", done: false }, { text: "手套", done: false }, { text: "防滑雪靴", done: false }, { text: "洗面乳", done: false }, { text: "乳液（極潤）", done: false }, { text: "護唇膏", done: false }, { text: "防曬乳", done: false }, { text: "卸妝用品", done: false }, { text: "牙膏牙刷", done: false }, { text: "髮油或整髮用品", done: false }, { text: "保養品", done: false }, { text: "折疊雨傘", done: false }, { text: "小玩具", done: false }, { text: "折凳", done: false }, { text: "夾鏈袋", done: false }
+        ];
+
         const FLIGHT_DATA = [
             { type: 'Departure', code: 'CI130', date: '12/24', fromCode: 'TPE', fromCity: 'Taipei', timeDep: '08:35', toCode: 'CTS', toCity: 'Sapporo', timeArr: '13:10', duration: '3h 35m' },
             { type: 'Return', code: 'CI131', date: '12/29', fromCode: 'CTS', fromCity: 'Sapporo', timeDep: '14:40', toCode: 'TPE', toCity: 'Taipei', timeArr: '18:XX', duration: '4h 10m' }
@@ -208,12 +249,6 @@
             ]}
         ];
 
-        const DEFAULT_CHECKLIST = [
-            { text: "護照（有效期限6個月以上）", done: false }, { text: "身分證影本", done: false }, { text: "機票／電子登機證", done: false }, { text: "飯店預約資訊", done: false }, { text: "旅責險／旅平險保單", done: false }, { text: "日幣現金", done: false }, { text: "信用卡（Visa / JCB）", done: false }, { text: "西瓜卡 Suica / Kitaca", done: false }, { text: "行動電源", done: false }, { text: "充電線", done: false }, { text: "iPhone / Apple Watch 充電器", done: false }, { text: "相機 / 記憶卡", done: false }, { text: "耳機", done: false }, { text: "口罩", done: false }, { text: "濕紙巾／酒精", done: false }, { text: "小藥包", done: false }, 
-            { text: "墨鏡", done: false }, { text: "汙衣袋", done: false }, { text: "洗碗精", done: false }, { text: "眼鏡", done: false }, { text: "隱形眼鏡", done: false },
-            { text: "發熱衣 2–3件", done: false }, { text: "羊毛針織或保暖中層", done: false }, { text: "羽絨外套", done: false }, { text: "保暖褲／刷毛褲", done: false }, { text: "厚襪／羊毛襪 3–5雙", done: false }, { text: "帽子", done: false }, { text: "圍巾", done: false }, { text: "手套", done: false }, { text: "防滑雪靴", done: false }, { text: "洗面乳", done: false }, { text: "乳液（極潤）", done: false }, { text: "護唇膏", done: false }, { text: "防曬乳", done: false }, { text: "卸妝用品", done: false }, { text: "牙膏牙刷", done: false }, { text: "髮油或整髮用品", done: false }, { text: "保養品", done: false }, { text: "折疊雨傘", done: false }, { text: "小玩具", done: false }, { text: "折凳", done: false }, { text: "夾鏈袋", done: false }
-        ];
-
         // --- LOAD DATA ---
         let itinerary = JSON.parse(localStorage.getItem('itinerary_v6')) || DEFAULT_ITINERARY;
         itinerary.forEach(day => {
@@ -270,7 +305,8 @@
             {id: 18, title: '1229札幌到新千歲機場車票', type: 'file', bookingId: '', link: 'https://drive.google.com/file/d/1UFWnMGasNCcmszR5yyR7no1bYpy1Pepk/view?usp=drive_link'},
         ];
         
-        let initialBudget = parseFloat(localStorage.getItem('initialBudget')) || 100000;
+        // --- FIXED: Initialize with 0 to allow adding cash later ---
+        let initialBudget = parseFloat(localStorage.getItem('initialBudget')) || 0; 
         let friendName = localStorage.getItem('friendName') || "Friend";
 
         // --- HELPER FUNCTIONS ---
@@ -471,8 +507,12 @@
                         <span class="text-sm text-stone-500 group-hover:text-bronze transition-colors">Show Google Map Button</span>
                     </label>
                 </div>
-                <div class="flex justify-between items-center pt-4 border-t border-stone-100"><button onclick="openConfirmModal('Delete this event?', () => deleteEvent(${dayIndex}, ${eventIndex}))" class="text-xs text-red-400 hover:text-red-600 uppercase tracking-widest font-bold px-2 py-2">Delete</button><button onclick="saveEvent(${dayIndex}, ${eventIndex})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Changes</button></div>
+                <div class="flex justify-between items-center pt-4 border-t border-stone-100"><button onclick="confirmDeleteEvent(${dayIndex}, ${eventIndex})" class="text-xs text-red-400 hover:text-red-600 uppercase tracking-widest font-bold px-2 py-2">Delete</button><button onclick="saveEvent(${dayIndex}, ${eventIndex})" class="bg-ink text-white px-8 py-3 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Save Changes</button></div>
             `);
+        }
+        
+        function confirmDeleteEvent(dayIndex, eventIndex) {
+            openConfirmModal('Delete this event?', () => deleteEvent(dayIndex, eventIndex));
         }
 
         function saveEvent(originalDayIndex, eventIndex) {
@@ -566,14 +606,24 @@
         function deleteShoppingItem(index) { shoppingList.splice(index, 1); saveAll(); renderLists(); closeModal(); }
         function saveMemos(value) { memos = value; saveAll(); }
         
-        function addToBudget() { 
-            const val = parseFloat(document.getElementById('budget-input').value); 
-            if(val) { 
-                initialBudget += val; 
-                saveAll(); 
-                renderWallet(); 
+        function updateTotalBudget() {
+            const val = parseFloat(document.getElementById('edit-total-input').value);
+            if (!isNaN(val)) {
+                initialBudget = val;
+                saveAll();
+                renderWallet();
                 closeModal(); 
-            } 
+            }
+        }
+
+        function addToBudget() {
+            const val = parseFloat(document.getElementById('add-cash-input').value);
+            if (!isNaN(val) && val !== 0) {
+                initialBudget += val;
+                saveAll();
+                renderWallet();
+                closeModal();
+            }
         }
         
         function resetBudget() {
@@ -621,6 +671,10 @@
                 saveAll(); renderWallet(); closeModal();
             }
         }
+        function confirmDeleteExpense(id) {
+            openConfirmModal('Delete?', () => deleteExpense(id));
+        }
+
         function deleteExpense(id) { expenses = expenses.filter(e => e.id !== id); saveAll(); renderWallet(); closeModal(); }
         function selectDocType(el, type) {
             document.querySelectorAll('.doc-type-btn').forEach(b => {
@@ -661,44 +715,78 @@
                 <div class="text-center py-8">
                     <div class="mb-4"><i class="fa-solid fa-circle-notch fa-spin text-4xl text-bronze"></i></div>
                     <h3 class="font-serif text-xl text-ink mb-2">Fetching Live Rate...</h3>
-                    <p class="text-xs text-stone-400">Connecting to currency exchange service</p>
+                    <p class="text-xs text-stone-400">Connecting to open.er-api.com...</p>
                 </div>
             `);
-            setTimeout(() => {
-                const newRate = 0.20 + (Math.random() * 0.02);
-                exchangeRate = newRate;
-                saveAll();
-                showModal(`
-                    <button onclick="closeModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-ink transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
-                    <div class="text-center py-4">
-                        <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fa-solid fa-check"></i></div>
-                        <h3 class="font-serif text-2xl text-ink mb-1">Rate Updated</h3>
-                        <div class="text-4xl font-mono font-bold text-bronze my-4">${newRate.toFixed(4)}</div>
-                        <p class="text-xs text-stone-400 mb-6">Current JPY to TWD exchange rate</p>
-                        <button onclick="closeModal(); renderWallet();" class="w-full bg-ink text-white py-3 rounded-lg">Done</button>
-                    </div>
-                `);
-            }, 1000);
+            
+            fetch('https://open.er-api.com/v6/latest/JPY')
+                .then(response => response.json())
+                .then(data => {
+                    const newRate = data.rates.TWD;
+                    const dateStr = new Date(data.time_last_update_utc).toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+                    
+                    if (newRate) {
+                        exchangeRate = newRate;
+                        saveAll();
+                        showModal(`
+                            <button onclick="closeModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-ink transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+                            <div class="text-center py-4">
+                                <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fa-solid fa-check"></i></div>
+                                <h3 class="font-serif text-2xl text-ink mb-1">Rate Updated</h3>
+                                <div class="text-4xl font-mono font-bold text-bronze my-4">${newRate.toFixed(4)}</div>
+                                <p class="text-xs text-stone-400 mb-2">Current JPY to TWD exchange rate</p>
+                                <p class="text-[10px] text-stone-300 mb-6">Last Update: ${dateStr}</p>
+                                <button onclick="closeModal(); renderWallet();" class="w-full bg-ink text-white py-3 rounded-lg">Done</button>
+                            </div>
+                        `);
+                    } else {
+                        throw new Error("Rate not found");
+                    }
+                })
+                .catch(err => {
+                    showModal(`
+                        <button onclick="closeModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-ink transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+                        <div class="text-center py-4">
+                            <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fa-solid fa-xmark"></i></div>
+                            <h3 class="font-serif text-xl text-ink mb-2">Update Failed</h3>
+                            <p class="text-xs text-stone-400 mb-6">Unable to fetch live rate. Please check internet connection.</p>
+                            <button onclick="closeModal()" class="w-full border border-stone-300 text-stone-500 py-3 rounded-lg">Close</button>
+                        </div>
+                    `);
+                });
         }
 
         function openBudgetModal() {
             showModal(`
                 <button onclick="closeModal()" class="absolute top-0 right-0 p-4 text-stone-400 hover:text-ink transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
                 <div class="w-8 h-1 bg-stone-200 rounded-full mx-auto mb-6"></div>
-                <h2 class="font-serif text-3xl text-ink mb-4 italic text-center">Manage Cash</h2>
-                <hr class="w-16 mx-auto border-stone-300 mb-6">
+                <h2 class="font-serif text-3xl text-ink mb-4 italic text-center">Cash Management</h2>
                 
-                <div class="text-center mb-8">
-                    <div class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">CURRENT TOTAL BUDGET</div>
-                    <div class="text-2xl font-serif text-ink mb-6">¥ ${initialBudget.toLocaleString()}</div>
-
-                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-2 block tracking-widest">ADD CASH AMOUNT</label>
-                    <input type="number" id="budget-input" placeholder="Amount to add" class="w-full text-4xl font-serif text-center border-b border-stone-200 py-2 focus:border-bronze outline-none bg-transparent font-bold text-ink placeholder-stone-200">
-                    <div class="text-[10px] text-stone-400 mt-4">輸入金額並點擊下方按鈕以增加預算。</div>
+                <!-- Edit Total Directly -->
+                <div class="bg-white border border-stone-200 rounded-xl p-4 mb-6 shadow-sm">
+                    <label class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1 block">CURRENT TOTAL (EDITABLE)</label>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg text-stone-300">¥</span>
+                        <input type="number" id="edit-total-input" value="${initialBudget}" class="w-full text-2xl font-serif font-bold text-ink bg-transparent outline-none">
+                        <button onclick="updateTotalBudget()" class="text-xs bg-stone-100 hover:bg-bronze hover:text-white text-stone-500 px-3 py-2 rounded-lg transition-colors font-bold uppercase">Fix</button>
+                    </div>
+                    <div class="text-[9px] text-stone-400 mt-2">如果金額有誤，請直接修改上方數字並點擊 Fix。</div>
                 </div>
-                <div class="flex flex-col gap-3">
-                    <button onclick="addToBudget()" class="w-full bg-ink text-white py-4 rounded shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Add Cash</button>
-                    <button onclick="resetBudget()" class="text-xs text-stone-400 hover:text-red-500 py-2">Reset to 0</button>
+
+                <hr class="border-stone-100 mb-6">
+
+                <!-- Add New Cash -->
+                <div class="mb-2">
+                    <label class="text-[10px] font-bold text-stone-400 uppercase mb-2 block tracking-widest">ADD NEW FUNDS (TOP UP)</label>
+                    <div class="flex items-center relative border-b border-stone-200 focus-within:border-bronze transition-colors">
+                        <span class="text-2xl text-stone-300 mr-2">+</span>
+                        <input type="number" id="add-cash-input" placeholder="Amount" class="w-full text-3xl font-serif py-2 outline-none bg-transparent font-bold text-ink placeholder-stone-200">
+                    </div>
+                    <div class="text-[10px] text-stone-400 mt-2">輸入換匯或提領金額以累加。</div>
+                </div>
+                
+                <div class="flex flex-col gap-3 mt-6">
+                    <button onclick="addToBudget()" class="w-full bg-ink text-white py-4 rounded-xl shadow-lg hover:bg-black transition-transform active:scale-95 font-serif italic text-lg">Add to Wallet</button>
                 </div>
             `);
         }
@@ -1084,11 +1172,14 @@
                 html += `
                     <div class="text-xs text-stone-400 mb-4 font-mono tracking-widest text-center">SOUVENIRS & GIFTS</div>
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-stone-100 mb-6">
-                        <div class="flex gap-2 mb-2">
-                            <input type="text" id="new-shop-item" placeholder="Item name..." class="flex-[2] bg-stone-50 border-b border-stone-300 py-2 px-3 focus:border-bronze outline-none text-sm font-serif rounded">
-                            <input type="number" id="new-shop-price" placeholder="¥ Est." class="flex-1 bg-stone-50 border-b border-stone-300 py-2 px-3 focus:border-bronze outline-none text-sm font-serif rounded">
+                        <div class="flex flex-col gap-3 mb-3">
+                            <input type="text" id="new-shop-item" placeholder="Item name..." class="w-full bg-stone-50 border-b border-stone-300 py-3 px-3 focus:border-bronze outline-none text-sm font-serif rounded">
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-xs">¥</span>
+                                <input type="number" id="new-shop-price" placeholder="Est. Price" class="w-full bg-stone-50 border-b border-stone-300 py-3 pl-8 pr-3 focus:border-bronze outline-none text-sm font-serif rounded">
+                            </div>
                         </div>
-                        <button onclick="addShoppingItem()" class="w-full bg-ink text-white py-2 rounded text-xs uppercase font-bold tracking-widest hover:bg-black">Add to List</button>
+                        <button onclick="addShoppingItem()" class="w-full bg-ink text-white py-3 rounded-lg text-xs uppercase font-bold tracking-widest hover:bg-black transition-colors shadow-lg">Add to List</button>
                     </div>
                     <div class="space-y-2 mb-6">
                         ${shoppingList.map((item, index) => `
@@ -1191,7 +1282,7 @@
                     </div>
                     <div class="space-y-3">${filteredExpenses.map(e => {
                         let iconClass, iconBg; if (e.method === 'cash') { iconClass = 'fa-coins text-yellow-600'; iconBg = 'bg-yellow-50'; } else if (e.method === 'card') { iconClass = 'fa-credit-card text-blue-600'; iconBg = 'bg-blue-50'; } else { iconClass = 'fa-train text-green-600'; iconBg = 'bg-green-50'; }
-                        return `<div class="flex justify-between items-center py-3 border-b border-stone-200/50 group"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full ${iconBg} flex items-center justify-center ${iconClass} text-sm"><i class="fa-solid ${e.method === 'card' ? 'fa-regular fa-credit-card' : (e.method === 'suica' ? 'fa-train' : 'fa-coins')}"></i></div><div><div class="font-serif text-ink">${e.desc}</div><div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div></div></div><div class="flex items-center gap-3"><div class="text-right"><div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div></div><div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"><button onclick="openEditExpenseModal(${e.id})" class="text-stone-300 hover:text-ink text-xs p-1"><i class="fa-solid fa-pen"></i></button><button onclick="openConfirmModal('Delete?', () => deleteExpense(${e.id}))" class="text-stone-300 hover:text-red-500 text-xs p-1"><i class="fa-solid fa-trash"></i></button></div></div></div>`;
+                        return `<div class="flex justify-between items-center py-3 border-b border-stone-200/50 group"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full ${iconBg} flex items-center justify-center ${iconClass} text-sm"><i class="fa-solid ${e.method === 'card' ? 'fa-regular fa-credit-card' : (e.method === 'suica' ? 'fa-train' : 'fa-coins')}"></i></div><div><div class="font-serif text-ink">${e.desc}</div><div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div></div></div><div class="flex items-center gap-3"><div class="text-right"><div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div></div><div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"><button onclick="openEditExpenseModal(${e.id})" class="text-stone-300 hover:text-ink text-xs p-1"><i class="fa-solid fa-pen"></i></button><button onclick="confirmDeleteExpense(${e.id})" class="text-stone-300 hover:text-red-500 text-xs p-1"><i class="fa-solid fa-trash"></i></button></div></div></div>`;
                     }).join('') || '<div class="text-center text-stone-300 text-sm py-10 italic">No records found.</div>'}</div>`;
             } else {
                 html += `
@@ -1208,7 +1299,7 @@
                     </div>
                     <div class="space-y-3">${filteredExpenses.map(e => {
                         const isFriend = e.payer === 'friend';
-                        return `<div class="flex justify-between items-center py-3 border-b border-stone-200/50 group ${isFriend ? 'bg-purple-50/30 -mx-2 px-2 rounded' : ''}"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full ${isFriend ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'} flex items-center justify-center text-xs font-bold">${isFriend ? friendName[0] : 'Me'}</div><div><div class="font-serif text-ink">${e.desc}</div><div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div></div></div><div class="flex items-center gap-3"><div class="text-right"><div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div></div><div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"><button onclick="openEditExpenseModal(${e.id})" class="text-stone-300 hover:text-ink text-xs p-1"><i class="fa-solid fa-pen"></i></button><button onclick="openConfirmModal('Delete?', () => deleteExpense(${e.id}))" class="text-stone-300 hover:text-red-500 text-xs p-1"><i class="fa-solid fa-trash"></i></button></div></div></div>`;
+                        return `<div class="flex justify-between items-center py-3 border-b border-stone-200/50 group ${isFriend ? 'bg-purple-50/30 -mx-2 px-2 rounded' : ''}"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full ${isFriend ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'} flex items-center justify-center text-xs font-bold">${isFriend ? friendName[0] : 'Me'}</div><div><div class="font-serif text-ink">${e.desc}</div><div class="text-[10px] text-stone-400 font-mono">${new Date(e.date).toLocaleDateString()}</div></div></div><div class="flex items-center gap-3"><div class="text-right"><div class="font-mono text-ink">¥${e.amount.toLocaleString()}</div></div><div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"><button onclick="openEditExpenseModal(${e.id})" class="text-stone-300 hover:text-ink text-xs p-1"><i class="fa-solid fa-pen"></i></button><button onclick="confirmDeleteExpense(${e.id})" class="text-stone-300 hover:text-red-500 text-xs p-1"><i class="fa-solid fa-trash"></i></button></div></div></div>`;
                     }).join('') || '<div class="text-center text-stone-300 text-sm py-10 italic">No records found.</div>'}</div>`;
             }
             html += `</div>`;
